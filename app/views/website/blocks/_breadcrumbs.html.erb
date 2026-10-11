@@ -1,24 +1,9 @@
 <%# locals: (data:) -%>
-<%# Home › the page's parents › the page (Breadcrumbs.astro), from the page tree, with its BreadcrumbList structured data. Not drawn on the home page. %>
-<% record = affordabox_page %>
-<% trail = record ? website_breadcrumbs(record) : [] %>
-<% trail[-1] = [data.current_label, trail[-1][1]] if trail.size > 1 && data.current_label.present? %>
+<%# Home / the page's parents / the page, from the page tree, with its BreadcrumbList structured data. Right above a page hero, the hero draws the trail in its own top; anywhere else it's a grey line on white. Not drawn on the home page. %>
+<% trail = affordabox_trail(data.current_label) %>
 <% if trail.size > 1 %>
-  <nav aria-label="Breadcrumb" class="container-base pt-5">
-    <ol class="flex flex-wrap items-center gap-1.5 text-sm text-neutral-500">
-      <% trail.each_with_index do |(name, path), index| %>
-        <%# herb:key index %>
-        <li class="flex items-center gap-1.5">
-          <% if index < trail.size - 1 %>
-            <a href="<%= path %>" class="hover:text-brand-600 transition-colors"><%= name %></a>
-            <span class="text-neutral-300">/</span>
-          <% else %>
-            <span class="text-ink-900 font-medium" aria-current="page"><%= name %></span>
-          <% end %>
-        </li>
-      <% end %>
-    </ol>
-  </nav>
-  <%= affordabox_json_ld({"@context" => "https://schema.org", "@type" => "BreadcrumbList",
-    "itemListElement" => trail.each_with_index.map { |(name, path), index| {"@type" => "ListItem", "position" => index + 1, "name" => website_plain_text(name), "item" => affordabox_url(path)} }}) %>
+  <% unless affordabox_crumbs_in_hero? %>
+    <%= render "website/shared/breadcrumb_trail", trail: %>
+  <% end %>
+  <%= affordabox_breadcrumb_json_ld(trail) %>
 <% end %>

@@ -24,6 +24,27 @@ module AffordaboxHelper
     nil
   end
 
+  # The breadcrumb trail for the page being drawn: [[name, path], …] from the
+  # page tree, the last one named by the breadcrumbs block when it says so.
+  def affordabox_trail(current_label = nil)
+    record = affordabox_page
+    trail = record ? website_breadcrumbs(record) : []
+    trail[-1] = [current_label, trail[-1][1]] if trail.size > 1 && current_label.present?
+    trail
+  end
+
+  # Whether the page's breadcrumbs block sits right above its hero, which
+  # then draws the trail in its own top (light on dark) instead of a white strip.
+  def affordabox_crumbs_in_hero?
+    types = Array(affordabox_page.try(:blocks)).map { it.is_a?(Hash) ? it["type"] : nil }
+    types.each_cons(2).any? { |first, second| first == "breadcrumbs" && second == "page_hero" }
+  end
+
+  def affordabox_breadcrumb_json_ld(trail)
+    affordabox_json_ld({"@context" => "https://schema.org", "@type" => "BreadcrumbList",
+      "itemListElement" => trail.each_with_index.map { |(name, path), index| {"@type" => "ListItem", "position" => index + 1, "name" => website_plain_text(name), "item" => affordabox_url(path)} }})
+  end
+
   # Site settings (the "site_settings" global): the business's name,
   # phones, address, hours, and the words around the content.
   def affordabox_settings = website_global(:site_settings)

@@ -1,9 +1,10 @@
 <%# locals: (data:) -%>
-<%# The dark band a page opens with: the home page's video, a product's photo, or plain ink; a display heading with its words and check marks; and, split, the lead form beside them (the heroes of the redesign's pages). {ownership} and {rating} in the words are Site settings'. %>
+<%# The dark band a page opens with: the home page's video, a product's photo, or plain ink; a display heading with its words and check marks; and, split, the lead form beside them (the heroes of the redesign's pages). {ownership} and {rating} in the words are Site settings'. Right after a breadcrumbs block, the trail is at its top. %>
 <% video = affordabox_file_url(data.video) if data.style == "video" %>
 <% padding = {"tall" => "pt-14 pb-16 lg:pt-20 lg:pb-24", "large" => "pt-12 pb-16 lg:pt-16 lg:pb-24", "small" => "pt-12 pb-12 lg:pt-14 lg:pb-14"}.fetch(data.padding.to_s, "pt-12 pb-14 lg:pt-16 lg:pb-20") %>
 <% center = data.layout == "center" %>
 <% split = data.layout == "split" %>
+<% trail = affordabox_crumbs_in_hero? ? affordabox_trail(affordabox_page.blocks.find { it["type"] == "breadcrumbs" }&.dig("data", "current_label")) : [] %>
 <% heading_size = data.heading_size == "medium" ? "text-4xl sm:text-5xl" : "text-4xl sm:text-5xl lg:text-6xl" %>
 <section class="<%= class_names("relative text-white overflow-hidden", data.style == "video" ? "bg-ink-950" : "bg-ink-900") %>">
   <% if video %>
@@ -16,6 +17,9 @@
   <% elsif data.style == "photo" && data.photo.present? %>
     <%= website_image_tag data.photo, alt: "", class: "absolute inset-0 h-full w-full object-cover #{data.photo_opacity == "25" ? "opacity-25" : "opacity-20"}", loading: :eager, fetchpriority: :high, "aria-hidden": "true" %>
     <div class="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-900/95 to-ink-900/70" aria-hidden="true"></div>
+  <% end %>
+  <% if trail.size > 1 %>
+    <%= render "website/shared/breadcrumb_trail", trail:, dark: true, class_name: "relative container-base pt-5" %>
   <% end %>
   <div class="<%= class_names("relative container-base", padding, "text-center": center) %>">
     <div class="<%= class_names("grid items-start gap-12 lg:grid-cols-2": split) %>">

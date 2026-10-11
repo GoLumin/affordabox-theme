@@ -1,0 +1,17 @@
+<%# locals: (trail:, dark: false, class_name: "container-base pt-5") -%>
+<%# Home / the page's parents / the page: grey on white, or light on a dark hero. %>
+<nav aria-label="Breadcrumb" class="<%= class_name %>">
+  <ol class="<%= class_names("flex flex-wrap items-center gap-1.5 text-sm", dark ? "text-neutral-400" : "text-neutral-500") %>">
+    <% trail.each_with_index do |(name, path), index| %>
+      <%# herb:key index %>
+      <li class="flex items-center gap-1.5">
+        <% if index < trail.size - 1 %>
+          <a href="<%= path %>" class="<%= dark ? "hover:text-white transition-colors" : "hover:text-brand-600 transition-colors" %>"><%= name %></a>
+          <span class="<%= dark ? "text-neutral-600" : "text-neutral-300" %>">/</span>
+        <% else %>
+          <span class="<%= dark ? "text-neutral-200 font-medium" : "text-ink-900 font-medium" %>" aria-current="page"><%= name %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>
