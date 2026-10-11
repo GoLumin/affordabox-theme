@@ -2,5 +2,6 @@
 <%# Every CMS page, from its blocks. Its "Exit-intent popup" field can switch the popup off (the layout reads it). %>
 <%= affordabox_drawing(page) %>
 <% content_for :exit_modal, page.frontmatter.to_h["exit_modal"].to_s %>
-<% content_for :head, website_seo_tags(page, image: affordabox_settings.share_image) %>
+<%# The home page also answers at /home: noindex there, so it isn't a second home page. %>
+<% content_for :head, website_seo_tags(page, image: affordabox_settings.share_image, noindex: request.path != page.public_path) %>
 <%= website_blocks page %>

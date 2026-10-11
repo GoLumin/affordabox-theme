@@ -1,9 +1,8 @@
 <%# locals: (data:) -%>
-<%# Home / the page's parents / the page, from the page tree, with its BreadcrumbList structured data. Right above a page hero, the hero draws the trail in its own top; anywhere else it's a grey line on white. Not drawn on the home page. %>
+<%# Home / the page's parents / the page, from the page tree (the CMS gives search engines the BreadcrumbList). Right above a page hero, the hero draws the trail in its own top; anywhere else it's a grey line on white. Not drawn on the home page. %>
 <% trail = affordabox_trail(data.current_label) %>
 <% if trail.size > 1 %>
   <% unless affordabox_crumbs_in_hero? %>
     <%= render "website/shared/breadcrumb_trail", trail: %>
   <% end %>
-  <%= affordabox_breadcrumb_json_ld(trail) %>
 <% end %>

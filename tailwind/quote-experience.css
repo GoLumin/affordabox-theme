@@ -31,7 +31,7 @@
 .qx .btn.primary:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--primary-deep)}
 .qx .band{padding-block:clamp(66px,11vh,140px)}
 .qx .sec-head{display:grid;gap:1rem;max-width:60ch}
-.qx .sec-head h2{font-size:var(--fs-h2)}
+.qx .sec-head h1,.qx .sec-head h2{font-size:var(--fs-h2)}
 .qx .sec-head p{color:var(--ink-soft);margin:0;font-size:1.12rem;max-width:54ch}
 .qx .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(30px,5vh,52px)}
 .qx .step{border:1px solid var(--line);border-radius:12px;padding:clamp(24px,2.6vw,34px);min-height:260px;display:flex;flex-direction:column;gap:14px;background:#fff;transition:.25s}

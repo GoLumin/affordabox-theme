@@ -1,5 +1,5 @@
 <%# locals: (data:) -%>
-<%# Questions from the FAQs collection (one group), opening to their answers: the simple list (FaqBlock.astro), or cards under a heading (the FAQ page), with the FAQPage structured data. %>
+<%# Questions from the FAQs collection (one group), opening to their answers: the simple list (FaqBlock.astro), or cards under a heading (the FAQ page), with the page's one FAQPage structured data. %>
 <% faqs = affordabox_faqs(data.group) %>
 <% cards = data.style == "cards" %>
 <% if faqs.any? %>
@@ -38,8 +38,7 @@
       </div>
     </div>
     <% if data.schema %>
-      <%= affordabox_json_ld({"@context" => "https://schema.org", "@type" => "FAQPage",
-        "mainEntity" => faqs.map { {"@type" => "Question", "name" => it.title, "acceptedAnswer" => {"@type" => "Answer", "text" => website_fields(it).answer}} }}) %>
+      <%= affordabox_faq_schema %>
     <% end %>
   </section>
 <% end %>

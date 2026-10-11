@@ -40,11 +40,6 @@ module AffordaboxHelper
     types.each_cons(2).any? { |first, second| first == "breadcrumbs" && second == "page_hero" }
   end
 
-  def affordabox_breadcrumb_json_ld(trail)
-    affordabox_json_ld({"@context" => "https://schema.org", "@type" => "BreadcrumbList",
-      "itemListElement" => trail.each_with_index.map { |(name, path), index| {"@type" => "ListItem", "position" => index + 1, "name" => website_plain_text(name), "item" => affordabox_url(path)} }})
-  end
-
   # Site settings (the "site_settings" global): the business's name,
   # phones, address, hours, and the words around the content.
   def affordabox_settings = website_global(:site_settings)
@@ -151,31 +146,50 @@ module AffordaboxHelper
   # US dollars, whole: $1,800.
   def affordabox_usd(amount) = "$#{amount.to_i.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
 
-  # schema.org LocalBusiness for the whole site, from Site settings (no
-  # rating unless both the rating and the count are confirmed).
-  def affordabox_local_business(area_served: nil, url: nil)
+  # schema.org LocalBusiness for the whole site, from Site settings: one
+  # business (the same @id and url on every page), with the cities a city page
+  # is about as its areaServed. No rating unless both the rating and the
+  # count are confirmed.
+  def affordabox_local_business(area_served: nil)
     s = affordabox_settings
     a = s.address
+    logo = website_image_url(s.logo, width: 600)
     data = {
-      "@context" => "https://schema.org", "@type" => "LocalBusiness", "name" => affordabox_name, "url" => url || affordabox_url("/"),
+      "@context" => "https://schema.org", "@type" => "LocalBusiness", "@id" => affordabox_url("/#localbusiness"),
+      "name" => affordabox_name, "url" => affordabox_url("/"), "logo" => logo,
+      "image" => website_image_url(s.share_image) || logo, "email" => s.email.presence,
       "telephone" => affordabox_tel(s.toll_free).delete_prefix("tel:"),
       "address" => {"@type" => "PostalAddress", "streetAddress" => a.street, "addressLocality" => a.city, "addressRegion" => a.state, "postalCode" => a.zip, "addressCountry" => "US"},
       "geo" => {"@type" => "GeoCoordinates", "latitude" => a.lat.to_f, "longitude" => a.lng.to_f},
       "openingHoursSpecification" => s.hours_detailed.map { {"@type" => "OpeningHoursSpecification", "dayOfWeek" => it.day, "opens" => it.open, "closes" => it.close} },
       "areaServed" => Array(area_served || s.primary_counties).map { {"@type" => "AdministrativeArea", "name" => it} },
       "priceRange" => "$$"
-    }
+    }.compact
     if s.rating.present? && s.review_count.present?
       data["aggregateRating"] = {"@type" => "AggregateRating", "ratingValue" => s.rating.to_f, "reviewCount" => s.review_count}
     end
     data
   end
 
-  def affordabox_product_schema(name:, description:, low:, high: nil, count: nil)
+  def affordabox_product_schema(name:, description:, low:, high: nil, count: nil, image: nil)
     offers = {"@type" => "AggregateOffer", "priceCurrency" => "USD", "lowPrice" => low, "highPrice" => high, "offerCount" => count,
               "availability" => "https://schema.org/InStock"}.compact
     {"@context" => "https://schema.org", "@type" => "Product", "name" => name, "description" => description,
-     "brand" => {"@type" => "Brand", "name" => affordabox_name}, "offers" => offers}
+     "image" => website_image_url(image || affordabox_settings.share_image), "brand" => {"@type" => "Brand", "name" => affordabox_name}, "offers" => offers}.compact
+  end
+
+  # One FAQPage for the whole page, from every FAQ block on it that asks for
+  # it: drawn by the first of them, nil for the rest (Google reads one per page).
+  def affordabox_faq_schema
+    return if @affordabox_faq_schema_drawn
+
+    @affordabox_faq_schema_drawn = true
+    blocks = Array(affordabox_page.try(:blocks)).select { it.is_a?(Hash) && it["type"] == "faq" && it.dig("data", "schema") != false }
+    faqs = blocks.flat_map { affordabox_faqs(it.dig("data", "group")) }.uniq
+    return if faqs.empty?
+
+    affordabox_json_ld({"@context" => "https://schema.org", "@type" => "FAQPage",
+      "mainEntity" => faqs.map { {"@type" => "Question", "name" => it.title, "acceptedAnswer" => {"@type" => "Answer", "text" => website_fields(it).answer}} }})
   end
 
   # A review's stars for a context ("portable", …), falling back to general ones.

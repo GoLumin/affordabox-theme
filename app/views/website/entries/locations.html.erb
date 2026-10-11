@@ -1,5 +1,5 @@
 <%# locals: (entry:) -%>
-<%# A city served, at /locations/<city> (locations/[city].astro): its hero with an intro built from its services and neighbours and the lead form with its ZIP, the services offered (self-storage goes to the city's own facility when it has one), links to every service, the nearby cities, reviews and the closing band. With LocalBusiness and BreadcrumbList structured data. %>
+<%# A city served, at /locations/<city> (locations/[city].astro): its hero with an intro built from its services and neighbours and the lead form with its ZIP, the services offered (self-storage goes to the city's own facility when it has one), links to every service, the nearby cities, reviews and the closing band. The site's LocalBusiness serves this city (areaServed). %>
 <%= affordabox_drawing(entry) %>
 <% f = website_fields(entry) %>
 <% city = f.city %>
@@ -10,10 +10,12 @@
 <% intro = "Looking for #{affordabox_sentence(services.map { affordabox_service_label(it).downcase })} in #{city}? AffordABox delivers across #{f.county} County straight from our St. Michael yard." %>
 <% intro += nearby.any? ? " We're on the road through #{affordabox_sentence(nearby.map { website_fields(it).city })} every week, so #{city} gets quick, reliable scheduling — no national call center, just local people." : " Real local people, fast scheduling, and the Mule placing your box exactly where you want it." %>
 <% crumbs = [["Home", "/"], ["Locations", "/locations"], [city, website_path(entry)]] %>
-<% content_for :head, website_seo_tags(entry, title: "Dumpster Rental, Containers & Storage in #{city}, MN | Affordabox",
-  description: "AffordABox serves #{city}, MN (#{f.county} County) with roll-off dumpsters, shipping containers and portable storage. Next-day delivery, real local people, $0 until it arrives.") %>
-<%= affordabox_json_ld(affordabox_local_business(area_served: [city, "#{f.county} County"], url: affordabox_url(website_path(entry)))) %>
-<%= affordabox_json_ld({"@context" => "https://schema.org", "@type" => "BreadcrumbList", "itemListElement" => crumbs.each_with_index.map { |(name, path), index| {"@type" => "ListItem", "position" => index + 1, "name" => name, "item" => affordabox_url(path)} }}) %>
+<%# Its title and description unless the entry's SEO panel has its own. %>
+<% seo = entry.seo.to_h %>
+<% content_for :head, website_seo_tags(entry, title: seo["meta_title"].presence || "Dumpsters & Storage in #{city}, MN | AffordABox",
+  description: seo["meta_description"].presence || "Roll-off dumpsters, shipping containers and portable storage in #{city}, MN (#{f.county} County). Next-day delivery, $0 until it arrives.",
+  image: affordabox_settings.share_image) %>
+<% content_for :area_served, "#{city}|#{f.county} County" %>
 <section class="bg-ink-900 text-white">
   <%= render "website/shared/breadcrumb_trail", trail: crumbs, dark: true %>
   <div class="container-base pt-12 pb-14 lg:pt-16 lg:pb-20">
