@@ -1,0 +1,31 @@
+<%# locals: (data:) -%>
+<%# A card per unit size from the Storage units collection (self-storage/monticello.astro): a photo of what fits when there is one, the size and its kind, square feet, what it fits, and a button to check availability. %>
+<% labels = {"drive-up" => "Drive-up", "climate" => "Climate-controlled", "oversized" => "Oversized"} %>
+<section class="bg-neutral-50">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro %>
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% affordabox_entries("storage-units").each_with_index do |unit, index| %>
+        <%# herb:key index %>
+        <% f = website_fields(unit) %>
+        <div class="flex flex-col rounded-lg bg-white border border-neutral-200 p-6 shadow-[var(--shadow-card)]">
+          <% if f.image.present? %>
+            <div class="mb-5 -mx-6 -mt-6 overflow-hidden rounded-t-lg bg-neutral-100 aspect-[4/3]">
+              <%= website_image_tag f.image, alt: "What fits in a #{unit.title} storage unit", class: "h-full w-full object-cover", sizes: "(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" %>
+            </div>
+          <% end %>
+          <div class="flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold uppercase tracking-tight text-ink-900"><%= unit.title %></h3>
+            <span class="inline-flex items-center rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600"><%= labels.fetch(f.category.to_s, f.category) %></span>
+          </div>
+          <p class="mt-1 text-sm font-medium text-brand-600"><%= f.sqft %> sq ft</p>
+          <p class="mt-3 text-sm text-neutral-600 leading-relaxed flex-1"><%= f.fits %></p>
+          <% if f.online_rate.present? %>
+            <p class="mt-3 font-display text-xl font-bold text-ink-900"><%= affordabox_usd(f.online_rate) %>/mo <span class="text-sm font-sans font-medium text-neutral-500">online</span></p>
+          <% end %>
+          <a href="/get-a-quote?service=Self-Storage&amp;size=<%= unit.slug %>" data-track="check_availability" class="btn-secondary mt-5 w-full justify-center"><%= data.button_label.presence || "Check availability" %></a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -2,8 +2,9 @@
 // (Website.theme.importmap): nothing is bundled, and none of the admin's.
 import "affordabox/attribution"
 import "affordabox/nav"
-import "affordabox/sliders"
-import "affordabox/faq"
-import "affordabox/gallery"
-import "affordabox/listing"
-import "affordabox/quote_form"
+import "affordabox/lead_form"
+import "affordabox/exit_modal"
+import "affordabox/track"
+
+// The 3-D quote pages' WebGL, only where there's one.
+if (document.querySelector("[data-configurator]")) import("affordabox/configurator")

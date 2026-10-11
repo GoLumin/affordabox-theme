@@ -1,0 +1,47 @@
+<%# locals: (data:) -%>
+<%# The phones, address with directions, hours and map, from Site settings, beside the lead form (contact.astro). %>
+<% settings = affordabox_settings %>
+<% address = affordabox_address_line %>
+<section class="bg-white">
+  <div class="container-base section-padding">
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="display text-2xl sm:text-3xl text-ink-900"><%= data.heading.presence || "Reach us" %></h2>
+        <dl class="mt-8 space-y-7">
+          <div>
+            <dt class="text-sm font-semibold uppercase tracking-wide text-neutral-500">Call us</dt>
+            <dd class="mt-2 space-y-2">
+              <div>
+                <a href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click" class="text-xl font-display font-bold text-ink-900 hover:text-brand-600 transition-colors"><%= settings.toll_free %></a>
+                <span class="block text-sm text-neutral-500">Toll-free</span>
+              </div>
+              <% if settings.local_phone.present? %>
+                <div>
+                  <a href="<%= affordabox_tel(settings.local_phone) %>" data-track="phone_click" class="text-xl font-display font-bold text-ink-900 hover:text-brand-600 transition-colors"><%= settings.local_phone %></a>
+                  <span class="block text-sm text-neutral-500">Local — talk to a real local person, no call center</span>
+                </div>
+              <% end %>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-semibold uppercase tracking-wide text-neutral-500">Visit / mail</dt>
+            <dd class="mt-2 text-neutral-700">
+              <address class="not-italic"><%= settings.address.street %><br><%= settings.address.city %>, <%= settings.address.state %> <%= settings.address.zip %></address>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=<%= ERB::Util.url_encode(address) %>" target="_blank" rel="noopener" class="mt-2 inline-block text-sm font-semibold text-brand-600 hover:text-brand-700">Get directions →</a>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-semibold uppercase tracking-wide text-neutral-500">Hours</dt>
+            <dd class="mt-2 text-neutral-700"><%= settings.hours %></dd>
+          </div>
+        </dl>
+        <div class="mt-8 overflow-hidden rounded-lg border border-neutral-200">
+          <iframe title="Map showing <%= affordabox_name %> at <%= address %>" src="https://www.google.com/maps?q=<%= ERB::Util.url_encode(address) %>&amp;output=embed" width="100%" height="320" class="block border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div>
+        <%= render "website/shared/lead_form", variant: "full", heading: data.form_heading %>
+      </div>
+    </div>
+  </div>
+</section>

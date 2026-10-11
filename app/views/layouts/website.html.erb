@@ -1,12 +1,13 @@
-<%# The frame of every page (src/layouts/Layout.astro): the dark sidebar on the left, and beside it the top bar the page chose, its blocks and the footer. A page sets its bars with content_for :navbar and :hide_sidebar (website/pages/show). %>
-<% navbar = content_for(:navbar).presence || "standard" %>
-<% hide_sidebar = content_for(:hide_sidebar) == "true" %>
-<% favicon = affordabox_file_url(affordabox_settings.favicon) %>
+<%# The frame of every page (LayoutV2.astro in the redesign): the sticky header with its mega menus, the page, the footer, the call/quote bar on phones, and the exit-intent popup (off on pages after a form is sent: a page's "Exit-intent popup" field). %>
+<% settings = affordabox_settings %>
+<% favicon = affordabox_file_url(settings.favicon) %>
 <!DOCTYPE html>
-<html lang="<%= website_settings["default_locale"].presence || "en" %>">
+<html lang="<%= website_settings["default_locale"].presence || "en" %>" class="scroll-smooth">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= preload_link_tag "affordabox/inter.woff2", crossorigin: "anonymous" %>
+    <%= preload_link_tag "affordabox/oswald.woff2", crossorigin: "anonymous" %>
     <%= stylesheet_link_tag "affordabox/site" %>
     <%= website_design_tags %>
     <%= yield :head %>
@@ -17,33 +18,23 @@
     <% end %>
     <link rel="manifest" href="/site.webmanifest">
     <link rel="sitemap" href="/sitemap.xml">
+    <%= affordabox_json_ld(affordabox_local_business(url: affordabox_url(request.path))) %>
     <% if content_for?(:turnstile) %>
       <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer nonce="<%= content_security_policy_nonce %>"></script>
     <% end %>
     <%= website_scripts("head") %>
     <%= website_javascript_tags %>
   </head>
-  <body class="overflow-x-hidden">
+  <body class="font-sans text-neutral-800 antialiased bg-white">
+    <%= render "website/shared/nav" %>
+    <main id="main">
+      <%= yield %>
+    </main>
+    <%= render "website/shared/footer" %>
+    <%= render "website/shared/sticky_cta" %>
+    <% if content_for(:exit_modal) != "off" && settings.exit_modal.enabled %>
+      <%= render "website/shared/exit_modal" %>
+    <% end %>
     <%= website_scripts("body") %>
-    <div id="layout-wrapper" class="flex min-h-screen lg:flex-row flex-col relative max-w-full">
-      <% unless navbar == "compact" %>
-        <div id="sidebar-wrapper" class="<%= class_names("bg-primary z-20 lg:flex-shrink-0 2xl:w-[375px] xl:w-[300px] lg:w-[250px]", "lg:hidden": hide_sidebar) %>">
-          <div class="sticky top-0 lg:h-screen overflow-y-auto">
-            <%= render "website/shared/sidebar" %>
-          </div>
-        </div>
-      <% end %>
-      <div id="main-content" class="flex-1 min-w-0">
-        <% if navbar == "standard" %>
-          <%= render "website/shared/navbar" %>
-        <% elsif navbar == "compact" %>
-          <%= render "website/shared/compact_navbar" %>
-        <% end %>
-        <main id="main">
-          <%= yield %>
-        </main>
-        <%= render "website/shared/footer" %>
-      </div>
-    </div>
   </body>
 </html>

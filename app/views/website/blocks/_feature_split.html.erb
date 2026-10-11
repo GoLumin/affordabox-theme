@@ -1,0 +1,42 @@
+<%# locals: (data:) -%>
+<%# A heading, words and check-marked points beside a photo with a green badge on its corner (MuleAdvantage.astro, "Meet the Mule"). %>
+<% dark = data.dark %>
+<section class="<%= class_names("overflow-hidden", dark ? "bg-ink-900 text-white" : "bg-white") %>">
+  <div class="container-base section-padding">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <% if data.eyebrow.present? %>
+          <span class="<%= class_names("eyebrow", "eyebrow-light": dark) %>"><%= data.eyebrow %></span>
+        <% end %>
+        <h2 class="<%= class_names("display mt-3 text-3xl sm:text-4xl lg:text-5xl", dark ? "text-white" : "text-ink-900") %>"><%= data.heading %></h2>
+        <div class="<%= class_names("mt-4 text-lg leading-relaxed", dark ? "text-neutral-300" : "text-neutral-600") %>"><%= affordabox_markdown data.body %></div>
+        <ul class="mt-8 space-y-5">
+          <% data.points.each_with_index do |point, index| %>
+            <%# herb:key index %>
+            <li class="flex gap-4">
+              <span class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-500"><%= render "website/shared/check", class_name: "w-4 h-4 text-white" %></span>
+              <div>
+                <div class="<%= class_names("font-display font-bold uppercase tracking-tight", dark ? "text-white" : "text-ink-900") %>"><%= point.title %></div>
+                <p class="<%= class_names("mt-1 text-sm leading-relaxed", dark ? "text-neutral-400" : "text-neutral-600") %>"><%= point.body %></p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <% if data.button_label.present? %>
+          <a href="<%= affordabox_href(data.button_link) || "#" %>" class="btn-primary mt-8"><%= data.button_label %></a>
+        <% end %>
+      </div>
+      <div class="relative">
+        <div class="<%= class_names("aspect-[4/3] overflow-hidden rounded-lg border", dark ? "border-ink-700 bg-ink-700" : "border-neutral-200 bg-neutral-100") %>">
+          <%= website_image_tag data.image, class: "h-full w-full object-cover", sizes: "(min-width:1024px) 45vw, 90vw" %>
+        </div>
+        <% if data.badge_value.present? %>
+          <div class="absolute -bottom-4 -left-4 hidden sm:block bg-brand-500 text-white rounded-md px-5 py-3 shadow-[var(--shadow-lift)]">
+            <div class="font-display font-bold text-2xl leading-none"><%= data.badge_value %></div>
+            <div class="text-xs uppercase tracking-wide"><%= data.badge_label %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

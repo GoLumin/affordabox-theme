@@ -1,0 +1,15 @@
+<%# locals: (data:) -%>
+<%# Formatted text: an article (the privacy policy and terms), or a small grey note (a location's local words). %>
+<% if data.style == "small" %>
+  <section class="<%= affordabox_background(data.background) %>">
+    <div class="container-base -mt-10 pb-16 md:-mt-14 md:pb-24">
+      <div class="max-w-3xl text-sm text-neutral-500 leading-relaxed [&_p]:m-0"><%= affordabox_markdown data.body %></div>
+    </div>
+  </section>
+<% else %>
+  <section class="<%= affordabox_background(data.background) %>">
+    <div class="container-base section-padding">
+      <article class="prose prose-neutral max-w-3xl"><%= affordabox_markdown data.body %></article>
+    </div>
+  </section>
+<% end %>

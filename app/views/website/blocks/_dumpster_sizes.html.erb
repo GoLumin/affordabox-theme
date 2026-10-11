@@ -1,0 +1,45 @@
+<%# locals: (data:) -%>
+<%# A price card per size from the Dumpster sizes collection (dumpster-rentals/index.astro): photo, size, dimensions, what it fits, example projects, the flat starting price and a button to quote that size; the most popular is ringed. With its Product structured data. %>
+<% sizes = affordabox_entries(:dumpsters) %>
+<section class="bg-white">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro %>
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <% sizes.each_with_index do |size, index| %>
+        <%# herb:key index %>
+        <% f = website_fields(size) %>
+        <article class="<%= class_names("relative flex flex-col rounded-lg border bg-white p-6 shadow-[var(--shadow-card)]", f.popular ? "border-brand-500 ring-2 ring-brand-500/20" : "border-neutral-200") %>">
+          <% if f.popular %>
+            <span class="absolute -top-3 left-6 z-10 inline-flex items-center rounded-full bg-brand-500 px-3 py-1 text-xs font-display font-bold uppercase tracking-wide text-white">Most popular</span>
+          <% end %>
+          <div class="mb-5 -mx-6 -mt-6 overflow-hidden rounded-t-lg bg-neutral-100 aspect-[4/3]">
+            <%= website_image_tag f.image, alt: "AffordABox #{size.title} roll-off dumpster", class: "h-full w-full object-cover", sizes: "(min-width:1024px) 22vw, (min-width:640px) 45vw, 90vw" %>
+          </div>
+          <h3 class="font-display text-2xl font-bold uppercase tracking-tight text-ink-900"><%= size.title %></h3>
+          <p class="mt-1 text-sm font-semibold text-neutral-500"><%= f.yards %> cubic yards</p>
+          <p class="mt-3 text-sm text-neutral-600"><%= f.dims %></p>
+          <p class="mt-3 text-sm font-medium text-ink-900"><%= f.fits %></p>
+          <ul class="mt-4 space-y-2 text-sm text-neutral-600 flex-1">
+            <% f.examples.each_with_index do |example, example_index| %>
+              <%# herb:key example_index %>
+              <li class="flex items-start gap-2"><%= render "website/shared/check", class_name: "mt-0.5 w-4 h-4 shrink-0 text-brand-500" %><span><%= example %></span></li>
+            <% end %>
+          </ul>
+          <div class="mt-6 border-t border-neutral-100 pt-5">
+            <span class="text-xs font-semibold uppercase tracking-wide text-neutral-500">Starting at</span>
+            <div class="mt-1 inline-block">
+              <span class="font-display text-3xl font-bold text-ink-900"><%= affordabox_usd(f.price) %></span>
+              <span class="block mt-1 h-1 w-full rounded-full bg-brand-500" aria-hidden="true"></span>
+            </div>
+            <a href="/get-a-quote?service=Dumpster&amp;size=<%= size.slug %>" class="<%= class_names("mt-5 w-full justify-center", f.popular ? "btn-primary" : "btn-secondary") %>"><%= data.button_label.presence || "Get this size" %></a>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  </div>
+  <% if data.schema && sizes.any? %>
+    <% prices = sizes.filter_map { website_fields(it).price.presence } %>
+    <%= affordabox_json_ld(affordabox_product_schema(name: "Roll-Off Dumpster Rental", description: "Flat-rate roll-off dumpster rentals in Minnesota — delivery, 7-day rental, pickup, and disposal included.",
+      low: prices.min, high: prices.max, count: sizes.size)) %>
+  <% end %>
+</section>

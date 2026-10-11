@@ -1,0 +1,35 @@
+<%# locals: (data:) -%>
+<%# A card per facility from the Facilities collection (self-storage/index.astro): its photo, city, address, words, features, a button to its page and the price line. %>
+<% by_slug = affordabox_entries(:facilities).index_by(&:slug) %>
+<% facilities = data.facilities.any? ? data.facilities.filter_map { by_slug[it] } : by_slug.values %>
+<section class="bg-white">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading %>
+    <div class="mt-12 grid gap-8 md:grid-cols-2">
+      <% facilities.each_with_index do |facility, index| %>
+        <%# herb:key index %>
+        <% f = website_fields(facility) %>
+        <div class="flex flex-col rounded-lg border border-neutral-200 p-8 shadow-[var(--shadow-card)]">
+          <% if f.image.present? %>
+            <div class="mb-6 -mx-8 -mt-8 overflow-hidden rounded-t-lg bg-neutral-100 aspect-[16/9]">
+              <%= website_image_tag f.image, alt: "AffordABox self-storage in #{f.city}, #{f.state}", class: "h-full w-full object-cover", sizes: "(min-width:768px) 45vw, 90vw" %>
+            </div>
+          <% end %>
+          <h3 class="font-display text-2xl font-bold uppercase tracking-tight text-ink-900"><%= f.city %>, <%= f.state %></h3>
+          <p class="mt-1 text-sm text-neutral-500"><%= f.street %>, <%= f.city %>, <%= f.state %> <%= f.zip %></p>
+          <p class="mt-4 text-neutral-600 leading-relaxed"><%= f.blurb %></p>
+          <ul class="mt-5 space-y-2 flex-1">
+            <% f.features.each_with_index do |feature, feature_index| %>
+              <%# herb:key feature_index %>
+              <li class="flex items-start gap-2 text-sm text-neutral-700"><%= render "website/shared/check", class_name: "mt-0.5 w-4 h-4 shrink-0 text-brand-500" %><%= feature %></li>
+            <% end %>
+          </ul>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <a href="<%= affordabox_href(f.link) || "#" %>" class="btn-primary">View <%= f.city %></a>
+            <span class="text-sm font-display font-bold uppercase tracking-wide text-brand-600"><%= data.price_label %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

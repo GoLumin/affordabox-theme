@@ -1,40 +1,20 @@
 <%# locals: (data:) -%>
-<%# Where the quote form lands (src/pages/thank-you.astro): a thank-you with the phone number, and what happens next. {phone} in the words is the Sidebar global's number. %>
-<% phone = affordabox_sidebar.phone.presence || "(833) 468-2269" %>
-<% tel = affordabox_tel(phone) %>
-<section class="bg-primary py-20 px-4">
-  <div class="custom-container">
-    <div class="mx-auto flex max-w-3xl flex-col items-center text-center space-y-6">
-      <div class="flex h-20 w-20 items-center justify-center rounded-full bg-secondary">
-        <svg class="h-10 w-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-      </div>
-      <h1 class="text-4xl md:text-5xl font-bold uppercase text-white"><%= data.heading %></h1>
-      <p class="text-lg text-white/80 max-w-xl"><%= data.body %></p>
-      <div class="flex flex-col sm:flex-row gap-4 pt-2">
-        <a href="<%= tel %>" class="rounded-lg bg-secondary px-8 py-4 font-bold text-primary transition-all hover:opacity-90"><%= data.call_label.to_s.gsub("{phone}", phone) %></a>
-        <a href="/" class="rounded-lg border-2 border-white/30 px-8 py-4 font-bold text-white transition-all hover:bg-white/10"><%= data.home_label %></a>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="bg-[#E8EDEC] py-16 px-4">
-  <div class="custom-container">
-    <div class="flex flex-col items-center text-center space-y-4 mb-12">
-      <h2 class="text-2xl uppercase font-bold border-b-2 border-primary pb-1 text-primary"><%= data.steps_heading %></h2>
-    </div>
-    <ol class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      <% data.steps.each_with_index do |step, index| %>
-        <%# herb:key index %>
-        <li class="bg-white rounded-lg shadow-sm p-8 space-y-3">
-          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-secondary font-bold text-primary"><%= index + 1 %></span>
-          <h3 class="text-xl font-semibold text-primary"><%= step.title %></h3>
-          <p class="text-gray-600 leading-relaxed"><%= step.body %></p>
-        </li>
-      <% end %>
-    </ol>
-    <% if data.footnote.present? %>
-      <% before, after = data.footnote.to_s.split("{phone}", 2) %>
-      <p class="text-center text-gray-600 mt-12"><%= before %><% if after %><a href="<%= tel %>" class="font-semibold text-primary underline"><%= phone %></a><%= after %><% end %></p>
+<%# Where the forms land (thank-you.astro): a check, the thank-you, the phone number and two buttons, and the analytics event. %>
+<% phone = affordabox_toll_free %>
+<% before, after = data.call_line.to_s.split("{phone}", 2) %>
+<section class="bg-neutral-50 min-h-[calc(100dvh-64px)] flex items-center" <%= tag.attributes(data: {gtag_event: data.event.presence}) %>>
+  <div class="container-base max-w-xl text-center section-padding">
+    <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-500"><%= render "website/shared/check", class_name: "w-8 h-8 text-white" %></span>
+    <h1 class="display mt-6 text-4xl sm:text-5xl text-ink-900"><%= data.heading %></h1>
+    <p class="mt-5 text-lg text-neutral-600 leading-relaxed"><%= data.body %></p>
+    <% if data.call_line.present? %>
+      <p class="mt-4 text-neutral-600"><%= before %><% if after %><a href="<%= affordabox_tel(phone) %>" data-track="phone_click" class="font-display font-bold text-brand-600 hover:text-brand-700"><%= phone %></a><%= after %><% end %></p>
     <% end %>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+      <% data.buttons.each_with_index do |button, index| %>
+        <%# herb:key index %>
+        <a href="<%= affordabox_href(button.link) || "/" %>" class="<%= button.style == "secondary" ? "btn-secondary" : "btn-primary" %>"><%= button.label %></a>
+      <% end %>
+    </div>
   </div>
 </section>

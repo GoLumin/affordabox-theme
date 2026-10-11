@@ -1,0 +1,55 @@
+<%# locals: (data:) -%>
+<%# A facility's address, office hours, phone and features beside its Google map (self-storage/monticello.astro), with its SelfStorage structured data. %>
+<% facility = affordabox_entries(:facilities).find { it.slug == data.facility } %>
+<% if facility %>
+  <% f = website_fields(facility) %>
+  <% address = "#{f.street}, #{f.city}, #{f.state} #{f.zip}" %>
+  <% settings = affordabox_settings %>
+  <section class="bg-white">
+    <div class="container-base section-padding">
+      <div class="grid gap-12 lg:grid-cols-2">
+        <div>
+          <% if data.eyebrow.present? %>
+            <span class="eyebrow"><%= data.eyebrow %></span>
+          <% end %>
+          <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900"><%= data.heading %></h2>
+          <dl class="mt-8 space-y-5">
+            <div>
+              <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Address</dt>
+              <dd class="mt-1 text-ink-900"><%= address %></dd>
+            </div>
+            <div>
+              <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Office hours</dt>
+              <dd class="mt-1 text-ink-900"><%= settings.hours %></dd>
+            </div>
+            <div>
+              <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Phone</dt>
+              <dd class="mt-1"><a href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click" class="text-brand-600 font-semibold hover:text-brand-700"><%= settings.toll_free %></a></dd>
+            </div>
+            <div>
+              <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Security &amp; features</dt>
+              <dd class="mt-2">
+                <ul class="space-y-2">
+                  <% f.features.each_with_index do |feature, index| %>
+                    <%# herb:key index %>
+                    <li class="flex items-start gap-2 text-sm text-neutral-700"><%= render "website/shared/check", class_name: "mt-0.5 w-4 h-4 shrink-0 text-brand-500" %><%= feature %></li>
+                  <% end %>
+                </ul>
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <div class="aspect-[4/3] w-full overflow-hidden rounded-lg border border-neutral-200">
+            <iframe title="Map to <%= facility.title %>, <%= address %>" src="https://www.google.com/maps?q=<%= ERB::Util.url_encode("#{facility.title}, #{address}") %>&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="h-full w-full border-0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= affordabox_json_ld({"@context" => "https://schema.org", "@type" => "SelfStorage", "name" => facility.title, "telephone" => affordabox_tel(settings.toll_free).delete_prefix("tel:"),
+      "address" => {"@type" => "PostalAddress", "streetAddress" => f.street, "addressLocality" => f.city, "addressRegion" => f.state, "postalCode" => f.zip, "addressCountry" => "US"},
+      "geo" => {"@type" => "GeoCoordinates", "latitude" => f.lat.to_f, "longitude" => f.lng.to_f},
+      "openingHoursSpecification" => settings.hours_detailed.map { {"@type" => "OpeningHoursSpecification", "dayOfWeek" => it.day, "opens" => it.open, "closes" => it.close} },
+      "priceRange" => "$"}) %>
+  </section>
+<% end %>

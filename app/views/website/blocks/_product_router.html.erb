@@ -1,0 +1,32 @@
+<%# locals: (data:) -%>
+<%# A card per service with its photo and starting price; a featured card is dark (ProductRouter.astro). %>
+<section class="bg-white">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro, align: "left" %>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <% data.cards.each_with_index do |card, index| %>
+        <%# herb:key index %>
+        <% href = affordabox_href(card.link) || "#" %>
+        <a href="<%= href %>" data-track="product_card_<%= href %>" class="<%= class_names("group relative flex flex-col rounded-lg p-6 transition-all duration-200 hover:-translate-y-1", card.featured ? "bg-ink-900 text-white shadow-[var(--shadow-lift)]" : "bg-white border border-neutral-200 shadow-[var(--shadow-card)] hover:border-brand-300") %>">
+          <% if card.badge.present? %>
+            <span class="absolute top-4 right-4 z-10 rounded-full bg-brand-500 px-2.5 py-0.5 text-[0.7rem] font-display font-semibold uppercase tracking-wide text-white"><%= card.badge %></span>
+          <% end %>
+          <div class="mb-5 -mx-6 -mt-6 aspect-[16/10] overflow-hidden rounded-t-lg bg-neutral-100">
+            <%= website_image_tag card.image, class: "h-full w-full object-cover transition-transform duration-300 group-hover:scale-105", sizes: "(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" %>
+          </div>
+          <h3 class="<%= class_names("font-display text-xl font-bold uppercase tracking-tight", card.featured ? "text-white" : "text-ink-900") %>"><%= card.title %></h3>
+          <p class="<%= class_names("mt-2 text-sm leading-relaxed flex-1", card.featured ? "text-neutral-300" : "text-neutral-600") %>"><%= card.blurb %></p>
+          <div class="mt-5 flex items-end justify-between">
+            <div>
+              <div class="<%= class_names("font-display text-2xl font-bold", card.featured ? "text-brand-400" : "text-ink-900") %>"><%= card.price %></div>
+              <div class="<%= class_names("mt-1 h-1.5 w-10 rounded-full", card.featured ? "bg-brand-400" : "bg-brand-500") %>"></div>
+            </div>
+            <span class="<%= class_names("inline-flex items-center gap-1 text-sm font-display font-semibold uppercase tracking-wide", card.featured ? "text-brand-400" : "text-brand-600") %>">
+              <%= data.cta_label.presence || "Start" %> <span class="transition-transform group-hover:translate-x-1">→</span>
+            </span>
+          </div>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</section>

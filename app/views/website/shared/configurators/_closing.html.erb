@@ -1,0 +1,17 @@
+<%# locals: (fuse_url:, heading:, body:) -%>
+<%# A 3-D quote page's closing band: the firm-quote button and both phones (Site settings). %>
+<% settings = affordabox_settings %>
+<section class="end">
+  <div class="wrap">
+    <span class="eyebrow reveal">Ready when you are</span>
+    <h2 class="reveal"><%= heading %></h2>
+    <p class="reveal"><%= body %></p>
+    <div class="phones reveal">
+      <a class="btn dark" id="fuse-cta-2" href="<%= fuse_url %>" style="min-width:220px">Get my firm quote →</a>
+      <a class="btn outline-dark" href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click" style="min-width:220px"><span class="lbl">Toll-free</span><%= settings.toll_free %></a>
+      <% if settings.local_phone.present? %>
+        <a class="btn outline-dark" href="<%= affordabox_tel(settings.local_phone) %>" data-track="phone_click" style="min-width:220px"><span class="lbl">Local</span><%= settings.local_phone %></a>
+      <% end %>
+    </div>
+  </div>
+</section>

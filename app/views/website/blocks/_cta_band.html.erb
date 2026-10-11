@@ -1,0 +1,24 @@
+<%# locals: (data:) -%>
+<%# The dark closing band (CtaBand.astro): a heading, words, the phone button and the compact lead form. %>
+<section class="bg-ink-900 text-white relative overflow-hidden">
+  <div class="hazard-rule h-1.5" aria-hidden="true"></div>
+  <div class="container-base section-padding">
+    <div class="grid items-center gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="display text-3xl sm:text-4xl lg:text-5xl text-white"><%= data.heading.presence || "Ready to get started?" %></h2>
+        <% if data.body.present? %>
+          <p class="mt-4 text-lg text-neutral-300 leading-relaxed"><%= data.body %></p>
+        <% end %>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="<%= affordabox_tel(affordabox_toll_free) %>" data-track="phone_click" class="btn-primary">Call <%= affordabox_toll_free %></a>
+          <% if data.note.present? %>
+            <span class="text-sm text-neutral-400"><%= data.note %></span>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <%= render "website/shared/lead_form", variant: "compact", service: data.service %>
+      </div>
+    </div>
+  </div>
+</section>

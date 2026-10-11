@@ -1,15 +1,30 @@
-<%# Page not found. Its words are in Site settings › Page not found. %>
+<%# Page not found (404.astro). Its words and the services to jump to are Site settings › Page not found. %>
 <% words = affordabox_settings.not_found %>
 <% heading = words.heading.presence || "Page not found" %>
-<% content_for :head, website_seo_tags(title: heading, description: words.body, noindex: true) %>
-<section class="bg-primary py-20 px-4">
-  <div class="custom-container">
-    <div class="mx-auto flex max-w-3xl flex-col items-center text-center space-y-6">
-      <h1 class="text-4xl md:text-5xl font-bold uppercase text-white"><%= heading %></h1>
-      <% if words.body.present? %>
-        <p class="text-lg text-white/80 max-w-xl"><%= words.body %></p>
-      <% end %>
-      <a href="/" class="rounded-lg bg-secondary px-8 py-4 font-bold text-primary transition-all hover:opacity-90"><%= words.button_label.presence || "Back to Home" %></a>
+<% content_for :head, website_seo_tags(title: "#{heading} | Affordabox", description: words.body, noindex: true) %>
+<section class="bg-neutral-50 min-h-[calc(100dvh-64px)] flex items-center">
+  <div class="container-base max-w-2xl text-center section-padding">
+    <span class="eyebrow eyebrow-center">— 404</span>
+    <h1 class="display mt-4 text-4xl sm:text-5xl lg:text-6xl text-ink-900"><%= heading %></h1>
+    <p class="mt-5 text-lg text-neutral-600 leading-relaxed"><%= words.body %></p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+      <a href="/" class="btn-primary">Back to home</a>
+      <a href="/get-a-quote" class="btn-secondary">Get a quote</a>
     </div>
+    <% if words.links.any? %>
+      <div class="mt-12">
+        <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">Or jump to a service</p>
+        <div class="mt-4 grid gap-3 sm:grid-cols-2 max-w-md mx-auto text-left">
+          <% words.links.each_with_index do |link, index| %>
+            <%# herb:key index %>
+            <a href="<%= affordabox_href(link.link) || "/" %>" class="flex items-center justify-between rounded-lg border border-neutral-200 bg-white px-5 py-4 font-medium text-ink-900 hover:border-brand-300 hover:text-brand-600 transition-colors">
+              <%= link.label %>
+              <span aria-hidden="true">→</span>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <p class="mt-10 text-sm text-neutral-500">Still stuck? Call us at <a href="<%= affordabox_tel(affordabox_toll_free) %>" data-track="phone_click" class="font-semibold text-brand-600 hover:text-brand-700"><%= affordabox_toll_free %></a>.</p>
   </div>
 </section>

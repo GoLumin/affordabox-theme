@@ -1,0 +1,6 @@
+<%# locals: (data:) -%>
+<%# The 3-D quote (thank-you-quote-*.astro in the redesign): size it and price it live in WebGL, then hand off to the online quote. The product's page is website/shared/configurators/_<product>; its script, affordabox/configurator_<product>. %>
+<% product = data.product.to_s %>
+<% if %w[dumpsters portable-storage shipping-containers].include?(product) %>
+  <%= render "website/shared/configurators/#{product.tr("-", "_")}", fuse_url: data.fuse_url.presence || "https://affordabox.gofuse.app/web-quotes/quote" %>
+<% end %>

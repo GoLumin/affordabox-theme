@@ -1,0 +1,60 @@
+<%# locals: (data:) -%>
+<%# The dark band a page opens with: the home page's video, a product's photo, or plain ink; a display heading with its words and check marks; and, split, the lead form beside them (the heroes of the redesign's pages). {ownership} and {rating} in the words are Site settings'. %>
+<% video = affordabox_file_url(data.video) if data.style == "video" %>
+<% padding = {"tall" => "pt-14 pb-16 lg:pt-20 lg:pb-24", "large" => "pt-12 pb-16 lg:pt-16 lg:pb-24", "small" => "pt-12 pb-12 lg:pt-14 lg:pb-14"}.fetch(data.padding.to_s, "pt-12 pb-14 lg:pt-16 lg:pb-20") %>
+<% center = data.layout == "center" %>
+<% split = data.layout == "split" %>
+<% heading_size = data.heading_size == "medium" ? "text-4xl sm:text-5xl" : "text-4xl sm:text-5xl lg:text-6xl" %>
+<section class="<%= class_names("relative text-white overflow-hidden", data.style == "video" ? "bg-ink-950" : "bg-ink-900") %>">
+  <% if video %>
+    <%= tag.video class: "absolute inset-0 h-full w-full object-cover", autoplay: true, muted: true, loop: true, playsinline: true, preload: "metadata",
+      poster: affordabox_file_url(data.photo), "aria-hidden": "true", data: {hero_video: ""} do %>
+      <source src="<%= video %>" type="video/mp4">
+    <% end %>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink-950/85 via-ink-950/45 to-ink-950/10" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink-950/60 via-transparent to-transparent" aria-hidden="true"></div>
+  <% elsif data.style == "photo" && data.photo.present? %>
+    <%= website_image_tag data.photo, alt: "", class: "absolute inset-0 h-full w-full object-cover #{data.photo_opacity == "25" ? "opacity-25" : "opacity-20"}", loading: :eager, fetchpriority: :high, "aria-hidden": "true" %>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-900/95 to-ink-900/70" aria-hidden="true"></div>
+  <% end %>
+  <div class="<%= class_names("relative container-base", padding, "text-center": center) %>">
+    <div class="<%= class_names("grid items-start gap-12 lg:grid-cols-2": split) %>">
+      <div>
+        <% if data.eyebrow.present? %>
+          <span class="<%= class_names("eyebrow eyebrow-light", "eyebrow-center": center) %>"><%= affordabox_fill(data.eyebrow) %></span>
+        <% end %>
+        <h1 class="<%= class_names("display mt-4 text-white", heading_size, "max-w-4xl": data.layout == "left", "max-w-3xl mx-auto": center) %>"><%= data.heading %></h1>
+        <% if data.body.present? %>
+          <div class="<%= class_names("text-lg text-neutral-300 [&_strong]:text-white [&_strong]:font-semibold", center ? "mt-4 max-w-2xl mx-auto" : "mt-5 leading-relaxed #{split ? "max-w-xl" : "max-w-2xl"}") %>"><%= affordabox_markdown data.body %></div>
+        <% end %>
+        <% if data.detail.present? %>
+          <p class="mt-4 text-base text-neutral-300 leading-relaxed max-w-xl"><%= data.detail %></p>
+        <% end %>
+        <% if data.checklist.any? %>
+          <ul class="<%= class_names("mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-neutral-200", "justify-center": center) %>">
+            <% data.checklist.each_with_index do |item, index| %>
+              <%# herb:key index %>
+              <li class="flex items-center gap-2"><%= render "website/shared/check", class_name: "w-4 h-4 text-brand-400" %><%= item %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if data.buttons.any? || data.note.present? %>
+          <div class="<%= class_names("mt-8 flex flex-wrap items-center gap-4", "justify-center": center) %>">
+            <% data.buttons.each_with_index do |button, index| %>
+              <%# herb:key index %>
+              <a href="<%= affordabox_href(button.link) || "#" %>" class="<%= button.style == "secondary" ? "btn-secondary btn-on-dark" : "btn-primary" %>"><%= button.label %></a>
+            <% end %>
+            <% if data.note.present? %>
+              <span class="text-sm text-neutral-400"><%= data.note %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <% if split %>
+        <div class="lg:pl-4">
+          <%= render "website/shared/lead_form", variant: "full", heading: data.form_heading, service: data.form_service, zip: data.form_zip, city: data.form_city %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

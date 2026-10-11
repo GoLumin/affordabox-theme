@@ -1,14 +1,15 @@
 #!/usr/bin/env sh
-# Builds app/assets/stylesheets/affordabox/site.css from tailwind/site.css,
-# and vendors Swiper as an ES module (app/javascript/affordabox/vendor/swiper.js).
-# Run it after changing a template's classes, and commit what it builds:
-# the CMS serves those files as they are.
+# Builds app/assets/stylesheets/affordabox/site.css from tailwind/site.css
+# and copies the fonts into app/assets/fonts/affordabox. Run it after
+# changing a template's classes, and commit what it builds: the CMS serves
+# those files as they are.
 #
 #   bin/css            # once
 #   bin/css --watch    # while working on the templates
 set -e
 cd "$(dirname "$0")/../tailwind"
 [ -d node_modules ] || npm install --no-fund --no-audit
-mkdir -p ../app/javascript/affordabox/vendor
-{ sed '/sourceMappingURL/d' node_modules/swiper/swiper-bundle.min.js; printf '\nexport default Swiper\n'; } > ../app/javascript/affordabox/vendor/swiper.js
+mkdir -p ../app/assets/fonts/affordabox
+cp node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2 ../app/assets/fonts/affordabox/inter.woff2
+cp node_modules/@fontsource-variable/oswald/files/oswald-latin-wght-normal.woff2 ../app/assets/fonts/affordabox/oswald.woff2
 exec npx @tailwindcss/cli -i site.css -o ../app/assets/stylesheets/affordabox/site.css --minify "$@"

@@ -1,46 +1,97 @@
 # frozen_string_literal: true
 
 # The theme's own vocabulary on top of WebsiteHelper: the globals the site
-# is built around, its buttons, a page's choice of bars, and the quote form.
+# is built around (site settings, the menu, the footer), its collections,
+# the page being drawn, JSON-LD, and the lead form's services.
 module AffordaboxHelper
-  # The button the Astro site drew everywhere (src/components/ui/Button.astro).
-  BUTTON = "rounded-md px-4.5 capitalize py-2.5 text-sm font-semibold flex justify-center items-center shadow-sm " \
-    "focus-visible:outline-2 focus-visible:outline-offset-2 transition-colors"
-  BUTTONS = {
-    solid: "bg-secondary text-white hover:bg-secondary/90 focus-visible:outline-secondary",
-    outline: "border-2 border-primary !px-3 !py-2 text-primary hover:bg-primary hover:text-white focus-visible:outline-secondary"
-  }.freeze
+  # The lead form's services (the CMS's "lead" form has the same values);
+  # a block's "any" leaves the choice to the visitor.
+  def affordabox_services
+    form = affordabox_lead_form
+    form ? Array(website_form_field(form, :service)["options"]).map { [it["value"], it["label"]] } : []
+  end
 
-  NAVBARS = %w[standard compact none].freeze
+  # The page or entry being drawn (website/pages/show and the entry templates
+  # set it), for blocks that depend on where they are: breadcrumbs.
+  def affordabox_page(record = nil)
+    @affordabox_page = record if record
+    @affordabox_page
+  end
 
-  # Site settings (the "site_settings" global): the favicon, the listing
-  # sidebar's words, the 404's.
+  # Sets the page or entry being drawn, from its template (outputs nothing).
+  def affordabox_drawing(record)
+    affordabox_page(record)
+    nil
+  end
+
+  # Site settings (the "site_settings" global): the business's name,
+  # phones, address, hours, and the words around the content.
   def affordabox_settings = website_global(:site_settings)
 
-  # The "sidebar" global: the logo, the phone number and the main links.
-  def affordabox_sidebar = website_global(:sidebar)
+  def affordabox_name = affordabox_settings["name"].presence || website_settings["title"].presence || "AffordABox"
 
-  # A button: a link with an href, else a <button>.
-  def affordabox_button(label, href = nil, variant: :solid, **options)
-    options[:class] = [BUTTON, BUTTONS.fetch(variant), options[:class]].compact.join(" ")
-    content = tag.span(label)
-    href ? link_to(content, href, **options) : button_tag(content, type: :button, **options)
+  # A phone number as a tel: link (+1 and its digits).
+  def affordabox_tel(phone)
+    digits = phone.to_s.gsub(/\D/, "")
+    "tel:+#{digits.length == 10 ? "1#{digits}" : digits}"
   end
 
-  # Which bars a page has, from its fields (Top bar, Hide the sidebar), as
-  # {navbar:, hide_sidebar:}. A page made without those fields has the
-  # standard ones.
-  def affordabox_bars(page)
-    fields = page.respond_to?(:frontmatter) ? page.frontmatter.to_h : {}
-    navbar = fields["navbar"].to_s
-    {navbar: NAVBARS.include?(navbar) ? navbar : "standard", hide_sidebar: website_truthy?(fields["hide_sidebar"])}
+  def affordabox_toll_free = affordabox_settings.toll_free.to_s
+
+  # "Locally owned since 2016", or the safe line while the year's unconfirmed.
+  def affordabox_ownership
+    year = affordabox_settings.founded_year
+    year.present? ? "Locally owned since #{year}" : "Locally owned & operated"
   end
 
-  # A link field's href, or "#" (the Astro site's fallback for a link left blank).
-  def affordabox_href(link) = website_href(link) || "#"
+  # The rating line, never with a review count nobody has confirmed.
+  def affordabox_rating_line
+    rating = affordabox_settings.rating.presence
+    count = affordabox_settings.review_count
+    rating && count.present? ? "#{rating}★ from #{count} Google reviews" : "5-star rated on Google"
+  end
 
-  # A phone number as a tel: link.
-  def affordabox_tel(phone) = "tel:#{phone.to_s.gsub(/[^\d+]/, "")}"
+  def affordabox_address_line(address = affordabox_settings.address)
+    "#{address.street}, #{address.city}, #{address.state} #{address.zip}"
+  end
+
+  # Words with the site's placeholders filled: {ownership}, {rating}, {year},
+  # {name}, {phone}.
+  def affordabox_fill(text)
+    text.to_s.gsub("{ownership}", affordabox_ownership).gsub("{rating}", affordabox_rating_line)
+      .gsub("{year}", Date.current.year.to_s).gsub("{name}", affordabox_name).gsub("{phone}", affordabox_toll_free)
+  end
+
+  # A link field's href, or nil.
+  def affordabox_href(link) = website_href(link)
+
+  # The "lead" form (the Forms plugin), drawn by every lead form on the site.
+  def affordabox_lead_form
+    return @affordabox_lead_form if defined?(@affordabox_lead_form)
+
+    @affordabox_lead_form = defined?(Form) ? Form.find_by(slug: "lead", status: "published") : nil
+  end
+
+  # Cloudflare Turnstile ({site_key:, theme:}) when Settings › Forms has it
+  # set up (the Forms plugin then refuses a submission without its token).
+  def affordabox_turnstile
+    captcha = Forms.public_captcha if defined?(Forms) && Forms.respond_to?(:public_captcha)
+    {site_key: captcha[:site_key], theme: "light"} if captcha && captcha[:provider] == "turnstile"
+  end
+
+  # ZIP code → city, for the lead form's "Yes! We serve …" (the Locations collection).
+  def affordabox_zip_areas
+    @affordabox_zip_areas ||= affordabox_locations.each_with_object({}) do |entry, zips|
+      fields = website_fields(entry)
+      fields.zips.each { zips[it.strip] ||= fields.city.to_s }
+    end
+  end
+
+  # The cities served, nearest first (by priority, then the collection's order).
+  def affordabox_locations = website_entries(:locations)
+
+  # A collection's published entries, in their order.
+  def affordabox_entries(collection) = website_entries(collection)
 
   # An asset's address at full size, for a video or a CSS background.
   def affordabox_file_url(id)
@@ -50,48 +101,87 @@ module AffordaboxHelper
     rails_storage_proxy_path(asset.file) if asset&.file&.attached?
   end
 
-  # An image's address at the largest size the site offers (a resized copy),
-  # for a CSS background.
-  def affordabox_background_url(id) = website_image(id)&.dig(:src) || affordabox_file_url(id)
+  # An image's address at the largest offered size, for a poster or a background.
+  def affordabox_image_url(id) = website_image(id)&.dig(:src) || affordabox_file_url(id)
 
-  # Markdown as website_markdown draws it, but a single line break is a
-  # space, as on the Astro site (marked): Commonmarker otherwise makes it a <br>.
+  # Markdown as website_markdown draws it, but a single line break is a space
+  # (Commonmarker otherwise makes it a <br>).
   def affordabox_markdown(text)
     return "" if text.blank?
 
-    html = Commonmarker.to_html(text.to_s, options: Markdown::OPTIONS.deep_merge(render: {unsafe: true, hardbreaks: false}), plugins: {syntax_highlighter: nil})
+    html = Commonmarker.to_html(affordabox_fill(text), options: Markdown::OPTIONS.deep_merge(render: {unsafe: true, hardbreaks: false}), plugins: {syntax_highlighter: nil})
     website_html Cms::Hooks.apply("website.markdown", sanitize(html, tags: Markdown::TAGS, attributes: Markdown::ATTRIBUTES), text: text)
   end
 
-  # A heading that may carry <span class="highlighted-title">, and nothing else.
-  def affordabox_title(text) = sanitize(text.to_s, tags: %w[span br strong em b i], attributes: %w[class])
+  # Markdown on one line: **bold** and links, without a paragraph around it.
+  def affordabox_inline(text) = affordabox_markdown(text).to_s.strip.delete_prefix("<p>").delete_suffix("</p>").html_safe # rubocop:disable Rails/OutputSafety -- sanitized above
 
-  # The footer's copyright line ("{year}" is this year).
-  def affordabox_copyright(text) = text.to_s.gsub("{year}", Date.current.year.to_s)
+  # A JSON-LD <script> for schema.org data.
+  def affordabox_json_ld(data) = website_json_ld(data)
 
-  # The "quote" form (the Forms plugin), drawn by the quote_form block.
-  def affordabox_quote_form
-    return @affordabox_quote_form if defined?(@affordabox_quote_form)
+  # An absolute address on the site.
+  def affordabox_url(path) = website_url(path)
 
-    @affordabox_quote_form = defined?(Form) ? Form.find_by(slug: "quote", status: "published") : nil
+  # A block's section background: white, muted (neutral-50) or dark (ink-900).
+  def affordabox_background(name)
+    {"muted" => "bg-neutral-50", "dark" => "bg-ink-900 text-white"}.fetch(name.to_s, "bg-white")
   end
 
-  # A quote form field's choices, as the form defines them.
-  def affordabox_options(form, name) = Array(website_form_field(form, name)["options"])
+  # US dollars, whole: $1,800.
+  def affordabox_usd(amount) = "$#{amount.to_i.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
 
-  # Cloudflare Turnstile ({site_key:, theme:}) when Settings › Forms has it
-  # set up (the Forms plugin then refuses a submission without its token).
-  def affordabox_turnstile
-    captcha = Forms.public_captcha if defined?(Forms) && Forms.respond_to?(:public_captcha)
-    {site_key: captcha[:site_key], theme: captcha[:theme] || "light"} if captcha && captcha[:provider] == "turnstile"
+  # schema.org LocalBusiness for the whole site, from Site settings (no
+  # rating unless both the rating and the count are confirmed).
+  def affordabox_local_business(area_served: nil, url: nil)
+    s = affordabox_settings
+    a = s.address
+    data = {
+      "@context" => "https://schema.org", "@type" => "LocalBusiness", "name" => affordabox_name, "url" => url || affordabox_url("/"),
+      "telephone" => affordabox_tel(s.toll_free).delete_prefix("tel:"),
+      "address" => {"@type" => "PostalAddress", "streetAddress" => a.street, "addressLocality" => a.city, "addressRegion" => a.state, "postalCode" => a.zip, "addressCountry" => "US"},
+      "geo" => {"@type" => "GeoCoordinates", "latitude" => a.lat.to_f, "longitude" => a.lng.to_f},
+      "openingHoursSpecification" => s.hours_detailed.map { {"@type" => "OpeningHoursSpecification", "dayOfWeek" => it.day, "opens" => it.open, "closes" => it.close} },
+      "areaServed" => Array(area_served || s.primary_counties).map { {"@type" => "AdministrativeArea", "name" => it} },
+      "priceRange" => "$$"
+    }
+    if s.rating.present? && s.review_count.present?
+      data["aggregateRating"] = {"@type" => "AggregateRating", "ratingValue" => s.rating.to_f, "reviewCount" => s.review_count}
+    end
+    data
   end
 
-  # Container filters (the listing's left column), from the containers it
-  # lists: each value once, numbers in order, "ft" dropped as the Astro site did.
-  def affordabox_filter_values(entries, field)
-    values = entries.filter_map { affordabox_filter_value(website_fields(it)[field]) }.uniq
-    values.sort_by { |value| value.match?(/\A[-+]?(\d|\.\d)/) ? [0, value.to_f, value] : [1, 0, value] }
+  def affordabox_product_schema(name:, description:, low:, high: nil, count: nil)
+    offers = {"@type" => "AggregateOffer", "priceCurrency" => "USD", "lowPrice" => low, "highPrice" => high, "offerCount" => count,
+              "availability" => "https://schema.org/InStock"}.compact
+    {"@context" => "https://schema.org", "@type" => "Product", "name" => name, "description" => description,
+     "brand" => {"@type" => "Brand", "name" => affordabox_name}, "offers" => offers}
   end
 
-  def affordabox_filter_value(value) = value.to_s.sub(/\s*ft\z/i, "").strip.presence
+  # A review's stars for a context ("portable", …), falling back to general ones.
+  def affordabox_reviews(context, limit = nil)
+    all = affordabox_entries(:reviews)
+    matched = all.select { website_fields(it).tags.include?(context.to_s) }
+    pool = matched.any? ? matched : all.select { website_fields(it).tags.include?("general") }
+    limit.to_i.positive? ? pool.first(limit.to_i) : pool
+  end
+
+  def affordabox_faqs(group) = affordabox_entries(:faqs).select { website_fields(it).group == group.to_s }
+
+  # "a, b and c".
+  def affordabox_sentence(names)
+    case names.size
+    when 0 then "the surrounding communities"
+    when 1 then names.first
+    else "#{names[0..-2].join(", ")} and #{names.last}"
+    end
+  end
+
+  SERVICE_LABELS = {"dumpster" => "Dumpster Rentals", "container-buy" => "Buy a Container", "container-rent" => "Rent a Container",
+                    "portable" => "Portable Storage", "self-storage" => "Self-Storage"}.freeze
+  SERVICE_PAGES = {"dumpster" => "dumpster-rentals", "container-buy" => "shipping-containers/buy", "container-rent" => "shipping-containers/rent",
+                   "portable" => "portable-storage", "self-storage" => "self-storage"}.freeze
+
+  def affordabox_service_label(key) = SERVICE_LABELS.fetch(key.to_s, key.to_s.humanize)
+
+  def affordabox_service_href(key) = "/#{SERVICE_PAGES.fetch(key.to_s, "")}"
 end

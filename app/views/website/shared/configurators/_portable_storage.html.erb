@@ -1,0 +1,144 @@
+<%# locals: (fuse_url:) -%>
+<%# The portable storage 3-D quote (thank-you-quote-portable-storage.astro): the white box in WebGL that resizes with the choice, the monthly rate with its delivery legs per service (keep, move, store indoors or out), then reviews, how it works, the spec, the FAQ and the closing band. Sizes and monthly rates are the Portable sizes collection; the services and their legs are written here as the redesign had them. %>
+<% sizes = affordabox_entries("portable-sizes").map do |entry|
+  f = website_fields(entry)
+  length = entry.slug.to_s[/\d+\z/].to_i
+  {slug: entry.slug, label: entry.title, tag: entry.title.to_s.gsub(/\s/, ""), lengthFt: length, cuft: 64 * length, dims: f.dims.to_s,
+   holds: f.rooms.to_s, monthly: f.monthly.to_i, popular: f.popular == true}
+end %>
+<% default = (sizes.find { it[:popular] } || sizes.first || {})[:slug] %>
+<% svc = {
+  keep: {name: "Keep It · on your property", sku: "KEEP", fuse: "keep-it", storage: nil, legs: [["Delivery & pickup", "drop-off and final pickup by the Mule", 79]]},
+  move: {name: "Move It · to a new address", sku: "MOVE", fuse: "move-it", storage: nil,
+    legs: [["Delivery & pickup", "drop-off and final pickup", 79], ["Relocation move", "carried level to the new address", nil]]},
+  indoor: {name: "Store It · indoor facility", sku: "IN", fuse: "store-it", storage: ["Indoor climate storage", "monthly facility fee"],
+    legs: [["Delivery & pickup", "to you and back", 79], ["Facility transfers", "to & from indoor storage", nil]]},
+  outdoor: {name: "Store It · outdoor lot", sku: "OUT", fuse: "store-it", storage: ["Outdoor secure storage", "monthly facility fee"],
+    legs: [["Delivery & pickup", "to you and back", 79], ["Facility transfers", "to & from the secure lot", nil]]}
+} %>
+<% cfg = {logoUrl: asset_path("affordabox/affordabox-logo-decal.png"), sizes:, defaultSlug: default, delivery: 79, fuseBase: fuse_url, productType: "portable-storage", svc:} %>
+<% settings = affordabox_settings %>
+<%= tag.div class: "qx qx-affordabox", data: {configurator: "portable-storage", config: cfg.to_json} do %>
+  <section class="band" id="configure" style="background:#fbfbfa">
+    <div class="wrap">
+      <div class="cfg">
+        <div class="sec-head reveal" style="align-self:center">
+          <span class="eyebrow">Build your quote</span>
+          <h2>Size it. Price it. In real time.</h2>
+          <p>That's your AffordABox white box, rendered live. Change a choice and the unit — and your monthly rate — update instantly. Delivered to your driveway by the Mule.</p>
+        </div>
+
+        <div class="viz viz-3d reveal">
+          <canvas id="gl-box" aria-hidden="true"></canvas>
+          <div class="callouts">
+            <span class="dimtag d-l" id="tag-h">8'</span>
+            <span class="dimtag d-b" id="tag-l">16'</span>
+            <span class="dimtag d-c mono" id="tag-v">1,024 ft³</span>
+          </div>
+        </div>
+
+        <form class="panel reveal" id="cfg" aria-label="Portable storage configurator">
+          <div class="panel-h"><span class="t">Configuration</span><span class="tag" id="sku">8×16 · KEEP</span></div>
+          <fieldset class="field">
+            <legend>Unit size</legend>
+            <div class="seg four" role="radiogroup" aria-label="Unit size">
+              <% sizes.each_with_index do |size, index| %>
+                <%# herb:key index %>
+                <label class="opt">
+                  <%= tag.input type: "radio", name: "size", value: size[:slug], checked: size[:slug] == default %>
+                  <span class="box"><span class="k"><%= size[:label] %></span><span class="s"><%= size[:holds] %><%= " · most popular" if size[:popular] %></span></span>
+                </label>
+              <% end %>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>Service</legend>
+            <div class="seg four" role="radiogroup" aria-label="Service">
+              <label class="opt"><input type="radio" name="svc" value="keep" checked><span class="box"><span class="k">Keep It</span><span class="s">on your property</span></span></label>
+              <label class="opt"><input type="radio" name="svc" value="move"><span class="box"><span class="k">Move It</span><span class="s">to a new address</span></span></label>
+              <label class="opt"><input type="radio" name="svc" value="indoor"><span class="box"><span class="k">Store · Indoor</span><span class="s">climate facility</span></span></label>
+              <label class="opt"><input type="radio" name="svc" value="outdoor"><span class="box"><span class="k">Store · Outdoor</span><span class="s">secure lot</span></span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="zip">Delivery ZIP</label>
+            <input id="zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="e.g. 55376" autocomplete="postal-code">
+          </div>
+        </form>
+
+        <div class="panel reveal">
+          <div class="qh"><span class="lab" id="qh-lab">Monthly recurring</span><span class="svc" id="svc-label">Keep It · on your property</span></div>
+          <div class="lines" id="lines"></div>
+          <div class="transit-sec" id="transit-sec">
+            <div class="transit-head">Delivery · one-time <span>billed separately</span></div>
+            <div id="transit-lines"></div>
+          </div>
+          <div class="total">
+            <div><div class="tl">Your rate</div><div><span class="big">$<span id="total">199</span></span><span class="per" id="per">/mo</span></div></div>
+            <div class="mono dim" style="text-align:right;font-size:.72rem" id="capacity">holds ≈ 2–3 bedrooms</div>
+          </div>
+          <div class="transit">
+            <span>$0 until it arrives</span><b>Delivered by the Mule</b>
+          </div>
+          <div class="qcta">
+            <a class="btn primary" id="fuse-cta" href="<%= fuse_url %>">Lock in this unit →</a>
+            <a class="btn dark" href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click"><span class="lbl">Talk to a local person</span><%= settings.toll_free %></a>
+            <a class="qq" href="#faq">Questions? Read the FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%= render "website/shared/configurators/reviews", eyebrow: "From the driveway", heading: "Neighbors who stopped renting trucks.", context: "portable" %>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Three moves. That's the whole thing.</h2>
+        <p>No truck to rent, no dolly, no weekend lost. The box comes to you — placed level by the Mule — and waits on your schedule.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="idx">01 / Deliver</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 44h44V22H8zM52 30h20l10 8v6H52z" stroke-linejoin="round" /><circle cx="26" cy="50" r="4" /><circle cx="70" cy="50" r="4" /><path d="M96 44h16M104 36v16" class="a" /></svg>
+          <h3>The Mule sets it level, right where you want it.</h3>
+          <p>Remote-controlled placement into tight driveways and alleys — no damage to your driveway or lawn, no ramp to climb.</p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">02 / Pack</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="18" y="16" width="34" height="32" rx="2" /><rect x="60" y="26" width="20" height="22" rx="2" /><rect x="86" y="10" width="16" height="38" rx="2" /><path d="M12 52h100" class="a" /></svg>
+          <h3>Load it over days, not one frantic afternoon.</h3>
+          <p>It stays on your property as long as you need — month-to-month, no change or cancel fees. Pack a room a night; lock it when you're done.</p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">03 / Keep · Move · Store</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 40h28V22H14z" /><path d="M52 31h10l6 5v4H52z" /><path d="M74 40l14-14M80 26h8v8" class="a" /><path d="M96 40h16V26H96z" /></svg>
+          <h3>Leave it, relocate it, or we store it.</h3>
+          <p>Same box, three endings. Nothing gets re-handled — what you packed is what comes back out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="spec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The white box</span>
+        <h2>Engineered to protect what you pack.</h2>
+        <p>Weatherproof steel and smart design — your belongings stay clean, dry, and secure.</p>
+      </div>
+      <div class="spec">
+        <div class="cell reveal"><span class="v">Steel</span><span class="k">Weatherproof skin</span><p>Galvanized steel panels — dent-resistant and rust-treated against Minnesota weather.</p></div>
+        <div class="cell reveal"><span class="v">Level</span><span class="k">Mule delivery</span><p>The Mule keeps the unit level in transit, so nothing shifts, tips, or breaks.</p></div>
+        <div class="cell reveal"><span class="v">Sealed</span><span class="k">Weather-tight</span><p>Gasketed door and vents keep rain, dust, and moisture out of your things.</p></div>
+        <div class="cell reveal"><span class="v">1 key</span><span class="k">Yours only</span><p>You hold the only key from delivery to the day it's emptied. $0 until it arrives.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <%= render "website/shared/configurators/faq", group: "portable" %>
+  <%= render "website/shared/configurators/closing", fuse_url:, heading: "Get the box on the calendar.",
+    body: "Tell us your ZIP and a size — a real local person confirms your firm, all-in rate, usually within the hour." %>
+<% end %>

@@ -1,0 +1,99 @@
+<%# locals: (variant: "full", heading: nil, service: nil, zip: nil, city: nil) -%>
+<%# The 3-step free-quote form (LeadForm.svelte): ZIP and service, what it's for, then name and phone. It's the CMS's "lead" form (Forms › Lead): its services come from there, and it posts to the Forms plugin, which checks the honeypot, its rate limit, Cloudflare Turnstile (when Settings › Forms has the keys) and the fields, then sends the emails and the lead webhook. The ZIP is checked against the Locations collection; ad click ids and the landing page ride along; on success the visitor goes to /thank-you (affordabox/lead_form.js). %>
+<% form = affordabox_lead_form %>
+<% settings = affordabox_settings.lead_form %>
+<% id = "lead-#{SecureRandom.hex(3)}" %>
+<% field = ->(name) { website_form_field(form, name)["name"] } if form %>
+<% input = "mt-1.5 w-full rounded-md border border-neutral-300 px-3.5 py-2.5 text-base focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30" %>
+<% preset = service.presence unless service == "any" %>
+<div class="<%= variant == "full" ? "rounded-lg bg-white text-ink-900 shadow-[var(--shadow-lift)] p-6 sm:p-7" : "rounded-lg bg-white text-ink-900 shadow-[var(--shadow-card)] border border-neutral-200 p-5 sm:p-6" %>" aria-live="polite">
+  <% if variant == "full" %>
+    <h2 class="font-display text-xl font-bold uppercase tracking-tight text-ink-900"><%= heading.presence || "Get your free quote" %></h2>
+    <p class="mt-1 text-sm text-neutral-500"><%= settings.subtitle %></p>
+  <% end %>
+  <% if form %>
+    <div class="mt-4 flex items-center gap-2" aria-hidden="true">
+      <% 3.times do |step| %>
+        <%# herb:key step %>
+        <span class="<%= step.zero? ? "bg-brand-500" : "bg-neutral-200" %> h-1.5 flex-1 rounded-full transition-colors" data-lead-progress="<%= step + 1 %>"></span>
+      <% end %>
+    </div>
+    <p class="sr-only" data-lead-step-label>Step 1 of 3</p>
+    <form id="<%= id %>" class="mt-5" method="post" action="<%= api_form_submissions_path(form_slug: form.slug) %>" novalidate
+      data-lead-form data-honeypot="<%= Form::HONEYPOT_FIELD %>" data-redirect="/thank-you" data-areas="<%= affordabox_zip_areas.to_json %>" data-city="<%= city %>">
+      <p hidden aria-hidden="true"><label>Leave this empty: <input name="<%= Form::HONEYPOT_FIELD %>" tabindex="-1" autocomplete="off"></label></p>
+      <% %w[city in_area use_case gclid gbraid wbraid fbclid msclkid ttclid utm_source utm_medium utm_campaign utm_term utm_content landing_page referrer page_url].each_with_index do |name, index| %>
+        <%# herb:key index %>
+        <input type="hidden" name="<%= field.(name) %>" value="" data-lead-hidden="<%= name %>">
+      <% end %>
+
+      <div class="space-y-4" data-lead-step="1">
+        <div>
+          <label for="<%= id %>-zip" class="block text-sm font-semibold text-ink-900">Your ZIP code</label>
+          <input id="<%= id %>-zip" name="<%= field.(:zip) %>" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" value="<%= zip %>" placeholder="e.g. 55376" class="<%= input %>" data-lead-zip>
+          <p class="mt-1.5 text-sm font-semibold text-brand-600" data-lead-in-area hidden></p>
+          <p class="mt-1.5 text-sm text-neutral-500" data-lead-out-area hidden>We may still be able to help — leave your info and we'll confirm.</p>
+        </div>
+        <div>
+          <label for="<%= id %>-service" class="block text-sm font-semibold text-ink-900">What do you need?</label>
+          <select id="<%= id %>-service" name="<%= field.(:service) %>" class="<%= input %> bg-white" data-lead-service>
+            <%= tag.option "Choose a service…", value: "", disabled: true, selected: preset.nil? %>
+            <% affordabox_services.each_with_index do |(value, label), index| %>
+              <%# herb:key index %>
+              <%= tag.option label, value:, selected: value == preset %>
+            <% end %>
+          </select>
+        </div>
+        <button type="button" class="btn-primary w-full" data-lead-next>Continue →</button>
+      </div>
+
+      <div class="space-y-4" data-lead-step="2" hidden>
+        <fieldset>
+          <legend class="block text-sm font-semibold text-ink-900">What's it for? <span class="font-normal text-neutral-400">(optional)</span></legend>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <% settings.use_cases.each_with_index do |use, index| %>
+              <%# herb:key index %>
+              <button type="button" class="rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors border-neutral-300 text-neutral-600 hover:border-neutral-400 aria-pressed:border-brand-500 aria-pressed:bg-brand-50 aria-pressed:text-brand-700" aria-pressed="false" data-lead-use="<%= use %>"><%= use %></button>
+            <% end %>
+          </div>
+        </fieldset>
+        <div class="flex gap-3">
+          <button type="button" class="btn-ghost shrink-0" data-lead-back>← Back</button>
+          <button type="button" class="btn-primary flex-1" data-lead-next>Continue →</button>
+        </div>
+      </div>
+
+      <div class="space-y-4" data-lead-step="3" hidden>
+        <div>
+          <label for="<%= id %>-name" class="block text-sm font-semibold text-ink-900">Your name</label>
+          <input id="<%= id %>-name" name="<%= field.(:first_name) %>" type="text" autocomplete="given-name" class="<%= input %>">
+        </div>
+        <div>
+          <label for="<%= id %>-phone" class="block text-sm font-semibold text-ink-900">Phone</label>
+          <input id="<%= id %>-phone" name="<%= field.(:phone) %>" type="tel" inputmode="tel" autocomplete="tel" class="<%= input %>" data-lead-phone>
+        </div>
+        <div>
+          <label for="<%= id %>-email" class="block text-sm font-semibold text-ink-900">Email <span class="font-normal text-neutral-400">(optional)</span></label>
+          <input id="<%= id %>-email" name="<%= field.(:email) %>" type="email" inputmode="email" autocomplete="email" class="<%= input %>" data-lead-email>
+        </div>
+        <div>
+          <label for="<%= id %>-message" class="block text-sm font-semibold text-ink-900">Anything else? <span class="font-normal text-neutral-400">(optional)</span></label>
+          <textarea id="<%= id %>-message" name="<%= field.(:message) %>" rows="2" class="<%= input %>"></textarea>
+        </div>
+        <% if (turnstile = affordabox_turnstile) %>
+          <% content_for :turnstile, "on" %>
+          <div class="cf-turnstile" data-sitekey="<%= turnstile[:site_key] %>" data-theme="<%= turnstile[:theme] %>" data-size="flexible"></div>
+        <% end %>
+        <div class="flex gap-3">
+          <button type="button" class="btn-ghost shrink-0" data-lead-back>← Back</button>
+          <button type="submit" class="btn-primary flex-1" data-busy-label="Sending…"><%= form.submit_label.presence || "Get my quote" %></button>
+        </div>
+        <p class="text-xs text-neutral-500"><%= settings.note %></p>
+      </div>
+
+      <p class="mt-4 text-sm font-medium text-error-500" role="alert" data-lead-error hidden></p>
+    </form>
+  <% else %>
+    <p class="mt-4 text-sm text-neutral-600">Call us at <a href="<%= affordabox_tel(affordabox_toll_free) %>" class="font-semibold text-brand-600"><%= affordabox_toll_free %></a> and a real local person will quote it for you.</p>
+  <% end %>
+</div>

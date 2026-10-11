@@ -1,0 +1,29 @@
+<%# locals: (data:) -%>
+<%# A heading and words beside a column of check-marked points in white cards ("What's included in every rental"). %>
+<section class="<%= affordabox_background(data.background) %>">
+  <div class="container-base section-padding">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <% if data.eyebrow.present? %>
+          <span class="eyebrow"><%= data.eyebrow %></span>
+        <% end %>
+        <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900"><%= data.heading %></h2>
+        <% if data.body.present? %>
+          <p class="mt-4 text-neutral-600 leading-relaxed"><%= data.body %></p>
+        <% end %>
+      </div>
+      <ul class="space-y-5">
+        <% data.items.each_with_index do |item, index| %>
+          <%# herb:key index %>
+          <li class="flex items-start gap-4 rounded-lg bg-white p-5 shadow-[var(--shadow-card)]">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-500/10"><%= render "website/shared/check", class_name: "w-5 h-5 text-brand-600" %></span>
+            <div>
+              <h3 class="font-display font-semibold uppercase tracking-tight text-ink-900"><%= item.title %></h3>
+              <p class="mt-1 text-sm text-neutral-600 leading-relaxed"><%= item.body %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>

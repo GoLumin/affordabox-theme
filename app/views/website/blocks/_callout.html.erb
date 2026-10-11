@@ -1,0 +1,32 @@
+<%# locals: (data:) -%>
+<%# A dark panel with the hazard stripe, words and a button ("Custom modifications"), or a small muted note (the PODS disclaimer). %>
+<% case data.style %>
+<% when "note" %>
+  <section class="bg-white">
+    <div class="container-base pb-12">
+      <div class="rounded-md border border-neutral-200 bg-neutral-50 px-5 py-4 text-xs leading-relaxed text-neutral-500 [&_p]:m-0"><%= affordabox_markdown data.body %></div>
+    </div>
+  </section>
+<% else %>
+  <section class="bg-white">
+    <div class="container-base section-padding">
+      <div class="rounded-2xl bg-ink-900 p-10 lg:p-14 text-white">
+        <div class="hazard-rule h-1.5 mb-8 rounded-full" aria-hidden="true"></div>
+        <div class="grid items-center gap-8 lg:grid-cols-3">
+          <div class="lg:col-span-2">
+            <% if data.eyebrow.present? %>
+              <span class="eyebrow eyebrow-light"><%= data.eyebrow %></span>
+            <% end %>
+            <h2 class="display mt-3 text-3xl sm:text-4xl text-white"><%= data.heading %></h2>
+            <div class="mt-4 text-neutral-300 leading-relaxed max-w-2xl [&_p]:m-0"><%= affordabox_markdown data.body %></div>
+          </div>
+          <% if data.button_label.present? %>
+            <div class="lg:justify-self-end">
+              <a href="<%= affordabox_href(data.button_link) || "#" %>" class="btn-secondary btn-on-dark"><%= data.button_label %></a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+<% end %>

@@ -2,10 +2,10 @@
 <%# A form email (notification or confirmation) in the Affordabox design the Astro site's emails had (src/actions/emailTemplate): the logo on the dark band, then the email's blocks on white, a large heading as the green banner. The Forms plugin repeats the answers row once per answer and fills the {{tokens}}. Mail clients need tables and inline styles, so this uses nothing else. %>
 <% c = {page: "#f5f5f5", card: "#ffffff", ink: "#051c23", muted: "#4b5563", label: "#6b7280", rule: "#e5e7eb", green: "#349d41", dark: "#051c23"} %>
 <% sans = "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" %>
-<% name = website_settings["title"].presence || "Affordabox" %>
+<% name = affordabox_name %>
 <% home = website_url("/") %>
-<% logo = website_image_url(website_global(:sidebar).logo, width: 280) %>
-<% phone = website_global(:sidebar).phone.presence %>
+<% logo = website_image_url(website_global(:site_settings).logo_white, width: 280) %>
+<% phone = website_global(:site_settings).toll_free.presence %>
 <!DOCTYPE html>
 <html lang="en">
   <head>

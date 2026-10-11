@@ -1,0 +1,15 @@
+<%# locals: (data:) -%>
+<%# A centred line naming the first cities served (the Locations collection, nearest first), and a button. %>
+<% names = affordabox_locations.select { website_fields(it).tier.to_i <= 2 }.first((data.count.presence || 9).to_i).map { website_fields(it).city } %>
+<section class="bg-white">
+  <div class="container-base section-padding text-center">
+    <% if data.eyebrow.present? %>
+      <span class="eyebrow eyebrow-center"><%= data.eyebrow %></span>
+    <% end %>
+    <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900"><%= data.heading %></h2>
+    <p class="mt-4 max-w-2xl mx-auto text-neutral-600"><%= data.body.to_s.gsub("{cities}", names.join(", ")) %></p>
+    <% if data.button_label.present? %>
+      <a href="<%= affordabox_href(data.button_link) || "/locations" %>" class="btn-secondary mt-7"><%= data.button_label %></a>
+    <% end %>
+  </div>
+</section>

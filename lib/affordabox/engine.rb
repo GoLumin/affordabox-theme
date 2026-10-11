@@ -20,15 +20,7 @@ module Affordabox
         homepage: "https://github.com/GoLumin/affordabox-theme"
       Website.register :affordabox, name: "Affordabox", version: Affordabox::VERSION,
         views: Affordabox::Engine.root.join("app/views"),
-        importmap: Importmap::Map.new.draw(Affordabox::Engine.root.join("config/importmap.rb")),
-        # Settings › Themes › Customize. The stylesheet's primary and
-        # secondary colors (bg-primary, text-secondary, …) are these.
-        design: [
-          {name: "primary", label: "Primary color", type: "color", default: "#061b23",
-           help: "The sidebar, the bars and the headings."},
-          {name: "secondary", label: "Secondary color", type: "color", default: "#339d42",
-           help: "Buttons, the phone number and the feature band."}
-        ]
+        importmap: Importmap::Map.new.draw(Affordabox::Engine.root.join("config/importmap.rb"))
     end
   end
 end

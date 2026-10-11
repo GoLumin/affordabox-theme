@@ -1,0 +1,13 @@
+<%# locals: (data:) -%>
+<%# A strip of check-marked promises (TrustBar.astro); blank uses Site settings › Trust items. %>
+<% items = data.items.presence || affordabox_settings.trust_items %>
+<div class="<%= data.dark ? "bg-ink-900 text-neutral-200" : "bg-neutral-50 border-y border-neutral-200 text-ink-800" %>">
+  <div class="container-base py-4">
+    <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium">
+      <% items.each_with_index do |item, index| %>
+        <%# herb:key index %>
+        <li class="flex items-center gap-2"><%= render "website/shared/check", class_name: "w-4 h-4 text-brand-500 shrink-0" %><%= item %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

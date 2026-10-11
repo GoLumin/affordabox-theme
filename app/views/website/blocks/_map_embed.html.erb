@@ -1,0 +1,18 @@
+<%# locals: (data:) -%>
+<%# A Google map of a place, under a centred heading ("Centered on St. Michael, Minnesota"). %>
+<section class="bg-neutral-50 border-t border-neutral-200">
+  <div class="container-base section-padding">
+    <div class="text-center max-w-2xl mx-auto">
+      <% if data.eyebrow.present? %>
+        <span class="eyebrow eyebrow-center"><%= data.eyebrow %></span>
+      <% end %>
+      <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900"><%= data.heading %></h2>
+      <% if data.intro.present? %>
+        <p class="mt-3 text-neutral-600"><%= data.intro %></p>
+      <% end %>
+    </div>
+    <div class="mt-8 overflow-hidden rounded-md border border-neutral-200 shadow-sm">
+      <iframe title="Map of <%= data.query %>" src="https://www.google.com/maps?q=<%= ERB::Util.url_encode(data.query.to_s) %>&amp;output=embed" width="100%" height="<%= data.height.presence || 420 %>" class="block border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>

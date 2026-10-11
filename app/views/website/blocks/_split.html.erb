@@ -1,0 +1,92 @@
+<%# locals: (data:) -%>
+<%# Two columns: on the left an eyebrow, heading and words with a button, facts (boxes, or specs) or a price box; beside them a check-marked list, a 2×2 grid of check marks, a table, or a photo (the redesign's "Popular uses", "Pay by the month", "Reserve online", "Real prices", "Our story" and the cold storage specs). %>
+<% right = data.right.presence || "list" %>
+<section class="<%= affordabox_background(data.background) %>">
+  <div class="container-base section-padding">
+    <div class="<%= class_names("grid gap-12 lg:grid-cols-2", data.align == "start" ? "items-start gap-10" : "items-center") %>">
+      <div class="<%= class_names("max-w-2xl": data.large_text) %>">
+        <% if data.eyebrow.present? %>
+          <span class="eyebrow"><%= data.eyebrow %></span>
+        <% end %>
+        <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900"><%= data.heading %></h2>
+        <% if data.body.present? %>
+          <div class="<%= class_names("leading-relaxed", data.large_text ? "mt-6 space-y-5 text-lg text-neutral-700 [&_p]:m-0" : "mt-4 text-neutral-600") %>"><%= affordabox_markdown data.body %></div>
+        <% end %>
+        <% if data.facts.any? %>
+          <% if data.facts_style == "specs" %>
+            <div class="mt-8 grid grid-cols-2 gap-3">
+              <% data.facts.each_with_index do |fact, index| %>
+                <%# herb:key index %>
+                <div class="bg-neutral-50 border border-neutral-200 rounded-md p-4">
+                  <div class="text-xs text-neutral-500 uppercase tracking-widest"><%= fact.label %></div>
+                  <div class="mt-1 font-display font-semibold uppercase tracking-tight text-ink-900"><%= fact.value %></div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="mt-6 grid grid-cols-2 gap-4">
+              <% data.facts.each_with_index do |fact, index| %>
+                <%# herb:key index %>
+                <div class="rounded-lg border border-neutral-200 p-5">
+                  <span class="font-display font-bold uppercase tracking-tight text-ink-900"><%= fact.label %></span>
+                  <p class="mt-1 text-sm text-neutral-600"><%= fact.value %></p>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+        <% if data.price_value.present? %>
+          <div class="mt-7 inline-flex flex-col rounded-lg border border-neutral-200 bg-neutral-50 p-6">
+            <span class="text-xs font-semibold uppercase tracking-wide text-neutral-500"><%= data.price_label.presence || "Starting at" %></span>
+            <span class="mt-1 font-display text-2xl font-bold text-ink-900"><%= data.price_value %></span>
+            <span class="mt-2 block h-1 w-24 rounded-full bg-brand-500" aria-hidden="true"></span>
+          </div>
+        <% end %>
+        <% if data.button_label.present? %>
+          <a href="<%= affordabox_href(data.button_link) || "#" %>" class="<%= data.button_style == "secondary" ? "btn-secondary mt-7" : "btn-primary mt-7" %>"><%= data.button_label %></a>
+        <% end %>
+      </div>
+      <% case right %>
+      <% when "image" %>
+        <div class="overflow-hidden rounded-lg bg-neutral-100 aspect-[4/3] shadow-[var(--shadow-card)]">
+          <%= website_image_tag data.image, class: "h-full w-full object-cover", sizes: "(min-width:1024px) 45vw, 90vw" %>
+        </div>
+      <% when "check_grid" %>
+        <ul class="grid gap-4 sm:grid-cols-2">
+          <% data.list.each_with_index do |item, index| %>
+            <%# herb:key index %>
+            <li class="flex items-start gap-3 rounded-lg border border-neutral-200 bg-neutral-50 px-5 py-4"><%= render "website/shared/check", class_name: "mt-0.5 w-5 h-5 shrink-0 text-brand-500" %><span class="text-sm font-medium text-ink-900"><%= item %></span></li>
+          <% end %>
+        </ul>
+      <% when "rows" %>
+        <div class="rounded-lg border border-neutral-200 p-8 shadow-[var(--shadow-card)]">
+          <dl class="divide-y divide-neutral-200">
+            <% data.rows.each_with_index do |row, index| %>
+              <%# herb:key index %>
+              <% long = row.value.to_s.length > 24 && !row.highlight %>
+              <div class="<%= class_names("py-4 first:pt-0 last:pb-0", "flex items-baseline justify-between gap-4": !long) %>">
+                <dt class="text-neutral-600"><%= row.label %></dt>
+                <dd class="<%= class_names(long ? "mt-1 font-medium text-ink-900" : "font-display font-bold text-right", row.highlight ? "text-lg text-brand-600" : (long ? nil : "text-2xl text-ink-900")) %>"><%= row.value %></dd>
+              </div>
+            <% end %>
+          </dl>
+        </div>
+      <% else %>
+        <div>
+          <% if data.right_eyebrow.present? %>
+            <span class="eyebrow"><%= data.right_eyebrow %></span>
+          <% end %>
+          <% if data.right_heading.present? %>
+            <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900"><%= data.right_heading %></h2>
+          <% end %>
+          <ul class="mt-6 space-y-3">
+            <% data.list.each_with_index do |item, index| %>
+              <%# herb:key index %>
+              <li class="flex items-center gap-3 rounded-lg bg-neutral-50 px-5 py-3.5"><%= render "website/shared/check", class_name: "w-5 h-5 shrink-0 text-brand-500" %><span class="text-sm font-medium text-ink-900"><%= item %></span></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

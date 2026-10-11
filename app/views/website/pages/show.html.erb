@@ -1,7 +1,6 @@
 <%# locals: (page:) -%>
-<%# Every CMS page, from its blocks. Its fields choose the bars around it (Top bar: standard, compact or none; Hide the sidebar), which the layout draws. %>
-<% bars = affordabox_bars(page) %>
-<% content_for :navbar, bars[:navbar] %>
-<% content_for :hide_sidebar, bars[:hide_sidebar].to_s %>
+<%# Every CMS page, from its blocks. Its "Exit-intent popup" field can switch the popup off (the layout reads it). %>
+<%= affordabox_drawing(page) %>
+<% content_for :exit_modal, page.frontmatter.to_h["exit_modal"].to_s %>
 <% content_for :head, website_seo_tags(page, image: affordabox_settings.share_image) %>
 <%= website_blocks page %>

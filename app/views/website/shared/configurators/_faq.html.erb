@@ -1,0 +1,19 @@
+<%# locals: (group:) -%>
+<%# A 3-D quote page's FAQ (the FAQs collection's group), the first one open. %>
+<section class="band" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Before you book</span>
+      <h2>The questions everyone asks.</h2>
+    </div>
+    <div class="faq reveal">
+      <% affordabox_faqs(group).each_with_index do |faq, index| %>
+        <%# herb:key index %>
+        <%= tag.details(open: index.zero?) do %>
+          <summary><%= faq.title %></summary>
+          <div class="ans"><%= website_fields(faq).answer %></div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

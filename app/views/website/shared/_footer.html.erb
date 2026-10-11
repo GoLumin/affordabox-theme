@@ -1,45 +1,80 @@
-<%# The footer (src/components/sections/Footer.astro), from the Footer global: the logo, columns of links, the social icons, the legal links and the copyright line. %>
+<%# The footer (FooterV2.astro): the white logo, the blurb, the address, phones and hours (Site settings), the Footer global's link columns, the first cities served, the Facebook link, the PODS disclaimer and the legal links. %>
 <% footer = website_global(:footer) %>
-<footer class="bg-[#f7f7f7] text-dark py-12 lg:py-16">
-  <div class="custom-container p-6 flex flex-wrap justify-between">
-    <div class="w-full flex justify-center mb-6">
-      <%= website_image_tag footer.logo, alt: website_settings["title"].presence || "Affordabox", class: "h-24 w-auto object-contain", sizes: "300px" %>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full my-14 items-start gap-4">
+<% settings = affordabox_settings %>
+<% cities = affordabox_locations.select { website_fields(it).tier.to_i == 1 }.first((footer.area_count.presence || 6).to_i) %>
+<footer class="bg-ink-900 text-neutral-300">
+  <div class="hazard-rule h-1.5" aria-hidden="true"></div>
+  <div class="container-base section-padding">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-10 lg:gap-8">
+      <div class="col-span-2 md:col-span-3 lg:col-span-4">
+        <a href="/" class="inline-block" aria-label="<%= affordabox_name %> home">
+          <%= website_image_tag settings.logo_white, alt: affordabox_name, class: "h-10 w-auto", sizes: "240px" %>
+        </a>
+        <p class="mt-4 text-sm text-neutral-400 max-w-sm leading-relaxed"><%= affordabox_fill(footer.blurb) %></p>
+        <address class="mt-5 not-italic space-y-2 text-sm">
+          <div class="flex items-start gap-2">
+            <svg class="w-4 h-4 mt-0.5 shrink-0 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            <span><%= affordabox_address_line %></span>
+          </div>
+          <a href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click" class="flex items-center gap-2 hover:text-white transition-colors">
+            <%= render "website/shared/phone_icon" %>
+            <%= settings.toll_free %> <span class="text-neutral-500">(toll-free)</span>
+          </a>
+          <% if settings.local_phone.present? %>
+            <a href="<%= affordabox_tel(settings.local_phone) %>" data-track="phone_click" class="flex items-center gap-2 hover:text-white transition-colors">
+              <%= render "website/shared/phone_icon" %>
+              <%= settings.local_phone %> <span class="text-neutral-500">(local)</span>
+            </a>
+          <% end %>
+          <div class="flex items-center gap-2 text-neutral-400">
+            <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <%= settings.hours %>
+          </div>
+        </address>
+      </div>
       <% footer.columns.each_with_index do |column, index| %>
         <%# herb:key index %>
-        <div class="w-full mb-6">
-          <h2 class="text-lg font-semibold"><%= column.heading %></h2>
-          <ul class="mt-2 space-y-2">
-            <% column.items.each_with_index do |item, item_index| %>
-              <%# herb:key item_index %>
-              <li><a href="<%= affordabox_href(item.link) %>" class="text-dark hover:text-dark"><%= item.label %></a></li>
+        <div class="lg:col-span-2">
+          <h2 class="font-display text-sm font-semibold text-white uppercase tracking-wider"><%= column.heading %></h2>
+          <ul class="mt-4 space-y-2.5">
+            <% column.links.each_with_index do |link, link_index| %>
+              <%# herb:key link_index %>
+              <li><a href="<%= affordabox_href(link.link) || "#" %>" class="text-sm hover:text-white transition-colors"><%= link.label %></a></li>
             <% end %>
           </ul>
         </div>
       <% end %>
-      <% if footer.socials.any? %>
-        <div>
-          <h2 class="text-lg font-semibold mb-2"><%= footer.socials_heading.presence || "Follow Us" %></h2>
-          <div class="flex space-x-4">
-            <% footer.socials.each_with_index do |social, index| %>
-              <%# herb:key index %>
-              <a href="<%= affordabox_href(social.link) %>" class="text-dark text-2xl" aria-label="<%= website_plain_text(social.label) %>">
-                <%= website_image_tag social.icon, alt: "", class: "h-8 object-contain w-fit", sizes: "32px" %>
-              </a>
-            <% end %>
+      <div class="col-span-2 lg:col-span-4">
+        <h2 class="font-display text-sm font-semibold text-white uppercase tracking-wider"><%= footer.area_heading.presence || "Service Area" %></h2>
+        <ul class="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5">
+          <% cities.each_with_index do |city, index| %>
+            <%# herb:key index %>
+            <li><a href="<%= website_path(city) %>" class="text-sm hover:text-white transition-colors"><%= website_fields(city).city %>, MN</a></li>
+          <% end %>
+          <li><a href="/locations" class="text-sm font-semibold text-brand-400 hover:text-brand-300 transition-colors"><%= footer.area_all_label.presence || "All locations →" %></a></li>
+        </ul>
+        <% if settings.social.facebook.present? %>
+          <div class="mt-5 flex items-center gap-3">
+            <a href="<%= settings.social.facebook %>" target="_blank" rel="noopener" aria-label="Facebook" class="text-neutral-400 hover:text-white transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" /></svg>
+            </a>
           </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-14 pt-8 border-t border-ink-700 space-y-4">
+      <% if settings.pods_disclaimer.present? %>
+        <p class="text-xs text-neutral-500 leading-relaxed max-w-3xl"><%= settings.pods_disclaimer %></p>
+      <% end %>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs text-neutral-500"><%= affordabox_fill(footer.copyright.presence || "© {year} {name}. All rights reserved.") %></p>
+        <div class="flex items-center gap-6">
+          <% footer.legal_links.each_with_index do |link, index| %>
+            <%# herb:key index %>
+            <a href="<%= affordabox_href(link.link) || "#" %>" class="text-xs text-neutral-500 hover:text-neutral-300 transition-colors"><%= link.label %></a>
+          <% end %>
         </div>
-      <% end %>
-    </div>
-    <div class="flex justify-center md:flex-row flex-col w-full gap-4">
-      <% footer.legal_links.each_with_index do |item, index| %>
-        <%# herb:key index %>
-        <a href="<%= affordabox_href(item.link) %>" class="text-dark text-xs"><%= item.label %></a>
-      <% end %>
-    </div>
-    <div class="w-full text-center text-sm mt-6 text-dark">
-      <%= affordabox_copyright(footer.copyright.presence || "{year} - AffordaBox. All rights reserved.") %>
+      </div>
     </div>
   </div>
 </footer>

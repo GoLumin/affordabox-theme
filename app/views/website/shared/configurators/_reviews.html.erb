@@ -1,0 +1,24 @@
+<%# locals: (eyebrow:, heading:, context:) -%>
+<%# A 3-D quote page's three reviews (the Reviews collection, for its context). %>
+<section class="band" id="reviews" style="background:#fbfbfa">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><%= eyebrow %></span>
+      <h2><%= heading %></h2>
+    </div>
+    <div class="revs">
+      <% affordabox_reviews(context, 3).each_with_index do |review, index| %>
+        <%# herb:key index %>
+        <% fields = website_fields(review) %>
+        <div class="rev reveal">
+          <div class="stars">★★★★★</div>
+          <p>“<%= fields.quote %>”</p>
+          <div class="by">
+            <span class="av">✓</span>
+            <span class="who"><b><%= fields.context %></b><span>Verified · <%= fields.source.presence || "Google" %></span></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+<%# locals: (eyebrow: nil, heading: nil, intro: nil, align: "center", dark: false, heading_tag: :h2) -%>
+<%# A section's eyebrow, display heading and intro, centred or on the left, as the redesign sets them. %>
+<% if eyebrow.present? || heading.present? || intro.present? %>
+  <div class="<%= align == "center" ? "text-center max-w-2xl mx-auto" : "max-w-2xl" %>">
+    <% if eyebrow.present? %>
+      <span class="<%= class_names("eyebrow", "eyebrow-center": align == "center", "eyebrow-light": dark) %>"><%= eyebrow %></span>
+    <% end %>
+    <% if heading.present? %>
+      <%= content_tag heading_tag, affordabox_fill(heading), class: class_names("display mt-3 text-3xl sm:text-4xl", dark ? "text-white" : "text-ink-900") %>
+    <% end %>
+    <% if intro.present? %>
+      <p class="<%= class_names("mt-4", dark ? "text-neutral-300" : "text-neutral-600") %>"><%= intro %></p>
+    <% end %>
+  </div>
+<% end %>

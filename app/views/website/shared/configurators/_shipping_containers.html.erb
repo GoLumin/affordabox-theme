@@ -1,0 +1,140 @@
+<%# locals: (fuse_url:) -%>
+<%# The shipping container 3-D quote (thank-you-quote-shipping-containers.astro): a corrugated container in WebGL that resizes with the choice, the buy (new or used) or rent price, then reviews, how it works, the spec, the FAQ and the closing band. Prices are the Containers collection's standard and high-cube ones; the four sizes and the services are written here as the redesign had them. %>
+<% prices = Hash.new { |hash, key| hash[key] = {} } %>
+<% affordabox_entries(:containers).each do |entry|
+  f = website_fields(entry)
+  next unless %w[Standard High-Cube].include?(f.type)
+
+  prices["#{f.size.to_s.start_with?("20") ? "20" : "40"}-#{f.type == "High-Cube" ? "hc" : "std"}"][f.condition.to_s.start_with?("New") ? :new : :used] = f.price.presence
+end %>
+<% sizes = [
+  {key: "20-std", label: "20' Standard", len: 20, hc: false, cuft: 1170, height: "8'6\"", popular: true},
+  {key: "20-hc", label: "20' High-Cube", len: 20, hc: true, cuft: 1360, height: "9'6\"", popular: false},
+  {key: "40-std", label: "40' Standard", len: 40, hc: false, cuft: 2390, height: "8'6\"", popular: false},
+  {key: "40-hc", label: "40' High-Cube", len: 40, hc: true, cuft: 2700, height: "9'6\"", popular: false}
+].map { it.merge(priceNew: prices[it[:key]][:new], priceUsed: prices[it[:key]][:used]) } %>
+<% default = sizes.find { it[:popular] }[:key] %>
+<% cfg = {logoUrl: asset_path("affordabox/affordabox-logo-decal-white.png"), sizes:, defaultKey: default, rentFrom: nil, fuseBase: fuse_url,
+   svc: {"buy-new" => {name: "Buy · New (one-trip)", sku: "NEW", mode: "buy", cond: "new", fuse: "shipping-container-sales"},
+         "buy-used" => {name: "Buy · Used (cargo-worthy)", sku: "USED", mode: "buy", cond: "used", fuse: "shipping-container-sales"},
+         "rent" => {name: "Rent · monthly", sku: "RENT", mode: "rent", cond: nil, fuse: "shipping-container-rentals"}}} %>
+<% settings = affordabox_settings %>
+<%= tag.div class: "qx qx-affordabox", data: {configurator: "shipping-containers", config: cfg.to_json} do %>
+  <section class="band" id="configure" style="background:#fbfbfa">
+    <div class="wrap">
+      <div class="cfg">
+        <div class="sec-head reveal" style="align-self:center">
+          <span class="eyebrow">Build your quote</span>
+          <h2>Size it. Price it. In real time.</h2>
+          <p>That's your AffordABox container, rendered live. Change the size or condition and the container — and your price — update instantly. Wind- and water-tight, delivered local.</p>
+        </div>
+
+        <div class="viz viz-3d reveal">
+          <canvas id="gl-box" aria-hidden="true"></canvas>
+          <div class="callouts">
+            <span class="dimtag d-l" id="tag-h">8'6"</span>
+            <span class="dimtag d-b" id="tag-l">20'</span>
+            <span class="dimtag d-c mono" id="tag-v">1,170 ft³</span>
+          </div>
+        </div>
+
+        <form class="panel reveal" id="cfg" aria-label="Container configurator">
+          <div class="panel-h"><span class="t">Configuration</span><span class="tag" id="sku">20' STD · USED</span></div>
+          <fieldset class="field">
+            <legend>Container size</legend>
+            <div class="seg four" role="radiogroup" aria-label="Container size">
+              <% sizes.each_with_index do |size, index| %>
+                <%# herb:key index %>
+                <label class="opt">
+                  <%= tag.input type: "radio", name: "size", value: size[:key], checked: size[:key] == default %>
+                  <span class="box"><span class="k"><%= size[:label] %></span><span class="s"><%= size[:height] %> · <%= size[:cuft].to_s.reverse.scan(/\d{1,3}/).join(",").reverse %> ft³<%= " · popular" if size[:popular] %></span></span>
+                </label>
+              <% end %>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>Buy or rent</legend>
+            <div class="seg four" role="radiogroup" aria-label="Buy or rent">
+              <label class="opt"><input type="radio" name="svc" value="buy-used" checked><span class="box"><span class="k">Buy · Used</span><span class="s">cargo-worthy</span></span></label>
+              <label class="opt"><input type="radio" name="svc" value="buy-new"><span class="box"><span class="k">Buy · New</span><span class="s">one-trip</span></span></label>
+              <label class="opt"><input type="radio" name="svc" value="rent"><span class="box"><span class="k">Rent</span><span class="s">month-to-month</span></span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="zip">Delivery ZIP</label>
+            <input id="zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="e.g. 55376" autocomplete="postal-code">
+          </div>
+        </form>
+
+        <div class="panel reveal">
+          <div class="qh"><span class="lab" id="qh-lab">Purchase — one-time</span><span class="svc" id="svc-label">Buy · Used (cargo-worthy)</span></div>
+          <div class="lines" id="lines"></div>
+          <div class="total">
+            <div><div class="tl">Your price</div><div><span class="big" id="total">$1,800</span><span class="per" id="per">one-time</span></div></div>
+            <div class="mono dim" style="text-align:right;font-size:.72rem" id="capacity">wind &amp; water-tight</div>
+          </div>
+          <div class="transit">
+            <span>$0 due until delivery</span><b>Delivered on a tilt-bed truck</b>
+          </div>
+          <div class="qcta">
+            <a class="btn primary" id="fuse-cta" href="<%= fuse_url %>">Lock in this container →</a>
+            <a class="btn dark" href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click"><span class="lbl">Talk to a local person</span><%= settings.toll_free %></a>
+            <a class="qq" href="#faq">Questions? Read the FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%= render "website/shared/configurators/reviews", eyebrow: "From the yard", heading: "Built to protect what you store.", context: "container" %>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Three moves. That's the whole thing.</h2>
+        <p>Pick your size, see a real price, and we deliver it to your site — buy it outright or rent month-to-month.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="idx">01 / Pick &amp; price</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="14" y="20" width="60" height="26" rx="2" /><path d="M74 26h20l12 8v12H74z" /><path d="M20 46v6M56 46v6" class="a" /></svg>
+          <h3>See the real price up front.</h3>
+          <p>New one-trip or budget-friendly used, 20' or 40' — every option is priced online, no "call for quote."</p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">02 / Deliver</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 44h58V24H8z" /><path d="M66 30h22l12 8v6H66z" /><circle cx="30" cy="50" r="4" /><circle cx="86" cy="50" r="4" /><path d="M96 20l8 8" class="a" /></svg>
+          <h3>Delivered level, right to your site.</h3>
+          <p>We tilt-bed it into place on firm, level ground — wind- and water-tight and ready to lock the same day.</p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">03 / Buy or rent</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="16" y="18" width="34" height="30" rx="2" /><rect x="62" y="18" width="34" height="30" rx="2" /><path d="M33 48v6M79 48v6M50 33h12" class="a" /></svg>
+          <h3>Own it, or keep it as long as you need.</h3>
+          <p>Buy it outright, or rent month-to-month with no long-term contract. Modifications available on request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="spec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The container</span>
+        <h2>Wind &amp; water-tight, secure steel.</h2>
+        <p>Corten steel with lockable cargo doors — your gear stays dry, clean, and locked down.</p>
+      </div>
+      <div class="spec">
+        <div class="cell reveal"><span class="v">Corten</span><span class="k">Steel build</span><p>Corrugated weathering-steel panels — rugged, rust-resistant, and stackable.</p></div>
+        <div class="cell reveal"><span class="v">WWT</span><span class="k">Wind &amp; water-tight</span><p>Gasketed double cargo doors seal out rain, snow, and dust year-round.</p></div>
+        <div class="cell reveal"><span class="v">Lock-up</span><span class="k">Secure doors</span><p>Full-height locking rods and a lockbox-ready latch keep contents safe.</p></div>
+        <div class="cell reveal"><span class="v">20/40</span><span class="k">Sizes</span><p>Standard or high-cube, new one-trip or cargo-worthy used — delivered local.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <%= render "website/shared/configurators/faq", group: "container-buy" %>
+  <%= render "website/shared/configurators/closing", fuse_url:, heading: "Lock in your container.",
+    body: "Confirm your size and ZIP and we'll finalize your all-in price — a real local person, usually within the hour." %>
+<% end %>

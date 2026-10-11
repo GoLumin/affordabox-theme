@@ -1,0 +1,135 @@
+<%# locals: (fuse_url:) -%>
+<%# The dumpster 3-D quote (thank-you-quote-dumpsters.astro): a roll-off in WebGL that resizes with the choice, the flat all-in price, then reviews, how it works, the spec, the FAQ and the closing band. Sizes and prices are the Dumpster sizes collection; the terms (tonnage, overage, rental days) are written here as the redesign had them. %>
+<% sizes = affordabox_entries(:dumpsters).map do |entry|
+  f = website_fields(entry)
+  {slug: entry.slug, yards: f.yards.to_i, label: "#{f.yards}-Yard", tag: "#{f.yards}YD", price: f.price.to_i, fits: f.fits.to_s,
+   lengthFt: f.length_ft.to_i, heightFt: f.height_ft.to_f, popular: f.popular == true}
+end %>
+<% projects = ["Home cleanout", "Remodel", "Roofing", "Construction", "Estate"] %>
+<% default = (sizes.find { it[:popular] } || sizes.first || {})[:slug] %>
+<% cfg = {logoUrl: asset_path("affordabox/affordabox-logo-decal-white.png"), sizes:, defaultSlug: default, projects:, tonnage: 5000, overage: "$0.10/lb", rentalDays: 7,
+   fuseBase: fuse_url, productType: "dumpsters"} %>
+<% settings = affordabox_settings %>
+<%= tag.div class: "qx qx-affordabox", data: {configurator: "dumpsters", config: cfg.to_json} do %>
+  <section class="band" id="configure" style="background:#fbfbfa">
+    <div class="wrap">
+      <div class="cfg">
+        <div class="sec-head reveal" style="align-self:center">
+          <span class="eyebrow">Build your quote</span>
+          <h2>Size it. Price it. In real time.</h2>
+          <p>That's your AffordABox roll-off, rendered live. Change the size and the dumpster — and your flat, all-in price — update instantly. Delivery, pickup and disposal included.</p>
+        </div>
+
+        <div class="viz viz-3d reveal">
+          <canvas id="gl-box" aria-hidden="true"></canvas>
+          <div class="callouts">
+            <span class="dimtag d-l" id="tag-h">5,000 lbs</span>
+            <span class="dimtag d-b" id="tag-l">14' L</span>
+            <span class="dimtag d-c mono" id="tag-v">15 yd³</span>
+          </div>
+        </div>
+
+        <form class="panel reveal" id="cfg" aria-label="Dumpster configurator">
+          <div class="panel-h"><span class="t">Configuration</span><span class="tag" id="sku">15YD · FLAT RATE</span></div>
+          <fieldset class="field">
+            <legend>Dumpster size</legend>
+            <div class="seg four" role="radiogroup" aria-label="Dumpster size">
+              <% sizes.each_with_index do |size, index| %>
+                <%# herb:key index %>
+                <label class="opt">
+                  <%= tag.input type: "radio", name: "size", value: size[:slug], checked: size[:slug] == default %>
+                  <span class="box"><span class="k"><%= size[:label] %></span><span class="s"><%= size[:yards] %> yd³<%= " · most popular" if size[:popular] %></span></span>
+                </label>
+              <% end %>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>What's the project?</legend>
+            <div class="seg four" role="radiogroup" aria-label="Project type">
+              <% projects.each_with_index do |project, index| %>
+                <%# herb:key index %>
+                <label class="opt">
+                  <%= tag.input type: "radio", name: "project", value: project, checked: index.zero? %>
+                  <span class="box"><span class="k"><%= project %></span></span>
+                </label>
+              <% end %>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="zip">Delivery ZIP</label>
+            <input id="zip" class="zip-input" inputmode="numeric" maxlength="5" placeholder="e.g. 55376" autocomplete="postal-code">
+          </div>
+        </form>
+
+        <div class="panel reveal">
+          <div class="qh"><span class="lab">Flat rate — one-time</span><span class="svc" id="svc-label">Home cleanout</span></div>
+          <div class="lines" id="lines"></div>
+          <div class="total">
+            <div><div class="tl">Your price</div><div><span class="big">$<span id="total">499</span></span><span class="per">flat</span></div></div>
+            <div class="mono dim" style="text-align:right;font-size:.72rem" id="capacity">7-day rental included</div>
+          </div>
+          <div class="transit">
+            <span>$0 due until delivery</span><b>Delivered as soon as next-day</b>
+          </div>
+          <div class="qcta">
+            <a class="btn primary" id="fuse-cta" href="<%= fuse_url %>">Lock in this size →</a>
+            <a class="btn dark" href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click"><span class="lbl">Talk to a local person</span><%= settings.toll_free %></a>
+            <a class="qq" href="#faq">Questions? Read the FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%= render "website/shared/configurators/reviews", eyebrow: "From the driveway", heading: "Neighbors who skipped the runaround.", context: "dumpster" %>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Three moves. That's the whole thing.</h2>
+        <p>No hauling, no dump runs, no guessing on price. The roll-off comes to you and we take it away when you're done.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="idx">01 / Deliver</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 44h44V22H8zM52 30h20l10 8v6H52z" stroke-linejoin="round" /><circle cx="26" cy="50" r="4" /><circle cx="70" cy="50" r="4" /><path d="M96 44h16M104 36v16" class="a" /></svg>
+          <h3>We drop it right where you want it.</h3>
+          <p>Flat-floor roll-off with a walk-in door — set gently on your driveway, boards down to protect the surface.</p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">02 / Fill</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="18" y="16" width="34" height="32" rx="2" /><rect x="60" y="26" width="20" height="22" rx="2" /><rect x="86" y="10" width="16" height="38" rx="2" /><path d="M12 52h100" class="a" /></svg>
+          <h3>Load it on your schedule — 7 days included.</h3>
+          <p>Fill it over the week, not one frantic afternoon. Disposal up to 5,000 lbs is already in the flat rate.</p>
+        </div>
+        <div class="step reveal">
+          <span class="idx">03 / We haul it</span>
+          <svg class="diagram" viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 40h28V22H14z" /><path d="M52 31h10l6 5v4H52z" /><path d="M74 40l14-14M80 26h8v8" class="a" /><path d="M96 40h16V26H96z" /></svg>
+          <h3>One call and it's gone.</h3>
+          <p>We pick up, weigh, and dispose. No dump fees to chase, no line at the transfer station.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="spec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The dumpster</span>
+        <h2>Built to make the messy part easy.</h2>
+        <p>Roll-off steel with a walk-in door and an honest, all-in price.</p>
+      </div>
+      <div class="spec">
+        <div class="cell reveal"><span class="v">5,000</span><span class="k">lbs included</span><p>Disposal up to 5,000 lbs is in the flat rate. Over that, a simple $0.10/lb rate.</p></div>
+        <div class="cell reveal"><span class="v">7-day</span><span class="k">Rental window</span><p>A full week on-site is included. Need longer? Just ask — no games.</p></div>
+        <div class="cell reveal"><span class="v">Walk-in</span><span class="k">Rear door</span><p>Swing-open door means you wheel debris in — no heaving it over the wall.</p></div>
+        <div class="cell reveal"><span class="v">$0</span><span class="k">Until delivery</span><p>Nothing due until the dumpster is in your driveway. Real local people, no call centers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <%= render "website/shared/configurators/faq", group: "dumpster" %>
+  <%= render "website/shared/configurators/closing", fuse_url:, heading: "Lock in your dumpster.",
+    body: "Confirm your size and ZIP and we'll finalize your all-in price — a real local person, usually within the hour." %>
+<% end %>

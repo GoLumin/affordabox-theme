@@ -1,0 +1,23 @@
+<%# The exit-intent popup (ExitModal.astro): on desktop, once a visit, when the pointer leaves for the tab bar. Its words are Site settings › Exit-intent popup; sending it goes to the quote page (affordabox/exit_modal.js). %>
+<% modal = affordabox_settings.exit_modal %>
+<div id="exit-modal" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title" data-exit-modal data-href="<%= affordabox_href(modal.cta_link) || "/get-a-quote" %>">
+  <div class="absolute inset-0 bg-ink-950/60 backdrop-blur-sm" data-exit-close></div>
+  <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+    <div class="relative bg-white rounded-lg shadow-2xl max-w-md w-full p-8 text-center pointer-events-auto">
+      <button type="button" class="absolute top-4 right-4 p-2 rounded-full text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 transition-colors" aria-label="Close" data-exit-close>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+      <div class="w-14 h-14 mx-auto rounded-full bg-brand-50 flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+      </div>
+      <h2 id="exit-modal-title" class="font-display text-xl font-bold uppercase tracking-tight text-ink-900"><%= modal.title %></h2>
+      <p class="mt-2 text-neutral-600"><%= modal.subtitle %></p>
+      <form class="mt-6 space-y-3" data-exit-form>
+        <input type="tel" inputmode="tel" name="phone" placeholder="Your phone number" required aria-label="Your phone number" autocomplete="tel" class="w-full rounded-md border border-neutral-300 px-4 py-3 text-ink-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all">
+        <input type="email" name="email" placeholder="Email (optional)" aria-label="Email (optional)" autocomplete="email" class="w-full rounded-md border border-neutral-300 px-4 py-3 text-ink-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all">
+        <button type="submit" class="w-full btn-primary py-3"><%= modal.cta_label.presence || "Get a quote" %></button>
+      </form>
+      <button type="button" class="mt-4 text-sm text-neutral-400 hover:text-neutral-600 underline" data-exit-close>No thanks</button>
+    </div>
+  </div>
+</div>

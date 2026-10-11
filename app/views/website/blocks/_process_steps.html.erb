@@ -1,0 +1,18 @@
+<%# locals: (data:) -%>
+<%# Numbered steps in a row (ProcessSteps.astro). %>
+<% dark = data.dark %>
+<section class="<%= dark ? "bg-ink-900 text-white" : "bg-white" %>">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, dark: %>
+    <ol class="mt-12 grid gap-8 md:grid-cols-3">
+      <% data.steps.each_with_index do |step, index| %>
+        <%# herb:key index %>
+        <li class="relative">
+          <div class="flex items-center justify-center w-12 h-12 rounded-md bg-brand-500 text-white font-display font-bold text-xl"><%= index + 1 %></div>
+          <h3 class="<%= class_names("mt-4 font-display text-lg font-bold uppercase tracking-tight", dark ? "text-white" : "text-ink-900") %>"><%= step.title %></h3>
+          <p class="<%= class_names("mt-2 text-sm leading-relaxed", dark ? "text-neutral-300" : "text-neutral-600") %>"><%= step.body %></p>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+</section>

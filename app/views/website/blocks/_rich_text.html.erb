@@ -1,5 +1,0 @@
-<%# locals: (data:) -%>
-<%# Formatted text, centred if asked (src/components/ui/RichText.astro). %>
-<div class="<%= class_names("prose max-w-6xl mx-auto prose-headings:font-semibold prose-a:text-primary min-w-full pt-8 md:pb-12 pb-6", "text-center": data.centered) %>">
-  <div class="rich-text mx-auto px-4"><%= affordabox_markdown data.body %></div>
-</div>

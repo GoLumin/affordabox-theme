@@ -1,0 +1,13 @@
+<%# locals: (data:) -%>
+<%# A row of rounded links: the projects that lead to the quote, pre-filled ("A dumpster for any job"). %>
+<section class="<%= affordabox_background(data.background) %>">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro %>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <% data.chips.each_with_index do |chip, index| %>
+        <%# herb:key index %>
+        <a href="<%= affordabox_href(chip.link) || "#" %>" class="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-5 py-2.5 text-sm font-semibold text-ink-900 transition-colors hover:border-brand-400 hover:bg-brand-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"><%= chip.label %></a>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<%# locals: (data:) -%>
+<%# Reviews from the Reviews collection that suit the page (tagged with its context, else the general ones): three in a row with the rating line (ReviewsFeed.astro), or every one in a grid (the reviews page). %>
+<% grid = data.layout == "grid" %>
+<% dark = data.dark %>
+<% reviews = affordabox_reviews(data.context.presence || "general", grid ? data.limit : (data.limit.presence || 3)) %>
+<section class="<%= dark ? "bg-ink-900 text-white" : "bg-neutral-50" %>">
+  <div class="container-base section-padding">
+    <% unless grid %>
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="eyebrow eyebrow-center"><%= data.eyebrow.presence || "— Reviews" %></span>
+        <h2 class="<%= class_names("display mt-3 text-3xl sm:text-4xl", dark ? "text-white" : "text-ink-900") %>"><%= data.heading.presence || "What our neighbors say" %></h2>
+        <p class="<%= class_names("mt-3 text-sm", dark ? "text-neutral-300" : "text-neutral-500") %>"><%= affordabox_rating_line %></p>
+      </div>
+    <% end %>
+    <div class="<%= class_names("grid gap-6", grid ? "md:grid-cols-2 lg:grid-cols-3" : "mt-12 md:grid-cols-3") %>">
+      <% reviews.each_with_index do |review, index| %>
+        <%# herb:key index %>
+        <% fields = website_fields(review) %>
+        <figure class="<%= class_names("rounded-lg p-6 flex flex-col", dark ? "bg-ink-700" : "bg-white shadow-[var(--shadow-card)]") %>">
+          <div class="flex items-center justify-between">
+            <%= render "website/shared/stars", rating: fields.rating.presence || 5 %>
+            <%= render "website/shared/google_g" %>
+          </div>
+          <blockquote class="<%= class_names("mt-4 text-sm leading-relaxed flex-1", dark ? "text-neutral-200" : "text-neutral-700") %>">"<%= fields.quote %>"</blockquote>
+          <figcaption class="<%= class_names("flex items-center justify-between gap-3", grid ? "mt-5 border-t border-neutral-100 pt-4" : "mt-4") %>">
+            <span class="<%= class_names("text-sm font-semibold", dark ? "text-white" : "text-ink-900") %>"><%= fields.context %></span>
+            <span class="inline-flex items-center gap-1 text-xs text-neutral-400 shrink-0">
+              <%= render "website/shared/check", class_name: "w-3.5 h-3.5 text-brand-500" %>
+              Verified · <%= fields.source.presence || "Google" %>
+            </span>
+          </figcaption>
+        </figure>
+      <% end %>
+    </div>
+    <% if data.footnote.present? %>
+      <p class="mt-10 text-center text-sm text-neutral-500"><%= data.footnote %></p>
+    <% end %>
+    <% if !grid && affordabox_settings.social.google.present? %>
+      <div class="mt-8 text-center">
+        <a href="<%= affordabox_settings.social.google %>" target="_blank" rel="noopener" class="<%= dark ? "text-sm font-semibold text-brand-400 hover:text-brand-300" : "text-sm font-semibold text-brand-600 hover:text-brand-700" %>">Read all reviews on Google →</a>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,96 @@
+<%# locals: (entry:) -%>
+<%# A city served, at /locations/<city> (locations/[city].astro): its hero with an intro built from its services and neighbours and the lead form with its ZIP, the services offered (self-storage goes to the city's own facility when it has one), links to every service, the nearby cities, reviews and the closing band. With LocalBusiness and BreadcrumbList structured data. %>
+<%= affordabox_drawing(entry) %>
+<% f = website_fields(entry) %>
+<% city = f.city %>
+<% by_slug = affordabox_locations.index_by(&:slug) %>
+<% nearby = f.nearby.filter_map { by_slug[it] } %>
+<% facility = affordabox_entries(:facilities).find { it.slug == entry.slug } %>
+<% services = f.services %>
+<% intro = "Looking for #{affordabox_sentence(services.map { affordabox_service_label(it).downcase })} in #{city}? AffordABox delivers across #{f.county} County straight from our St. Michael yard." %>
+<% intro += nearby.any? ? " We're on the road through #{affordabox_sentence(nearby.map { website_fields(it).city })} every week, so #{city} gets quick, reliable scheduling — no national call center, just local people." : " Real local people, fast scheduling, and the Mule placing your box exactly where you want it." %>
+<% crumbs = [["Home", "/"], ["Locations", "/locations"], [city, website_path(entry)]] %>
+<% content_for :head, website_seo_tags(entry, title: "Dumpster Rental, Containers & Storage in #{city}, MN | Affordabox",
+  description: "AffordABox serves #{city}, MN (#{f.county} County) with roll-off dumpsters, shipping containers and portable storage. Next-day delivery, real local people, $0 until it arrives.") %>
+<%= affordabox_json_ld(affordabox_local_business(area_served: [city, "#{f.county} County"], url: affordabox_url(website_path(entry)))) %>
+<%= affordabox_json_ld({"@context" => "https://schema.org", "@type" => "BreadcrumbList", "itemListElement" => crumbs.each_with_index.map { |(name, path), index| {"@type" => "ListItem", "position" => index + 1, "name" => name, "item" => affordabox_url(path)} }}) %>
+<nav aria-label="Breadcrumb" class="container-base pt-5">
+  <ol class="flex flex-wrap items-center gap-1.5 text-sm text-neutral-500">
+    <% crumbs.each_with_index do |(name, path), index| %>
+      <%# herb:key index %>
+      <li class="flex items-center gap-1.5">
+        <% if index < crumbs.size - 1 %>
+          <a href="<%= path %>" class="hover:text-brand-600 transition-colors"><%= name %></a>
+          <span class="text-neutral-300">/</span>
+        <% else %>
+          <span class="text-ink-900 font-medium" aria-current="page"><%= name %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>
+<section class="bg-ink-900 text-white">
+  <div class="container-base pt-12 pb-14 lg:pt-16 lg:pb-20">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow eyebrow-light">— Serving <%= city %>, <%= f.county %> County</span>
+        <h1 class="display mt-4 text-4xl sm:text-5xl text-white">Dumpster Rental, Containers &amp; Portable Storage in <%= city %>, MN</h1>
+        <p class="mt-5 text-lg text-neutral-300 leading-relaxed"><%= intro %></p>
+        <p class="mt-4 text-base text-neutral-300 leading-relaxed"><%= f.blurb %></p>
+      </div>
+      <div class="lg:pl-4">
+        <%= render "website/shared/lead_form", variant: "full", heading: "Get your #{city} quote", zip: f.zips.first, city: %>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-white">
+  <div class="container-base section-padding">
+    <span class="eyebrow">— What we deliver here</span>
+    <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900">Services in <%= city %></h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <% services.each_with_index do |service, index| %>
+        <%# herb:key index %>
+        <% local = service == "self-storage" && facility %>
+        <a href="<%= local ? (affordabox_href(website_fields(facility).link) || "/self-storage") : affordabox_service_href(service) %>" class="group flex items-center justify-between rounded-md border border-neutral-200 p-5 transition-colors hover:border-brand-400">
+          <span class="font-display text-lg font-bold uppercase tracking-tight text-ink-900 transition-colors group-hover:text-brand-600">
+            <%= affordabox_service_label(service) %>
+            <% if local %>
+              <span class="block mt-1 text-xs font-sans font-medium normal-case tracking-normal text-brand-600">Our <%= city %> facility →</span>
+            <% end %>
+          </span>
+          <svg class="w-5 h-5 text-brand-600 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      <% end %>
+    </div>
+    <div class="mt-12 rounded-md bg-neutral-50 border border-neutral-200 p-6">
+      <h3 class="font-display text-lg font-bold uppercase tracking-tight text-ink-900">Explore every service</h3>
+      <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium">
+        <% [["Dumpster Rentals", "dumpster"], ["Buy a Shipping Container", "container-buy"], ["Rent a Shipping Container", "container-rent"], ["Portable Storage", "portable"], ["Self-Storage", "self-storage"]].each_with_index do |(label, key), index| %>
+          <%# herb:key index %>
+          <li><a href="<%= affordabox_service_href(key) %>" class="text-brand-600 hover:text-brand-700 hover:underline"><%= label %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>
+<% if nearby.any? %>
+  <section class="bg-neutral-50 border-y border-neutral-200">
+    <div class="container-base section-padding">
+      <span class="eyebrow">— Nearby</span>
+      <h2 class="display mt-3 text-3xl sm:text-4xl text-ink-900">Other areas we serve near <%= city %></h2>
+      <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <% nearby.each_with_index do |near, index| %>
+          <%# herb:key index %>
+          <a href="<%= website_path(near) %>" class="group flex items-center justify-between rounded-md border border-neutral-200 bg-white p-4 transition-colors hover:border-brand-400">
+            <span class="font-display font-bold uppercase tracking-tight text-ink-900 transition-colors group-hover:text-brand-600"><%= website_fields(near).city %>, MN</span>
+            <span class="text-brand-600 transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
+<%= website_block({"type" => "reviews", "data" => {"context" => "general", "limit" => 3, "layout" => "feed"}}) %>
+<%= website_block({"type" => "cta_band", "data" => {"heading" => "Ready for delivery in #{city}?", "body" => "See your price and book in about two minutes — or call and talk to a real local person.",
+  "service" => "any", "note" => "Mon–Fri 8AM–5PM CT · No call centers"}}) %>

@@ -1,117 +1,354 @@
 /* The source of app/assets/stylesheets/affordabox/site.css (bin/css builds
-   it; the built file is what the CMS serves). Tailwind and the typography
-   plugin, as the Astro site used them (src/styles/global.css), scanning the
-   theme's templates, helpers and scripts; then what the Astro components
-   kept in their own <style>, and Swiper's styles. */
+   it; the built file is what the CMS serves). The redesign's design system,
+   "Bold Industrial" (src/styles/theme.css in GoLumin/affordabox-marketing's
+   redesign branch), as it is, scanning the theme's templates, helpers and
+   scripts; the fonts, served by the theme; and the 3-D quote pages' styles. */
 @import "tailwindcss" source(none);
 @source "../app/views";
 @source "../app/helpers";
 @source "../app/javascript/affordabox";
 @plugin "@tailwindcss/typography";
-@import "../tailwind/node_modules/swiper/swiper-bundle.css";
+@import "./quote-experience.css";
 
-/* The two brand colors are design settings (Settings › Themes › Customize). */
+/* Inter (body) and Oswald (condensed display), variable, Latin. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("inter.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Oswald";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 700;
+  src: url("oswald.woff2") format("woff2");
+}
+
+/* ───────────────────────────────────────────────────────────
+   Affordabox Design System — "Bold Industrial"
+   Brand DNA: deep petrol-teal ink (#061B23) + signal green (#339D42)
+   Condensed display type, sharp edges, photographic, confident.
+   ─────────────────────────────────────────────────────────── */
+
 @theme {
-  --color-primary: var(--design-primary, #061b23);
-  --color-secondary: var(--design-secondary, #339d42);
+  /* ─── Ink: deep petrol-teal — the brand's foundation ─── */
+  --color-ink-50:  #ecf2f4;
+  --color-ink-100: #d3e1e5;
+  --color-ink-200: #a6c3ca;
+  --color-ink-300: #6f9aa5;
+  --color-ink-400: #437582;
+  --color-ink-500: #285a67;
+  --color-ink-600: #194450;
+  --color-ink-700: #0f323c;
+  --color-ink-800: #0a232b;
+  --color-ink-900: #061b23;  /* ← brand primary */
+  --color-ink-950: #031217;
+
+  /* ─── Brand: signal green — CTAs, highlights, energy ─── */
+  --color-brand-50:  #ecfaef;
+  --color-brand-100: #d2f4d9;
+  --color-brand-200: #a6e8b4;
+  --color-brand-300: #6fd584;
+  --color-brand-400: #46bc5f;
+  --color-brand-500: #339d42;  /* ← brand accent */
+  --color-brand-600: #2a8537;
+  --color-brand-700: #226b2d;
+  --color-brand-800: #1c5526;
+  --color-brand-900: #163f1d;
+
+  /* ─── Signal amber — ratings, sparing highlights ─── */
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+
+  /* ─── Semantic ─── */
+  --color-success-50:  #f0fdf4;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-error-50:   #fef2f2;
+  --color-error-500:  #ef4444;
+  --color-error-600:  #dc2626;
+  --color-warning-50:  #fffbeb;
+  --color-warning-500: #f59e0b;
+
+  /* ─── Neutrals: cool steel/concrete ─── */
+  --color-neutral-50:  #f7f8f8;
+  --color-neutral-100: #eef0f1;
+  --color-neutral-200: #dce0e2;
+  --color-neutral-300: #c0c7ca;
+  --color-neutral-400: #8e989d;
+  --color-neutral-500: #66716f;
+  --color-neutral-600: #4b5658;
+  --color-neutral-700: #394245;
+  --color-neutral-800: #232a2c;
+  --color-neutral-900: #141a1b;
+
+  /* ─── Typography ─── */
+  --font-display: 'Oswald', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-xs:   0.75rem;   --leading-xs:   1rem;
+  --text-sm:   0.875rem;  --leading-sm:   1.25rem;
+  --text-base: 1rem;      --leading-base: 1.6rem;
+  --text-lg:   1.125rem;  --leading-lg:   1.75rem;
+  --text-xl:   1.25rem;   --leading-xl:   1.75rem;
+  --text-2xl:  1.5rem;    --leading-2xl:  2rem;
+  --text-3xl:  1.875rem;  --leading-3xl:  2.25rem;
+  --text-4xl:  2.25rem;   --leading-4xl:  2.4rem;
+  --text-5xl:  3rem;      --leading-5xl:  1.05;
+  --text-6xl:  3.75rem;   --leading-6xl:  1;
+  --text-7xl:  4.5rem;    --leading-7xl:  0.95;
+  --text-8xl:  6rem;      --leading-8xl:  0.92;
+  --text-9xl:  8rem;      --leading-9xl:  0.9;
+
+  /* ─── Spacing extensions ─── */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+
+  /* ─── Radii: sharp, industrial ─── */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5rem;
+
+  /* ─── Shadows: layered, ink-tinted ─── */
+  --shadow-card: 0 1px 2px rgb(6 27 35 / 0.06), 0 8px 24px -12px rgb(6 27 35 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(6 27 35 / 0.08), 0 24px 48px -16px rgb(6 27 35 / 0.28);
 }
 
-.custom-container { margin: 0 auto; width: 95%; padding: 0px 15px; }
-@media only screen and (min-width: 1000px) {
-  .custom-container { max-width: 1100px; margin-inline: auto; padding: 0px 15px; }
-}
-@media only screen and (min-width: 1300px) {
-  .custom-container { max-width: 1400px; width: 95%; margin-inline: auto; padding: 0px 15px; }
+/* ─── Base ─── */
+
+html {
+  scroll-behavior: smooth;
 }
 
-/* The home page's video, darkened from the top; the highlights' fade. */
-.video-container:before {
-  content: ""; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(#061b23, #061b2380, #061b2333);
-}
-.list { position: relative; z-index: 0; }
-.list:after {
-  content: ""; position: absolute; bottom: 0; left: 0; right: 0; z-index: -1;
-  height: 30%; width: 100%; pointer-events: none;
-  background: linear-gradient(0deg, #061b23 32%, #061b2300);
-}
-.main-hero__photo {
-  background-image: linear-gradient(to bottom, rgba(6, 27, 35, 1), rgba(6, 27, 35, 0.5), rgba(6, 27, 35, 0.2)), var(--hero-photo);
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Page header (SingleHero.astro) */
-.single-hero {
-  background-image: linear-gradient(to right, rgba(33, 33, 33, 0.5), rgba(33, 33, 33, 0.6)), var(--hero-photo, none);
-  background-position: center; background-size: cover; background-repeat: no-repeat;
-}
-.single-hero:not([style]) { background-color: #212121; }
-.highlighted-title { background: #6370e2; padding: 7px; border-radius: 5px; margin-right: 10px; }
-
-/* Title bar (ContainerPageTopSection.astro) */
-.title-bar { background-image: none; }
-@media screen and (min-width: 755px) {
-  .title-bar[style] { background-image: linear-gradient(to right, white 50%, rgba(255, 255, 255, 0) 100%), var(--bg-image); }
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
 }
 
-/* Banner (TwoColBanner.astro) */
-.two-col-banner--photo { background-image: var(--banner-photo); }
-.visualize-image { position: relative; }
-.visualize-image::before {
-  content: ""; position: absolute; top: 50%; left: 50%; z-index: -1;
-  width: 47.5%; height: 26%; transform: translate(-50%, -50%);
-  background-color: #fbe24c; border-radius: 50%; box-shadow: 0 4px 146.2px 129px #fbe24c;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* Logo strip (LogoGrid.astro) */
-.logos { display: flex; overflow: hidden; white-space: nowrap; position: relative; }
-.logo_items { display: flex; gap: 50px; animation: logo-slides 30s linear infinite; }
-.logos::before, .logos::after { content: ""; position: absolute; top: 0; bottom: 0; width: 10%; z-index: 2; }
-.logos::before { left: 0; background: linear-gradient(to left, rgba(255, 255, 255, 0), rgb(255, 255, 255)); }
-.logos::after { right: 0; background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255)); }
-.logos:hover .logo_items { animation-play-state: paused; }
-.logos .img { height: 100px; }
-@keyframes logo-slides { from { transform: translateX(0); } to { transform: translateX(-100%); } }
-@media (prefers-reduced-motion: reduce) { .logo_items { animation: none; flex-wrap: wrap; } }
+/* ─── Typographic system utilities ─── */
 
-/* Product cards (Products.astro) */
-@media (min-width: 584px) and (max-width: 639px) {
-  .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@utility font-display {
+  font-family: var(--font-display);
 }
 
-/* FAQs (Faq.astro) */
-.faq-accordion button[aria-expanded="true"] svg { rotate: 180deg; }
-
-/* Galleries (Gallery.astro, ImageGallery.astro) */
-.gallery-item:focus { outline: 2px solid white; outline-offset: 2px; }
-.gallery-item:focus-visible { outline-color: var(--color-secondary); }
-.lightbox { opacity: 0; transition: opacity 0.25s ease; }
-.lightbox:not(.hidden) { opacity: 1; }
-.lightbox__image { transform: scale(0.95); transition: transform 0.2s ease; }
-.lightbox:not(.hidden) .lightbox__image { transform: scale(1); }
-
-/* The listing sidebar's reasons: Markdown, but one line. */
-.reason-text p { margin: 0; }
-
-/* Sliders (Swiper) */
-:root {
-  --swiper-theme-color: #061b23;
-  --swiper-pagination-bullet-inactive-color: #cccccc;
-  --swiper-pagination-bullet-inactive-opacity: 1;
-  --swiper-pagination-bullet-size: 10px;
-  --swiper-pagination-bullet-horizontal-gap: 6px;
+/* Condensed, uppercase display headline — the brand's signature voice */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 0.92;
+  text-wrap: balance;
 }
-.swiper-pagination-bullet-active { opacity: 1; background: var(--swiper-theme-color) !important; }
-.nav-slider { width: 100%; overflow: hidden; }
-.nav-slider .swiper-slide { width: auto; flex-shrink: 0; }
-@media (min-width: 1280px) {
-  .nav-slider .swiper-wrapper { flex-wrap: wrap; justify-content: center; transform: none !important; gap: 1rem; }
-  .nav-slider .swiper-slide { width: auto !important; margin-right: 0 !important; }
+
+/* Eyebrow / kicker label with a leading rule */
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.8125rem;
+  color: var(--color-brand-600);
 }
-.testimonial-slider .swiper-button-prev:after, .testimonial-slider .swiper-button-next:after { display: none; }
-.testimonial-slider .swiper-button-prev, .testimonial-slider .swiper-button-next { color: inherit; width: auto; height: auto; margin-top: 0; }
+@utility eyebrow {
+  &::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    background: var(--color-brand-500);
+  }
+  &.eyebrow-light { color: var(--color-brand-300); }
+  &.eyebrow-center { justify-content: center; }
+}
 
-/* The quote form's selects: no native arrow, as on the Astro site. */
-[data-quote-form] select { appearance: none; }
+/* ─── Buttons ─── */
 
-/* The reviews' arrows: white 40px circles, as the Astro site's (Swiper sizes their icons to fill the button otherwise). */
-.testimonial-slider .swiper-button-prev svg, .testimonial-slider .swiper-button-next svg { width: 1.5rem; height: 1.5rem; }
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-brand-500);
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: white;
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.04), inset 0 1px 0 rgb(255 255 255 / 0.12);
+  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+@utility btn-primary {
+  &:hover {
+    background-color: var(--color-brand-600);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+  &:active { transform: translateY(0); }
+  &:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+}
+
+@utility btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-ink-900);
+  padding: 0.8125rem 1.75rem;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-900);
+  background-color: transparent;
+  transition: all 150ms ease;
+}
+@utility btn-secondary {
+  &:hover {
+    background-color: var(--color-ink-900);
+    color: white;
+    transform: translateY(-2px);
+  }
+  &:active { transform: translateY(0); }
+  &:focus-visible {
+    outline: 2px solid var(--color-ink-900);
+    outline-offset: 2px;
+  }
+}
+
+/* Secondary on dark backgrounds */
+@utility btn-on-dark {
+  border-color: rgb(255 255 255 / 0.4);
+  color: white;
+}
+@utility btn-on-dark {
+  &:hover {
+    background-color: white;
+    color: var(--color-ink-900);
+    border-color: white;
+  }
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  color: var(--color-ink-700);
+  transition: all 150ms ease;
+}
+@utility btn-ghost {
+  &:hover {
+    background-color: var(--color-neutral-100);
+    color: var(--color-ink-900);
+  }
+}
+
+/* ─── Layout ─── */
+
+@utility container-base {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+@utility container-base {
+  @media (min-width: 640px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@utility section-padding {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+@utility section-padding {
+  @media (min-width: 768px) {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  @media (min-width: 1024px) {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+@utility scroll-snap-start {
+  scroll-snap-align: start;
+}
+
+/* Diagonal hazard rule — a subtle industrial texture accent */
+@utility hazard-rule {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-brand-500) 0,
+    var(--color-brand-500) 10px,
+    var(--color-ink-900) 10px,
+    var(--color-ink-900) 20px
+  );
+}
+
+/* ─── Theme additions ─── */
+
+/* The mega menu opens on hover and keyboard focus (PrimaryNav.astro). */
+details > summary::-webkit-details-marker { display: none; }
+
+/* A Markdown paragraph inside a heading-sized line keeps the line's look. */
+.md-inline p { display: inline; margin: 0; }
+
+/* The 3-D quote's choices are fieldsets (their titles are legends, for
+   screen readers), looking like the redesign's labels. */
+.qx fieldset.field { border: 0; margin: 0; min-width: 0; }
+.qx .field > legend { float: left; width: 100%; padding: 0; font-family: var(--mono); font-size: .64rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
+.qx .field > legend + * { clear: both; }
+.qx fieldset.field + .field { border-top: 1px solid var(--line); }
+.qx.qx-affordabox .field > legend { letter-spacing: .1em; font-weight: 700; }
