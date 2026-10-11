@@ -352,3 +352,6 @@ details > summary::-webkit-details-marker { display: none; }
 .qx .field > legend + * { clear: both; }
 .qx fieldset.field + .field { border-top: 1px solid var(--line); }
 .qx.qx-affordabox .field > legend { letter-spacing: .1em; font-weight: 700; }
+
+/* Selects drop the browser's own look. */
+select { appearance: none; -webkit-appearance: none; }
