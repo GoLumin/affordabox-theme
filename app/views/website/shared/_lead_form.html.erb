@@ -82,7 +82,7 @@
         </div>
         <% if (turnstile = affordabox_turnstile) %>
           <% content_for :turnstile, "on" %>
-          <div class="cf-turnstile" data-sitekey="<%= turnstile[:site_key] %>" data-theme="<%= turnstile[:theme] %>" data-size="flexible"></div>
+          <div class="cf-turnstile" data-sitekey="<%= turnstile[:site_key] %>" data-theme="<%= turnstile[:theme] %>" data-size="flexible" data-lead-turnstile></div>
         <% end %>
         <div class="flex gap-3">
           <button type="button" class="btn-ghost shrink-0" data-lead-back>← Back</button>

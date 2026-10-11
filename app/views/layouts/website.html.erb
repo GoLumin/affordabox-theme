@@ -20,7 +20,7 @@
     <link rel="sitemap" href="/sitemap.xml">
     <%= affordabox_json_ld(affordabox_local_business(area_served: content_for?(:area_served) ? content_for(:area_served).split("|") : nil)) %>
     <% if content_for?(:turnstile) %>
-      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer nonce="<%= content_security_policy_nonce %>"></script>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer nonce="<%= content_security_policy_nonce %>"></script>
     <% end %>
     <%= website_scripts("head") %>
     <%= website_javascript_tags %>

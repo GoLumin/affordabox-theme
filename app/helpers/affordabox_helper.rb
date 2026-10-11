@@ -92,7 +92,7 @@ module AffordaboxHelper
   # set up (the Forms plugin then refuses a submission without its token).
   def affordabox_turnstile
     captcha = Forms.public_captcha if defined?(Forms) && Forms.respond_to?(:public_captcha)
-    {site_key: captcha[:site_key], theme: "light"} if captcha && captcha[:provider] == "turnstile"
+    {site_key: captcha[:site_key], theme: captcha[:theme].presence || "light"} if captcha && captcha[:provider] == "turnstile"
   end
 
   # ZIP code → city, for the lead form's "Yes! We serve …" (the Locations collection).

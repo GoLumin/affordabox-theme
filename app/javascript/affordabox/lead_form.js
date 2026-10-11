@@ -5,6 +5,23 @@
 // without leaving the page, then goes to the thank-you page.
 import { readAttribution } from "affordabox/attribution"
 
+// Cloudflare Turnstile, when Settings › Forms has it: drawn when the form's
+// last step opens (it can't draw inside a hidden step), once per form.
+// The script loads with render=explicit, so it waits until then.
+function renderTurnstile(form) {
+  const widget = form.querySelector("[data-lead-turnstile]")
+  if (!widget || widget.dataset.widgetId) return
+  if (!window.turnstile) {
+    widget.dataset.waiting = "1"
+    return setTimeout(() => renderTurnstile(form), 250)
+  }
+  widget.dataset.widgetId = window.turnstile.render(widget, {
+    sitekey: widget.dataset.sitekey,
+    theme: widget.dataset.theme || "light",
+    size: "flexible",
+  })
+}
+
 const FALLBACK = "Something went wrong. Please call us and we'll help right away."
 const MESSAGES = {
   captcha_failed: "Please complete the verification.",
@@ -37,6 +54,7 @@ function setup(form) {
     const label = card.querySelector("[data-lead-step-label]")
     if (label) label.textContent = `Step ${n} of 3`
     fail("")
+    if (n === 3) renderTurnstile(form)
   }
 
   const checkZip = () => {
@@ -117,7 +135,7 @@ function setup(form) {
     }
     submit.disabled = false
     submit.textContent = label
-    if (widget) window.turnstile?.reset(widget)
+    if (widget?.dataset.widgetId) window.turnstile?.reset(widget.dataset.widgetId)
   })
 }
 
