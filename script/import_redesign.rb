@@ -15,6 +15,7 @@
 # aren't sent twice. Pages are published (PUBLISH=0 leaves new ones drafts).
 # The old site's pages that moved go to the trash, where they can be restored.
 require_relative "cms_client"
+require_relative "seo_copy"
 
 ROOT = File.expand_path("..", __dir__)
 REDESIGN = File.expand_path(ENV.fetch("REDESIGN", File.join(ROOT, "../affordabox-redesign")))
@@ -33,6 +34,7 @@ end
 
 # A file from the redesign checkout (src/assets/images/<path>, or public/<path>), as an asset id.
 def img(path, alt: nil)
+  alt ||= ALTS[path]
   STATE["assets"][path] ||= begin
     full = [File.join(REDESIGN, "src/assets/images", path), File.join(REDESIGN, "public", path)].find { File.exist?(it) } or abort "Missing #{path} in #{REDESIGN}"
     CmsClient.upload(File.basename(full), CmsClient.content_type(full), File.binread(full), alt:).tap { puts "  file #{path} → asset #{it}" }
@@ -795,7 +797,9 @@ end
 entries_cache.each do |collection, list|
   list.each_with_index do |(slug, title, data), index|
     frontmatter = data.transform_keys(&:to_s).merge("order" => index + 1).reject { |_, v| v.nil? }
-    upsert("/collections/#{collection}/entries/#{slug}", "entry", {"slug" => slug, "title" => title, "status" => "published", "locale" => "en", "frontmatter" => frontmatter},
+    # Only the cities have pages: the other entries stay out of the sitemap.
+    seo = collection == "locations" ? {"schema_type" => "WebPage"} : {"noindex" => true}
+    upsert("/collections/#{collection}/entries/#{slug}", "entry", {"slug" => slug, "title" => title, "status" => "published", "locale" => "en", "frontmatter" => frontmatter, "seo" => seo},
       create_path: "/collections/#{collection}/entries")
   end
   puts "  #{collection}: #{list.size}"
@@ -850,7 +854,10 @@ all_pages.keys.sort_by { it.count("/") }.each do |path|
   spec = all_pages[path]
   parent_path, _, slug = path.rpartition("/")
   parent_id = parent_path.empty? ? nil : cms(:get, "/pages/#{parent_path}").dig("page", "id")
-  title, description = spec[:seo]
+  copy = SEO_COPY[path] || {}
+  title = copy[:title] || spec[:seo][0]
+  description = copy[:description] || spec[:seo][1]
+  spec[:blocks].each { it["data"]["heading"] = copy[:h1] if it["type"] == "page_hero" && copy[:h1] }
   attributes = {"slug" => slug, "title" => spec[:title], "locale" => "en", "blocks" => spec[:blocks], "parent_id" => parent_id,
     "seo" => {"meta_title" => title, "meta_description" => description, "noindex" => (spec[:noindex] || nil)}.compact}
   existing = cms(:get, "/pages/#{path}", missing_ok: true)
