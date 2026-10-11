@@ -16,6 +16,7 @@
 # The old site's pages that moved go to the trash, where they can be restored.
 require_relative "cms_client"
 require_relative "seo_copy"
+require_relative "facts"
 
 ROOT = File.expand_path("..", __dir__)
 REDESIGN = File.expand_path(ENV.fetch("REDESIGN", File.join(ROOT, "../affordabox-redesign")))
@@ -796,7 +797,8 @@ COLLECTIONS.each { |slug, c| cms(:patch, "/collections/#{slug}", {"collection" =
 end
 entries_cache.each do |collection, list|
   list.each_with_index do |(slug, title, data), index|
-    frontmatter = data.transform_keys(&:to_s).merge("order" => index + 1).reject { |_, v| v.nil? }
+    frontmatter = fix_facts(data.transform_keys(&:to_s).merge("order" => index + 1).reject { |_, v| v.nil? })
+    frontmatter.merge!(FACILITY_GEO[slug]) if collection == "facilities" && FACILITY_GEO[slug]
     # Only the cities have pages: the other entries stay out of the sitemap.
     seo = collection == "locations" ? {"schema_type" => "WebPage"} : {"noindex" => true}
     upsert("/collections/#{collection}/entries/#{slug}", "entry", {"slug" => slug, "title" => title, "status" => "published", "locale" => "en", "frontmatter" => frontmatter, "seo" => seo},
@@ -810,7 +812,7 @@ globals = globals_data
 GLOBALS.each do |slug, g|
   cms(:post, "/globals", {"global" => {"slug" => slug, "name" => g[:name], "data" => {}, "schema" => {"fields" => []}}}) unless cms(:get, "/globals/#{slug}", missing_ok: true)
   cms(:patch, "/globals/#{slug}/schema", {"global" => {"fields" => g[:fields]}})
-  cms(:patch, "/globals/#{slug}", {"global" => {"name" => g[:name], "data" => globals.fetch(slug)}})
+  cms(:patch, "/globals/#{slug}", {"global" => {"name" => g[:name], "data" => fix_facts(globals.fetch(slug))}})
 end
 cms(:delete, "/globals/sidebar") if cms(:get, "/globals/sidebar", missing_ok: true)
 
@@ -841,12 +843,12 @@ cms(:patch, "/forms/lead/emails/notification", {"form_email" => {"enabled" => tr
   "blocks" => [eb("email_heading", {"text" => "New quote request", "level" => "h1", "align" => "left"}),
     eb("email_text", {"body" => "<p>{{first_name}} asked about {{service}} for ZIP {{zip}}. Call them back at {{phone}}.</p>"}),
     eb("email_submission", {"title" => "Request details", "skip_empty" => true})]}.compact})
-cms(:patch, "/forms/lead/emails/confirmation", {"form_email" => {"enabled" => true, "subject" => "Thank You for Your Inquiry",
+cms(:patch, "/forms/lead/emails/confirmation", {"form_email" => fix_facts({"enabled" => true, "subject" => "Thank You for Your Inquiry",
   "blocks" => [eb("email_heading", {"text" => "Request Received!", "level" => "h1", "align" => "center"}),
     eb("email_text", {"body" => "<p>Hi {{first_name}},</p><p>Thanks for reaching out to AffordABox! A real local person will get back to you shortly — usually within the hour during business hours (Mon–Fri 8AM–5PM CT).</p>"}),
     eb("email_heading", {"text" => "Your request", "level" => "h3", "align" => "left"}),
     eb("email_text", {"body" => "<p>Service: {{service}}<br>ZIP: {{zip}}<br>Phone: {{phone}}</p>"}),
-    eb("email_text", {"body" => "<p>Need it sooner? Call us at <a href=\"tel:+18334682269\">(833) 468-2269</a>.</p>"})]}})
+    eb("email_text", {"body" => "<p>Need it sooner? Call us at <a href=\"tel:+18334682269\">(833) 468-2269</a>.</p>"})]})})
 
 puts "Pages"
 all_pages = pages
@@ -858,6 +860,8 @@ all_pages.keys.sort_by { it.count("/") }.each do |path|
   title = copy[:title] || spec[:seo][0]
   description = copy[:description] || spec[:seo][1]
   spec[:blocks].each { it["data"]["heading"] = copy[:h1] if it["type"] == "page_hero" && copy[:h1] }
+  spec[:blocks] = fix_facts(spec[:blocks])
+  title, description = fix_facts([title, description])
   attributes = {"slug" => slug, "title" => spec[:title], "locale" => "en", "blocks" => spec[:blocks], "parent_id" => parent_id,
     "seo" => {"meta_title" => title, "meta_description" => description, "noindex" => (spec[:noindex] || nil)}.compact}
   existing = cms(:get, "/pages/#{path}", missing_ok: true)
