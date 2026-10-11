@@ -1,0 +1,44 @@
+<%# locals: (data:) -%>
+<%# Reviews that slide past, with their stars and arrows (src/components/sections/Testimonial.astro; affordabox/sliders.js). %>
+<div class="relative pblock bg-primary/5">
+  <div class="custom-container !py-16">
+    <h2 class="text-2xl text-center font-semibold mb-12"><%= data.title %></h2>
+    <div class="swiper testimonial-slider w-full relative" data-slider="testimonials">
+      <div class="swiper-wrapper">
+        <% data.items.each_with_index do |review, index| %>
+          <%# herb:key index %>
+          <% rating = review.rating.to_i.clamp(0, 5) %>
+          <figure class="swiper-slide text-center">
+            <div class="flex flex-col items-center justify-center">
+              <% if rating.positive? %>
+                <div class="flex items-center mb-4" role="img" aria-label="<%= rating %> out of 5 stars">
+                  <% 5.times do |star| %>
+                    <%# herb:key star %>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="<%= star < rating ? "w-5 h-5 text-yellow-400" : "w-5 h-5 text-gray-300" %>" fill="<%= star < rating ? "currentColor" : "none" %>" stroke="<%= star < rating ? "none" : "currentColor" %>" stroke-width="<%= star < rating ? 0 : 1.5 %>" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95a1 1 0 00.95.69h4.159c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.95c.3.921-.755 1.688-1.54 1.118L12 15.347l-3.367 2.449c-.785.57-1.84-.197-1.54-1.118l1.287-3.95a1 1 0 00-.364-1.118L4.648 9.377c-.783-.57-.38-1.81.588-1.81h4.159a1 1 0 00.95-.69l1.286-3.95z" /></svg>
+                  <% end %>
+                </div>
+              <% end %>
+              <blockquote class="text-gray-600 text-sm mb-4"><%= affordabox_markdown review.quote %></blockquote>
+              <div class="flex items-center gap-4 mt-3">
+                <% if review.photo.present? %>
+                  <%= website_image_tag review.photo, alt: website_plain_text(review["name"]), class: "w-16 h-16 object-cover rounded-full border border-gray-200", sizes: "64px" %>
+                <% else %>
+                  <div class="w-10 h-10 text-sm rounded-full bg-primary text-white flex items-center justify-center font-bold" aria-hidden="true"><%= website_plain_text(review["name"]).first %></div>
+                <% end %>
+                <figcaption class="text-sm text-gray-700 before:content-['–_']">
+                  <span><%= review["name"] %></span><% if review.designation.present? %>,<span><%= review.designation %></span><% end %>
+                </figcaption>
+              </div>
+            </div>
+          </figure>
+        <% end %>
+      </div>
+      <button type="button" class="swiper-button-prev absolute top-1/2 left-2 -translate-y-1/2 z-10 bg-white p-2 min-w-10 min-h-10 flex justify-center items-center rounded-full shadow hover:bg-gray-100" aria-label="Previous review">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+      <button type="button" class="swiper-button-next absolute top-1/2 right-2 -translate-y-1/2 z-10 bg-white p-2 min-w-10 min-h-10 flex justify-center items-center rounded-full shadow hover:bg-gray-100" aria-label="Next review">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+  </div>
+</div>

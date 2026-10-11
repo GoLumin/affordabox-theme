@@ -1,0 +1,15 @@
+<%# Page not found. Its words are in Site settings › Page not found. %>
+<% words = affordabox_settings.not_found %>
+<% heading = words.heading.presence || "Page not found" %>
+<% content_for :head, website_seo_tags(title: heading, description: words.body, noindex: true) %>
+<section class="bg-primary py-20 px-4">
+  <div class="custom-container">
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center space-y-6">
+      <h1 class="text-4xl md:text-5xl font-bold uppercase text-white"><%= heading %></h1>
+      <% if words.body.present? %>
+        <p class="text-lg text-white/80 max-w-xl"><%= words.body %></p>
+      <% end %>
+      <a href="/" class="rounded-lg bg-secondary px-8 py-4 font-bold text-primary transition-all hover:opacity-90"><%= words.button_label.presence || "Back to Home" %></a>
+    </div>
+  </div>
+</section>

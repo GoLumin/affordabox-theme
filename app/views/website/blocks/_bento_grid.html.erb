@@ -1,0 +1,36 @@
+<%# locals: (data:) -%>
+<%# Photo tiles in a mosaic, each with a tagline, title, words and a button (src/components/sections/BintoGrid.astro). The first tile is the big one; a sixth starts the pattern again. %>
+<% places = [
+  "flex p-px col-span-1 md:col-span-2 lg:col-span-6 lg:row-span-8 lg:col-start-1 lg:row-start-1",
+  "flex p-px col-span-1 md:col-span-1 lg:col-span-3 lg:row-span-4 lg:col-start-7 lg:row-start-1",
+  "flex p-px col-span-1 md:col-span-1 lg:col-span-3 lg:row-span-4 lg:col-start-7 lg:row-start-5",
+  "flex p-px col-span-1 md:col-span-1 lg:col-span-4 lg:row-span-4 lg:col-start-1 lg:row-start-9",
+  "flex p-px col-span-1 md:col-span-1 lg:col-span-5 lg:row-span-4 lg:col-start-5 lg:row-start-9"
+] %>
+<section class="custom-container !py-16 xl:!py-20">
+  <% if data.title.present? %>
+    <h2 class="text-4xl font-bold mb-10"><%= data.title %></h2>
+  <% end %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-9 lg:grid-rows-12 gap-4">
+    <% data.cards.each_with_index do |card, index| %>
+      <%# herb:key index %>
+      <div class="<%= places[index % places.size] %> relative min-h-80 overflow-hidden rounded-lg ring-1 ring-white/15">
+        <div class="absolute inset-0">
+          <%= website_image_tag card.image, alt: "", class: "w-full h-full object-cover", sizes: index.zero? ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 100vw" %>
+          <div class="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60"></div>
+        </div>
+        <div class="relative p-6 z-10 text-white">
+          <% if card.tagline.present? %>
+            <p class="text-sm/4 font-semibold"><%= card.tagline %></p>
+          <% end %>
+          <h3 class="mt-2 text-2xl lg:text-4xl font-bold tracking-tight"><%= card.title %></h3>
+          <%# The Astro site put the Markdown's <p> inside a <p>, which browsers split: the text sits 1rem below the title, in plain white. %>
+          <div class="mt-4 bento-grid__body"><%= affordabox_markdown card.body %></div>
+          <% if card.button_label.present? %>
+            <div class="mt-4 w-fit"><%= affordabox_button card.button_label, affordabox_href(card.button_link) %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

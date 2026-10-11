@@ -1,0 +1,13 @@
+<%# locals: (data:) -%>
+<%# A page's title over a darkened photo (src/components/sections/SingleHero.astro). The title may highlight words in <span class="highlighted-title">. %>
+<% photo = affordabox_background_url(data.image) %>
+<%= tag.div class: "single-hero gradient py-28 flex justify-start items-center relative", style: ("--hero-photo: url('#{photo}')" if photo) do %>
+  <div class="relative custom-container text-white h-full flex justify-start items-center flex-col">
+    <div class="text-start">
+      <h1 class="md:ml-6 md:text-5xl text-4xl font-bold mb-8 hero-title"><%= affordabox_title data.title %></h1>
+      <% if data.description.present? %>
+        <div class="md:ml-6 text-xl font-light mb-8 w-full"><%= website_rich_text data.description %></div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

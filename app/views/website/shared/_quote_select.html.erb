@@ -1,0 +1,13 @@
+<%# locals: (form:, input:, name:, id:, prompt: nil, selected: nil, values: nil) -%>
+<%# One of the quote form's choices, with the options the CMS's form defines (`values` narrows them). %>
+<% options = affordabox_options(form, name) %>
+<% options = options.select { values.include?(it["value"]) } if values %>
+<select id="<%= id %>" name="<%= website_form_field(form, name)["name"] %>" class="<%= input %> bg-white">
+  <% if prompt %>
+    <option value=""><%= prompt %></option>
+  <% end %>
+  <% options.each_with_index do |option, index| %>
+    <%# herb:key index %>
+    <%= tag.option option["label"], value: option["value"], selected: option["value"] == selected %>
+  <% end %>
+</select>

@@ -1,0 +1,14 @@
+<%# locals: (data:) -%>
+<%# Logos scrolling past, pausing under the pointer (src/components/sections/LogoGrid.astro). %>
+<div class="bg-white py-16">
+  <div class="custom-container">
+    <div class="logos overlay relative">
+      <div class="logo_items flex justify-center items-center gap-4">
+        <% data.logos.each_with_index do |logo, index| %>
+          <%# herb:key index %>
+          <%= website_image_tag logo.image, alt: logo["name"].presence || "logo", class: "img object-contain w-[200px] max-w-none shrink-0", sizes: "200px" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

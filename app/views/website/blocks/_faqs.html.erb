@@ -1,0 +1,28 @@
+<%# locals: (data:) -%>
+<%# Questions that open to their answers (src/components/sections/Faq.astro; affordabox/faq.js). %>
+<% id = "faq-#{Zlib.crc32(data.to_h.to_json).to_s(36)}" %>
+<div class="faq-accordion py-16 w-full relative">
+  <div class="flex justify-between relative custom-container mx-auto px-8 lg:flex-row flex-col items-start gap-8">
+    <div class="w-full">
+      <h2 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-10"><%= affordabox_title data.title %></h2>
+      <dl class="space-y-5">
+        <% data.items.each_with_index do |faq, index| %>
+          <%# herb:key index %>
+          <div class="py-4 border-b border-black/10 transition-all duration-300">
+            <dt class="text-lg">
+              <button type="button" class="text-left w-full flex justify-between items-start focus:outline-none group" aria-controls="<%= id %>-<%= index %>" aria-expanded="false" id="<%= id %>-button-<%= index %>" data-faq-toggle>
+                <span class="font-medium text-secondary lg:text-2xl transition-colors duration-200"><%= faq.question %></span>
+                <span class="ml-6 h-7 flex items-center">
+                  <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0.409826 2.90249C0.24316 2.72916 0.139826 2.52916 0.0998264 2.30249C0.0664931 2.09583 0.0931597 1.89083 0.179826 1.68749C0.266493 1.48416 0.396493 1.32249 0.569826 1.20249C0.76316 1.06916 0.979826 1.00249 1.21983 1.00249L8.78983 1.01249C8.99649 1.01249 9.18483 1.06249 9.35483 1.16249C9.52483 1.26249 9.65983 1.39749 9.75983 1.56749C9.85983 1.73749 9.90983 1.92583 9.90983 2.13249L9.89983 9.88249C9.89983 10.1225 9.82983 10.3358 9.68983 10.5225C9.56316 10.7025 9.39649 10.8342 9.18983 10.9175C8.98316 11.0008 8.77649 11.0225 8.56983 10.9825C8.33649 10.9425 8.13649 10.8358 7.96983 10.6625L0.409826 2.90249Z" fill="currentColor" class="text-secondary" /></svg>
+                </span>
+              </button>
+            </dt>
+            <dd class="overflow-hidden transition-all duration-300 ease-in-out max-h-0" id="<%= id %>-<%= index %>" aria-labelledby="<%= id %>-button-<%= index %>">
+              <div class="pt-4 prose text-text/80 min-w-full"><%= affordabox_markdown faq.answer %></div>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+</div>

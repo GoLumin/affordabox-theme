@@ -1,0 +1,39 @@
+<%# locals: (data:) -%>
+<%# The home page's opening (src/components/sections/MainHero.astro): a looping video or a photo behind the headline and buttons, with a row of highlights along the bottom. %>
+<% video = affordabox_file_url(data.video) if data.background == "video" %>
+<% photo = affordabox_background_url(data.image) if data.background != "none" %>
+<div class="h-full relative mx-auto">
+  <% if video %>
+    <div class="absolute inset-0 w-full h-full video-container -top-3">
+      <video class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto" <%= tag.attributes(poster: photo) %>>
+        <source src="<%= video %>" type="video/mp4">
+      </video>
+    </div>
+  <% elsif photo %>
+    <div class="bg-cover bg-center absolute inset-0 main-hero__photo" style="--hero-photo: url('<%= photo %>')"></div>
+  <% end %>
+  <div class="relative lg:min-h-[800px] min-h-[550px] z-10 flex flex-col justify-between items-center pt-12 gap-6">
+    <div class="flex justify-center flex-col items-center gap-6">
+      <h1 class="max-w-5xl px-6 text-center mx-auto md:text-6xl 2xl:text-8xl text-4xl text-white font-bold mb-6"><%= data.title %></h1>
+      <div class="flex justify-center gap-4">
+        <% data.buttons.each_with_index do |button, index| %>
+          <%# herb:key index %>
+          <%= affordabox_button button.label, affordabox_href(button.link) %>
+        <% end %>
+      </div>
+    </div>
+    <% if data.highlights.any? %>
+      <div class="list w-full py-5 text-white">
+        <ul class="max-w-5xl mx-auto flex justify-center flex-wrap sm:px-6 px-2 lg:gap-8 gap-6">
+          <% data.highlights.each_with_index do |highlight, index| %>
+            <%# herb:key index %>
+            <li class="flex items-center sm:flex-row flex-col gap-2">
+              <%= website_image_tag highlight.icon, alt: "", width: 48, height: 48, sizes: "48px", class: "w-12 h-12" %>
+              <span class="whitespace-nowrap lg:text-base text-sm"><%= highlight.title %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

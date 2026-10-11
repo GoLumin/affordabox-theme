@@ -1,0 +1,11 @@
+{
+  "name": "affordabox-theme-css",
+  "private": true,
+  "description": "Builds app/assets/stylesheets/affordabox/site.css from site.css here (bin/css). The built file is committed: the CMS serves it as is.",
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.5",
+    "@tailwindcss/typography": "^0.5.16",
+    "swiper": "11.2.6",
+    "tailwindcss": "4.1.5"
+  }
+}

@@ -1,0 +1,12 @@
+<%# locals: (data:) -%>
+<%# A photo on the left of a column of formatted text (src/components/sections/LeftAlignedBlock.astro). %>
+<div class="bg-primary/5 py-16">
+  <div class="custom-container flex flex-col md:flex-row items-start gap-8">
+    <div class="w-full md:w-2/5 flex justify-center md:justify-start">
+      <%= website_image_tag data.image, class: "w-full h-auto rounded-lg object-cover shadow-md", sizes: "(min-width: 768px) 40vw, 100vw" %>
+    </div>
+    <div class="w-full md:w-3/5">
+      <div class="prose min-w-full"><%= affordabox_markdown data.body %></div>
+    </div>
+  </div>
+</div>

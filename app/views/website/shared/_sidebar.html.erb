@@ -1,0 +1,67 @@
+<%# The dark column on the left of every page but compact ones (src/components/sections/Sidebar.astro): the logo, the phone number and the main links, from the Sidebar global. On phones it's a bar with a menu button that slides the links in (affordabox/nav.js). The link for the page being shown is highlighted there too. %>
+<% sidebar = affordabox_sidebar %>
+<% phone = sidebar.phone.to_s %>
+<aside class="w-full">
+  <div class="hidden lg:flex flex-col h-full w-full">
+    <div class="flex flex-col items-center justify-around p-8">
+      <a href="/" class="mb-2" aria-label="Home">
+        <%= website_image_tag sidebar.logo, alt: "Logo", class: "h-10 w-auto mx-auto", sizes: "200px", loading: :eager %>
+      </a>
+      <a href="<%= affordabox_tel(phone) %>" class="text-lg font-bold text-secondary hover:text-secondary/80 transition-colors"><%= phone %></a>
+    </div>
+    <nav class="flex-1 overflow-y-auto mt-3" aria-label="Main">
+      <ul class="flex flex-col justify-around">
+        <% sidebar.items.each_with_index do |item, index| %>
+          <%# herb:key index %>
+          <% href = affordabox_href(item.link) %>
+          <li class="w-full 2xl:px-12 xl:px-10 px-8 hover:bg-[#05171E] nav-item" data-link="<%= href %>">
+            <a href="<%= href %>" class="flex items-center gap-4 py-2 text-[#ffffffc2] hover:text-white transition-colors text-sm font-light group">
+              <%= website_image_tag item.icon, alt: "", class: "w-5 h-5 invert aspect-square", sizes: "20px" %>
+              <span><%= item.label %></span>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="lg:hidden flex items-center justify-between w-full p-4">
+    <button type="button" id="menu-toggle" class="text-white p-2 hover:bg-white/10 rounded-lg transition-colors" aria-label="Toggle Menu" aria-controls="mobile-nav" aria-expanded="false">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
+    <a href="/" class="flex items-center" aria-label="Home">
+      <%= website_image_tag sidebar.logo, alt: "Logo", class: "h-12 w-auto sepia saturate-[400%] hue-rotate-[10deg] brightness-[105%]", sizes: "200px", loading: :eager %>
+    </a>
+    <a href="<%= affordabox_tel(phone) %>" class="text-lg font-bold text-secondary hover:text-secondary/80 transition-colors" aria-label="Call <%= phone %>">
+      <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5562 12.9062L16.1007 13.359C16.1007 13.359 15.0181 14.4355 12.0631 11.4972C9.10812 8.55901 10.1907 7.48257 10.1907 7.48257L10.4775 7.19738C11.1841 6.49484 11.2507 5.36691 10.6342 4.54348L9.37326 2.85908C8.61028 1.83992 7.13596 1.70529 6.26145 2.57483L4.69185 4.13552C4.25823 4.56668 3.96765 5.12559 4.00289 5.74561C4.09304 7.33182 4.81071 10.7447 8.81536 14.7266C13.0621 18.9492 17.0468 19.117 18.6763 18.9651C19.1917 18.9171 19.6399 18.6546 20.0011 18.2954L21.4217 16.883C22.3806 15.9295 22.1102 14.2949 20.8833 13.628L18.9728 12.5894C18.1672 12.1515 17.1858 12.2801 16.5562 12.9062Z" fill="#ffffff"></path></svg>
+    </a>
+  </div>
+
+  <nav id="mobile-nav" class="lg:hidden fixed w-[250px] inset-0 bg-[#061B23] backdrop-blur-sm transform -translate-x-full transition-transform duration-300 z-50 h-screen" aria-label="Main">
+    <button type="button" id="menu-close" class="absolute top-4 right-4 text-white p-2 hover:bg-white/10 rounded-lg transition-colors" aria-label="Close Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+    <div class="relative mt-10">
+      <div class="flex flex-col items-center justify-around p-5">
+        <a href="/" class="mb-2" aria-label="Home">
+          <%= website_image_tag sidebar.logo, alt: "Logo", class: "h-9 sm:h-10 w-auto mx-auto", sizes: "200px" %>
+        </a>
+        <a href="<%= affordabox_tel(phone) %>" class="text-sm sm:text-lg font-bold text-secondary hover:text-secondary/80 transition-colors"><%= phone %></a>
+      </div>
+      <div class="flex-1 overflow-y-auto mt-3">
+        <ul class="space-y-1">
+          <% sidebar.items.each_with_index do |item, index| %>
+            <%# herb:key index %>
+            <% href = affordabox_href(item.link) %>
+            <li class="w-full px-5 py-0.5 hover:bg-[#05171E] mobile-nav-item" data-link="<%= href %>">
+              <a href="<%= href %>" class="flex items-center gap-2 text-[#ffffffc2] hover:text-white transition-colors text-sm font-light group">
+                <%= website_image_tag item.icon, alt: "", class: "h-5 w-6 invert aspect-square", sizes: "24px" %>
+                <span><%= item.label %></span>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</aside>

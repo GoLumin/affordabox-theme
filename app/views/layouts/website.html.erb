@@ -1,0 +1,49 @@
+<%# The frame of every page (src/layouts/Layout.astro): the dark sidebar on the left, and beside it the top bar the page chose, its blocks and the footer. A page sets its bars with content_for :navbar and :hide_sidebar (website/pages/show). %>
+<% navbar = content_for(:navbar).presence || "standard" %>
+<% hide_sidebar = content_for(:hide_sidebar) == "true" %>
+<% favicon = affordabox_file_url(affordabox_settings.favicon) %>
+<!DOCTYPE html>
+<html lang="<%= website_settings["default_locale"].presence || "en" %>">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag "affordabox/site" %>
+    <%= website_design_tags %>
+    <%= yield :head %>
+    <% if favicon %>
+      <link rel="icon" href="<%= favicon %>">
+    <% else %>
+      <%= favicon_link_tag "affordabox/favicon.svg", type: "image/svg+xml" %>
+    <% end %>
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="sitemap" href="/sitemap.xml">
+    <% if content_for?(:turnstile) %>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer nonce="<%= content_security_policy_nonce %>"></script>
+    <% end %>
+    <%= website_scripts("head") %>
+    <%= website_javascript_tags %>
+  </head>
+  <body class="overflow-x-hidden">
+    <%= website_scripts("body") %>
+    <div id="layout-wrapper" class="flex min-h-screen lg:flex-row flex-col relative max-w-full">
+      <% unless navbar == "compact" %>
+        <div id="sidebar-wrapper" class="<%= class_names("bg-primary z-20 lg:flex-shrink-0 2xl:w-[375px] xl:w-[300px] lg:w-[250px]", "lg:hidden": hide_sidebar) %>">
+          <div class="sticky top-0 lg:h-screen overflow-y-auto">
+            <%= render "website/shared/sidebar" %>
+          </div>
+        </div>
+      <% end %>
+      <div id="main-content" class="flex-1 min-w-0">
+        <% if navbar == "standard" %>
+          <%= render "website/shared/navbar" %>
+        <% elsif navbar == "compact" %>
+          <%= render "website/shared/compact_navbar" %>
+        <% end %>
+        <main id="main">
+          <%= yield %>
+        </main>
+        <%= render "website/shared/footer" %>
+      </div>
+    </div>
+  </body>
+</html>

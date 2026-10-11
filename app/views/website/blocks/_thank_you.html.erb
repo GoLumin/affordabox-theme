@@ -1,0 +1,40 @@
+<%# locals: (data:) -%>
+<%# Where the quote form lands (src/pages/thank-you.astro): a thank-you with the phone number, and what happens next. {phone} in the words is the Sidebar global's number. %>
+<% phone = affordabox_sidebar.phone.presence || "(833) 468-2269" %>
+<% tel = affordabox_tel(phone) %>
+<section class="bg-primary py-20 px-4">
+  <div class="custom-container">
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center space-y-6">
+      <div class="flex h-20 w-20 items-center justify-center rounded-full bg-secondary">
+        <svg class="h-10 w-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold uppercase text-white"><%= data.heading %></h1>
+      <p class="text-lg text-white/80 max-w-xl"><%= data.body %></p>
+      <div class="flex flex-col sm:flex-row gap-4 pt-2">
+        <a href="<%= tel %>" class="rounded-lg bg-secondary px-8 py-4 font-bold text-primary transition-all hover:opacity-90"><%= data.call_label.to_s.gsub("{phone}", phone) %></a>
+        <a href="/" class="rounded-lg border-2 border-white/30 px-8 py-4 font-bold text-white transition-all hover:bg-white/10"><%= data.home_label %></a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-[#E8EDEC] py-16 px-4">
+  <div class="custom-container">
+    <div class="flex flex-col items-center text-center space-y-4 mb-12">
+      <h2 class="text-2xl uppercase font-bold border-b-2 border-primary pb-1 text-primary"><%= data.steps_heading %></h2>
+    </div>
+    <ol class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <% data.steps.each_with_index do |step, index| %>
+        <%# herb:key index %>
+        <li class="bg-white rounded-lg shadow-sm p-8 space-y-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-secondary font-bold text-primary"><%= index + 1 %></span>
+          <h3 class="text-xl font-semibold text-primary"><%= step.title %></h3>
+          <p class="text-gray-600 leading-relaxed"><%= step.body %></p>
+        </li>
+      <% end %>
+    </ol>
+    <% if data.footnote.present? %>
+      <% before, after = data.footnote.to_s.split("{phone}", 2) %>
+      <p class="text-center text-gray-600 mt-12"><%= before %><% if after %><a href="<%= tel %>" class="font-semibold text-primary underline"><%= phone %></a><%= after %><% end %></p>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+<%# locals: (data:) -%>
+<%# Cards with a title, a photo, a button over its corner and a few words (src/components/sections/Products.astro). %>
+<section class="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 custom-container lg:!py-20 !py-16">
+  <% data.cards.each_with_index do |card, index| %>
+    <%# herb:key index %>
+    <div class="bg-white rounded-lg p-4 text-center relative shadow-sm">
+      <h2 class="text-xl text-left font-bold mb-1"><%= card.title %></h2>
+      <%= website_image_tag card.image, alt: website_plain_text(card.title), class: "w-full h-60 lg:h-56 object-cover rounded-md mb-4", sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw" %>
+      <a href="<%= affordabox_href(card.link) %>" class="inline-block bg-secondary text-primary absolute bottom-[90px] lg:bottom-[110px] left-4 text-xs font-semibold py-1 px-3 rounded transition"><%= data.button_label.presence || "Learn More" %></a>
+      <p class="text-black mb-4 text-sm text-left"><%= card.description %></p>
+    </div>
+  <% end %>
+</section>

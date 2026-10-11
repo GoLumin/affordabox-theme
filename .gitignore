@@ -1,0 +1,4 @@
+/.bundle
+*.gem
+tmp/
+tailwind/node_modules/

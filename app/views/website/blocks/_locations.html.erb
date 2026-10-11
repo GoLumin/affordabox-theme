@@ -1,0 +1,23 @@
+<%# locals: (data:) -%>
+<%# Location cards: a photo with a button over it, the name and the address (src/components/sections/Locations.astro). %>
+<section class="py-16">
+  <div class="max-w-6xl mx-auto text-center px-4">
+    <h2 class="text-3xl font-semibold mb-2"><%= data.title %></h2>
+    <p class="text-gray-600 mb-12"><%= data.description %></p>
+    <div class="grid md:grid-cols-2 gap-6">
+      <% data.cards.each_with_index do |card, index| %>
+        <%# herb:key index %>
+        <div class="rounded-lg relative overflow-hidden shadow-md bg-white">
+          <div class="relative">
+            <%= website_image_tag card.image, alt: website_plain_text(card.title), class: "w-full h-64 object-cover", sizes: "(min-width: 768px) 50vw, 100vw" %>
+            <a href="<%= affordabox_href(card.link) %>" class="inline-block absolute bottom-4 left-1/2 -translate-x-1/2 w-fit whitespace-nowrap bg-secondary text-white px-6 py-2 rounded-md text-sm font-medium hover:opacity-90"><%= data.button_label.presence || "View Location" %></a>
+          </div>
+          <div class="p-6 text-center">
+            <h3 class="font-semibold text-lg"><%= card.title %></h3>
+            <p class="text-sm text-gray-600"><%= card.address %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

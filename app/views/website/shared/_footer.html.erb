@@ -1,0 +1,45 @@
+<%# The footer (src/components/sections/Footer.astro), from the Footer global: the logo, columns of links, the social icons, the legal links and the copyright line. %>
+<% footer = website_global(:footer) %>
+<footer class="bg-[#f7f7f7] text-dark py-12 lg:py-16">
+  <div class="custom-container p-6 flex flex-wrap justify-between">
+    <div class="w-full flex justify-center mb-6">
+      <%= website_image_tag footer.logo, alt: website_settings["title"].presence || "Affordabox", class: "h-24 w-auto object-contain", sizes: "300px" %>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full my-14 items-start gap-4">
+      <% footer.columns.each_with_index do |column, index| %>
+        <%# herb:key index %>
+        <div class="w-full mb-6">
+          <h2 class="text-lg font-semibold"><%= column.heading %></h2>
+          <ul class="mt-2 space-y-2">
+            <% column.items.each_with_index do |item, item_index| %>
+              <%# herb:key item_index %>
+              <li><a href="<%= affordabox_href(item.link) %>" class="text-dark hover:text-dark"><%= item.label %></a></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <% if footer.socials.any? %>
+        <div>
+          <h2 class="text-lg font-semibold mb-2"><%= footer.socials_heading.presence || "Follow Us" %></h2>
+          <div class="flex space-x-4">
+            <% footer.socials.each_with_index do |social, index| %>
+              <%# herb:key index %>
+              <a href="<%= affordabox_href(social.link) %>" class="text-dark text-2xl" aria-label="<%= website_plain_text(social.label) %>">
+                <%= website_image_tag social.icon, alt: "", class: "h-8 object-contain w-fit", sizes: "32px" %>
+              </a>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="flex justify-center md:flex-row flex-col w-full gap-4">
+      <% footer.legal_links.each_with_index do |item, index| %>
+        <%# herb:key index %>
+        <a href="<%= affordabox_href(item.link) %>" class="text-dark text-xs"><%= item.label %></a>
+      <% end %>
+    </div>
+    <div class="w-full text-center text-sm mt-6 text-dark">
+      <%= affordabox_copyright(footer.copyright.presence || "{year} - AffordaBox. All rights reserved.") %>
+    </div>
+  </div>
+</footer>

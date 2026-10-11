@@ -1,0 +1,23 @@
+<%# locals: (data:) -%>
+<%# Captioned photos in a grid that open full size, with the count in the corner (src/components/sections/Gallery.astro; affordabox/gallery.js). %>
+<div class="custom-container relative lg:!py-20 py-16" data-gallery>
+  <h2 class="text-3xl font-semibold mb-8 text-center uppercase"><%= data.title %></h2>
+  <div class="bg-[#061B23] absolute text-white rounded-sm flex items-center gap-1 p-1 right-5 bottom-5 z-40">
+    <span class="text-sm w-15"><%= data.items.size %> <%= data.items.size == 1 ? "Photo" : "Photos" %></span>
+    <%= image_tag "affordabox/image-icon.svg", class: "w-3 h-3", alt: "" %>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <% if data.items.empty? %>
+      <p class="text-center text-gray-500 col-span-full">No images available.</p>
+    <% end %>
+    <% data.items.each_with_index do |item, index| %>
+      <%# herb:key index %>
+      <% caption = [item.title, item.description].map { website_plain_text(it) }.compact_blank.join(": ") %>
+      <figure class="gallery-item rounded-lg overflow-hidden cursor-pointer" tabindex="0" role="button" aria-label="Image <%= index + 1 %>: <%= website_plain_text(item.title) %>" data-gallery-item data-caption="<%= caption %>">
+        <%= website_image_tag item.image, alt: website_plain_text(item.description.presence || item.title), class: "w-full h-64 md:h-40 object-cover transition-opacity", sizes: "(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw" %>
+        <figcaption class="sr-only"><%= caption %></figcaption>
+      </figure>
+    <% end %>
+  </div>
+  <%= render "website/shared/lightbox" %>
+</div>

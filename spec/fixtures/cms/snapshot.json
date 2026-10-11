@@ -1,0 +1,6002 @@
+{
+  "block_types": [
+    {
+      "slug": "cta",
+      "label": "Call to action",
+      "category": "Action",
+      "version": 1,
+      "fields": [
+        {
+          "name": "label",
+          "label": "Label",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "url",
+          "label": "Link",
+          "type": "link",
+          "required": true
+        },
+        {
+          "name": "style",
+          "label": "Style",
+          "type": "select",
+          "options": [
+            "primary",
+            "secondary",
+            "ghost"
+          ],
+          "required": true
+        }
+      ],
+      "defaults": {
+        "label": "Get started",
+        "url": {
+          "kind": "url",
+          "value": "/"
+        },
+        "style": "primary"
+      }
+    },
+    {
+      "slug": "two_col_banner",
+      "label": "Banner",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "label": "Words",
+          "type": "text"
+        },
+        {
+          "name": "background",
+          "label": "Background photo",
+          "type": "asset"
+        },
+        {
+          "name": "image",
+          "label": "Photo",
+          "type": "asset"
+        },
+        {
+          "name": "button_label",
+          "label": "Button text",
+          "type": "string"
+        },
+        {
+          "name": "button_link",
+          "label": "Button link",
+          "type": "link"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "bento_grid",
+      "label": "Bento grid",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "cards",
+          "label": "Tiles",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "image",
+              "label": "Photo",
+              "type": "asset"
+            },
+            {
+              "name": "tagline",
+              "label": "Tagline",
+              "type": "string"
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Words",
+              "type": "markdown"
+            },
+            {
+              "name": "button_label",
+              "label": "Button text",
+              "type": "string"
+            },
+            {
+              "name": "button_link",
+              "label": "Button link",
+              "type": "link"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "image_cta",
+      "label": "Call to action",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "label": "Words",
+          "type": "text"
+        },
+        {
+          "name": "background",
+          "label": "Background photo",
+          "type": "asset"
+        },
+        {
+          "name": "image",
+          "label": "Photo",
+          "type": "asset"
+        },
+        {
+          "name": "button_label",
+          "label": "Button text",
+          "type": "string"
+        },
+        {
+          "name": "button_link",
+          "label": "Button link",
+          "type": "link"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "container_listing",
+      "label": "Container listing",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "containers",
+          "label": "Containers",
+          "type": "record_refs",
+          "of_collection": "containers"
+        },
+        {
+          "name": "sidebar",
+          "label": "Sidebar text",
+          "type": "markdown"
+        },
+        {
+          "name": "button_label",
+          "label": "Button text",
+          "type": "string"
+        },
+        {
+          "name": "button_link",
+          "label": "Button link",
+          "type": "link"
+        },
+        {
+          "name": "show_more_label",
+          "label": "Show more button",
+          "type": "string"
+        }
+      ],
+      "defaults": {
+        "show_more_label": "Show More",
+        "button_label": "Get a quote"
+      }
+    },
+    {
+      "slug": "container_slider",
+      "label": "Container slider",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "button_label",
+          "label": "Button text",
+          "type": "string"
+        },
+        {
+          "name": "button_link",
+          "label": "Button link",
+          "type": "link"
+        },
+        {
+          "name": "filters",
+          "label": "Outline buttons",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "label",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        },
+        {
+          "name": "cards",
+          "label": "Cards",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "image",
+              "label": "Photo",
+              "type": "asset"
+            },
+            {
+              "name": "label",
+              "label": "Caption",
+              "type": "string"
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "faqs",
+      "label": "FAQs",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "items",
+          "label": "Questions",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "question",
+              "label": "Question",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "answer",
+              "label": "Answer",
+              "type": "markdown"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "features",
+      "label": "Feature band",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "label": "Words",
+          "type": "text"
+        },
+        {
+          "name": "items",
+          "label": "Features",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "asset"
+            },
+            {
+              "name": "title",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "hours",
+      "label": "Hours and features",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "columns",
+          "label": "Columns",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "show_features",
+              "label": "A list of features rather than hours",
+              "type": "boolean"
+            },
+            {
+              "name": "rows",
+              "label": "Hours",
+              "type": "repeater",
+              "of": [
+                {
+                  "name": "day",
+                  "label": "Day",
+                  "type": "string"
+                },
+                {
+                  "name": "time",
+                  "label": "Time",
+                  "type": "string"
+                },
+                {
+                  "name": "bold",
+                  "label": "Bold",
+                  "type": "boolean"
+                }
+              ]
+            },
+            {
+              "name": "features",
+              "label": "Features",
+              "type": "string_list"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "locations",
+      "label": "Locations",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "label": "Words",
+          "type": "text"
+        },
+        {
+          "name": "button_label",
+          "label": "Card button text",
+          "type": "string"
+        },
+        {
+          "name": "cards",
+          "label": "Locations",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "image",
+              "label": "Photo",
+              "type": "asset"
+            },
+            {
+              "name": "title",
+              "label": "Name",
+              "type": "string"
+            },
+            {
+              "name": "address",
+              "label": "Address",
+              "type": "string"
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "button_label": "View Location"
+      }
+    },
+    {
+      "slug": "logo_slider",
+      "label": "Logo strip",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "logos",
+          "label": "Logos",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "image",
+              "label": "Logo",
+              "type": "asset",
+              "required": true
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "main_hero",
+      "label": "Main hero",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Headline",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "background",
+          "label": "Background",
+          "type": "select",
+          "options": [
+            "video",
+            "image",
+            "none"
+          ]
+        },
+        {
+          "name": "video",
+          "label": "Background video",
+          "type": "asset",
+          "show_if": {
+            "field": "background",
+            "equals": "video"
+          }
+        },
+        {
+          "name": "image",
+          "label": "Background photo",
+          "type": "asset",
+          "help": "Shown behind the headline, or while the video loads."
+        },
+        {
+          "name": "buttons",
+          "label": "Buttons",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "label",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        },
+        {
+          "name": "highlights",
+          "label": "Highlights",
+          "type": "repeater",
+          "help": "The row of icons along the bottom.",
+          "of": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "asset"
+            },
+            {
+              "name": "title",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "background": "image"
+      }
+    },
+    {
+      "slug": "single_hero",
+      "label": "Page header",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "help": "Wrap words in <span class=\"highlighted-title\">…</span> to highlight them."
+        },
+        {
+          "name": "description",
+          "label": "Words below",
+          "type": "text"
+        },
+        {
+          "name": "image",
+          "label": "Photo",
+          "type": "asset"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "image_text",
+      "label": "Photo and long text",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "image",
+          "label": "Photo",
+          "type": "asset"
+        },
+        {
+          "name": "body",
+          "label": "Text",
+          "type": "markdown"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "two_col",
+      "label": "Photo and text",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "body",
+          "label": "Text",
+          "type": "markdown"
+        },
+        {
+          "name": "image",
+          "label": "Photo",
+          "type": "asset"
+        },
+        {
+          "name": "image_on_left",
+          "label": "Photo on the left",
+          "type": "boolean"
+        },
+        {
+          "name": "sticky_image",
+          "label": "Photo stays in view while the text scrolls",
+          "type": "boolean"
+        },
+        {
+          "name": "button_label",
+          "label": "Button text",
+          "type": "string"
+        },
+        {
+          "name": "button_link",
+          "label": "Button link",
+          "type": "link"
+        }
+      ],
+      "defaults": {
+        "image_on_left": true
+      }
+    },
+    {
+      "slug": "photo_gallery",
+      "label": "Photo gallery",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "items",
+          "label": "Photos",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "image",
+              "label": "Photo",
+              "type": "asset",
+              "required": true
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "image_gallery",
+      "label": "Photo grid",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "images",
+          "label": "Photos",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "image",
+              "label": "Photo",
+              "type": "asset",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "products",
+      "label": "Product cards",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string",
+          "help": "For editors; not shown."
+        },
+        {
+          "name": "button_label",
+          "label": "Card button text",
+          "type": "string"
+        },
+        {
+          "name": "cards",
+          "label": "Cards",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "image",
+              "label": "Photo",
+              "type": "asset"
+            },
+            {
+              "name": "description",
+              "label": "Words",
+              "type": "text"
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "button_label": "Learn More"
+      }
+    },
+    {
+      "slug": "quote_form",
+      "label": "Quote form",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Small heading",
+          "type": "string"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "intro",
+          "label": "Intro",
+          "type": "text"
+        }
+      ],
+      "defaults": {
+        "eyebrow": "Get a Quote",
+        "heading": "Request a Quote",
+        "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+      }
+    },
+    {
+      "slug": "testimonials",
+      "label": "Testimonials",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "items",
+          "label": "Reviews",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "rating",
+              "label": "Stars (1–5)",
+              "type": "integer"
+            },
+            {
+              "name": "quote",
+              "label": "Review",
+              "type": "markdown"
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "designation",
+              "label": "Who they are",
+              "type": "string"
+            },
+            {
+              "name": "photo",
+              "label": "Photo",
+              "type": "asset"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "rich_text",
+      "label": "Text",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "body",
+          "label": "Text",
+          "type": "markdown"
+        },
+        {
+          "name": "centered",
+          "label": "Centered",
+          "type": "boolean"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "thank_you",
+      "label": "Thank you",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "label": "Words",
+          "type": "text"
+        },
+        {
+          "name": "call_label",
+          "label": "Call button",
+          "type": "string",
+          "help": "{phone} is the phone number in the Sidebar global."
+        },
+        {
+          "name": "home_label",
+          "label": "Home button",
+          "type": "string"
+        },
+        {
+          "name": "steps_heading",
+          "label": "Steps heading",
+          "type": "string"
+        },
+        {
+          "name": "steps",
+          "label": "Steps",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Words",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "footnote",
+          "label": "Footnote",
+          "type": "text",
+          "help": "{phone} is the phone number, as a link."
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "title_bar",
+      "label": "Title bar",
+      "category": "Affordabox",
+      "version": 1,
+      "fields": [
+        {
+          "name": "title",
+          "label": "Title",
+          "type": "string"
+        },
+        {
+          "name": "image",
+          "label": "Photo",
+          "type": "asset"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "card_grid",
+      "label": "Card grid (legacy)",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text"
+        },
+        {
+          "name": "columns",
+          "label": "Columns",
+          "type": "select",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ],
+          "required": true
+        },
+        {
+          "name": "cards",
+          "label": "Cards",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "icon",
+              "label": "Icon (lucide)",
+              "type": "string"
+            },
+            {
+              "name": "image_id",
+              "label": "Image asset ID",
+              "type": "asset"
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "subtitle",
+              "label": "Subtitle",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text"
+            },
+            {
+              "name": "link_url",
+              "label": "Link",
+              "type": "link"
+            },
+            {
+              "name": "link_label",
+              "label": "Link label",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "columns": "3"
+      }
+    },
+    {
+      "slug": "collection_list",
+      "label": "Collection list",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "collection_slug",
+          "label": "Collection",
+          "type": "string",
+          "required": true,
+          "help": "Slug of the collection to list (e.g. \"beers\")."
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "label": "Intro",
+          "type": "text"
+        },
+        {
+          "name": "filter_status",
+          "label": "Status filter",
+          "type": "select",
+          "options": [
+            "published",
+            "any"
+          ],
+          "required": true,
+          "help": "Limit to published entries (default) or include drafts/archived too."
+        },
+        {
+          "name": "filter_tags",
+          "label": "Filter tags",
+          "type": "string",
+          "help": "Comma-separated. Entries must have all listed tags."
+        },
+        {
+          "name": "sort_by",
+          "label": "Sort by",
+          "type": "select",
+          "options": [
+            "published_at",
+            "updated_at",
+            "created_at",
+            "title"
+          ],
+          "required": true
+        },
+        {
+          "name": "sort_dir",
+          "label": "Direction",
+          "type": "select",
+          "options": [
+            "desc",
+            "asc"
+          ],
+          "required": true
+        },
+        {
+          "name": "limit",
+          "label": "Limit",
+          "type": "integer",
+          "help": "Max entries to show. Leave 0 / blank for all."
+        },
+        {
+          "name": "group_by",
+          "label": "Group by",
+          "type": "string",
+          "help": "Optional frontmatter field to group entries by (e.g. \"section\")."
+        },
+        {
+          "name": "layout",
+          "label": "Layout",
+          "type": "select",
+          "options": [
+            "grid",
+            "list",
+            "featured-first"
+          ],
+          "required": true
+        }
+      ],
+      "defaults": {
+        "filter_status": "published",
+        "sort_by": "published_at",
+        "sort_dir": "desc",
+        "limit": 0,
+        "layout": "grid"
+      }
+    },
+    {
+      "slug": "feature_list",
+      "label": "Feature list",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text"
+        },
+        {
+          "name": "items",
+          "label": "Bullet items",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "text",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "partners_grid",
+      "label": "Partners grid",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text"
+        },
+        {
+          "name": "partners",
+          "label": "Partners",
+          "type": "record_refs",
+          "of_collection": "partners",
+          "required": true
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "pitch",
+      "label": "Pitch",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "questions",
+          "label": "Questions",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "text",
+              "label": "Question",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "cta_label",
+          "label": "CTA label",
+          "type": "string"
+        },
+        {
+          "name": "cta_url",
+          "label": "CTA link",
+          "type": "link"
+        },
+        {
+          "name": "image_id",
+          "label": "Image asset ID",
+          "type": "asset"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "quote",
+      "label": "Quote",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "text",
+          "label": "Quote",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "attribution",
+          "label": "Attribution",
+          "type": "string"
+        }
+      ],
+      "defaults": {
+        "text": "A bold pull-quote captures the essential idea on the page. Trim to one sentence; let it breathe.",
+        "attribution": "— Source name"
+      }
+    },
+    {
+      "slug": "testimonial_grid",
+      "label": "Testimonial grid",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text"
+        },
+        {
+          "name": "testimonials",
+          "label": "Testimonials",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "rating",
+              "label": "Rating (1–5)",
+              "type": "integer"
+            },
+            {
+              "name": "quote",
+              "label": "Quote",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "attribution",
+              "label": "Attribution",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "text",
+      "label": "Text",
+      "category": "Content",
+      "version": 1,
+      "fields": [
+        {
+          "name": "body",
+          "label": "Body (markdown)",
+          "type": "markdown",
+          "required": true
+        }
+      ],
+      "defaults": {
+        "body": "## Your section heading\n\nReplace this paragraph with your content. Markdown formatting is supported — **bold**, *italic*, [links](https://example.com), lists, code, and more."
+      }
+    },
+    {
+      "slug": "columns",
+      "label": "Columns",
+      "category": "Layout",
+      "version": 1,
+      "fields": [
+        {
+          "name": "column_count",
+          "label": "Columns",
+          "type": "select",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ],
+          "required": true
+        },
+        {
+          "name": "items",
+          "label": "Blocks",
+          "type": "blocks",
+          "required": true
+        }
+      ],
+      "defaults": {
+        "column_count": "2"
+      }
+    },
+    {
+      "slug": "divider",
+      "label": "Divider",
+      "category": "Layout",
+      "version": 1,
+      "fields": [
+        {
+          "name": "style",
+          "label": "Style",
+          "type": "select",
+          "options": [
+            "solid",
+            "dashed",
+            "dotted"
+          ],
+          "required": true
+        }
+      ],
+      "defaults": {
+        "style": "solid"
+      }
+    },
+    {
+      "slug": "embed",
+      "label": "Embed",
+      "category": "Media",
+      "version": 1,
+      "fields": [
+        {
+          "name": "url",
+          "label": "URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "name": "kind",
+          "label": "Kind",
+          "type": "select",
+          "options": [
+            "youtube",
+            "vimeo",
+            "twitter",
+            "other"
+          ],
+          "required": true
+        }
+      ],
+      "defaults": {
+        "kind": "youtube"
+      }
+    },
+    {
+      "slug": "gallery",
+      "label": "Gallery",
+      "category": "Media",
+      "version": 1,
+      "fields": [
+        {
+          "name": "items",
+          "label": "Images",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "asset_id",
+              "label": "Image",
+              "type": "asset",
+              "required": true
+            },
+            {
+              "name": "caption",
+              "label": "Caption",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "image",
+      "label": "Image",
+      "category": "Media",
+      "version": 1,
+      "fields": [
+        {
+          "name": "asset_id",
+          "label": "Asset ID",
+          "type": "asset",
+          "required": true
+        },
+        {
+          "name": "alt",
+          "label": "Alt text",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "caption",
+          "label": "Caption",
+          "type": "string"
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "pattern",
+      "label": "Synced pattern",
+      "category": "Patterns",
+      "version": 1,
+      "fields": [
+        {
+          "name": "pattern",
+          "label": "Pattern",
+          "type": "string",
+          "required": true,
+          "help": "The pattern's slug (Content › Patterns)."
+        }
+      ],
+      "defaults": {}
+    },
+    {
+      "slug": "cta_band",
+      "label": "CTA band",
+      "category": "Sections",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text"
+        },
+        {
+          "name": "ctas",
+          "label": "Buttons",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Link",
+              "type": "link",
+              "required": true
+            },
+            {
+              "name": "style",
+              "label": "Style",
+              "type": "select",
+              "options": [
+                "primary",
+                "secondary",
+                "ghost"
+              ],
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "background",
+          "label": "Background",
+          "type": "select",
+          "options": [
+            "primary",
+            "muted",
+            "accent"
+          ],
+          "required": true
+        }
+      ],
+      "defaults": {
+        "heading": "Ready to take the next step?",
+        "body": "Wrap up the page with a clear call to action.",
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": {
+              "kind": "url",
+              "value": "/"
+            },
+            "style": "primary"
+          }
+        ],
+        "background": "primary"
+      }
+    },
+    {
+      "slug": "contact_info",
+      "label": "Contact info",
+      "category": "Sections",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "help": "Optional section heading. Leave blank to omit."
+        },
+        {
+          "name": "body",
+          "label": "Intro",
+          "type": "text"
+        }
+      ],
+      "defaults": {
+        "heading": "Visit Us"
+      }
+    },
+    {
+      "slug": "feature_grid",
+      "label": "Feature grid",
+      "category": "Sections",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string"
+        },
+        {
+          "name": "body",
+          "label": "Intro",
+          "type": "text"
+        },
+        {
+          "name": "columns",
+          "label": "Columns",
+          "type": "select",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ],
+          "required": true
+        },
+        {
+          "name": "items",
+          "label": "Items",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "icon",
+              "label": "Icon (lucide)",
+              "type": "string"
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "body",
+              "label": "Body",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "heading": "Why this works",
+        "columns": "3",
+        "items": [
+          {
+            "icon": "Sparkles",
+            "title": "First benefit",
+            "body": "One short sentence that captures the user value."
+          },
+          {
+            "icon": "Zap",
+            "title": "Second benefit",
+            "body": "Another sharp benefit. Three is the sweet spot for scannability."
+          },
+          {
+            "icon": "Heart",
+            "title": "Third benefit",
+            "body": "Keep them parallel in length and structure."
+          }
+        ]
+      }
+    },
+    {
+      "slug": "hero",
+      "label": "Hero",
+      "category": "Sections",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "subheading",
+          "label": "Subheading",
+          "type": "text"
+        },
+        {
+          "name": "image_id",
+          "label": "Image",
+          "type": "asset"
+        },
+        {
+          "name": "ctas",
+          "label": "Buttons",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Link",
+              "type": "link",
+              "required": true
+            },
+            {
+              "name": "style",
+              "label": "Style",
+              "type": "select",
+              "options": [
+                "primary",
+                "secondary",
+                "ghost"
+              ],
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "heading": "Lead with your strongest line.",
+        "subheading": "A clear sub-headline that supports the hero. Two lines max.",
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": {
+              "kind": "url",
+              "value": "/"
+            },
+            "style": "primary"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "media_text",
+      "label": "Media + text",
+      "category": "Sections",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "markdown",
+          "required": true
+        },
+        {
+          "name": "image_id",
+          "label": "Image",
+          "type": "asset"
+        },
+        {
+          "name": "side",
+          "label": "Image side",
+          "type": "select",
+          "options": [
+            "right",
+            "left"
+          ],
+          "required": true,
+          "help": "Which side of the row the image sits on."
+        },
+        {
+          "name": "background",
+          "label": "Background",
+          "type": "select",
+          "options": [
+            "none",
+            "muted",
+            "accent"
+          ],
+          "required": true
+        },
+        {
+          "name": "cta_label",
+          "label": "CTA label",
+          "type": "string"
+        },
+        {
+          "name": "cta_url",
+          "label": "CTA link",
+          "type": "link"
+        }
+      ],
+      "defaults": {
+        "heading": "Pair an image with words.",
+        "body": "A two-column section that places an image alongside supporting copy. Use it for product highlights, feature explanations, or about-section narratives.",
+        "side": "right",
+        "background": "none"
+      }
+    },
+    {
+      "slug": "stats_section",
+      "label": "Stats",
+      "category": "Sections",
+      "version": 1,
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "label": "Body",
+          "type": "text"
+        },
+        {
+          "name": "image_id",
+          "label": "Image",
+          "type": "asset"
+        },
+        {
+          "name": "stats",
+          "label": "Stats",
+          "type": "repeater",
+          "required": true,
+          "of": [
+            {
+              "name": "value",
+              "label": "Value",
+              "type": "string",
+              "required": true,
+              "help": "Display string, e.g. \"98%\" or \"8,000+\""
+            },
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "defaults": {
+        "heading": "By the numbers",
+        "stats": [
+          {
+            "value": "10+",
+            "label": "Years experience"
+          },
+          {
+            "value": "1,000+",
+            "label": "Happy customers"
+          },
+          {
+            "value": "98%",
+            "label": "Satisfaction rate"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "heading",
+      "label": "Heading",
+      "category": "Text",
+      "version": 1,
+      "fields": [
+        {
+          "name": "level",
+          "label": "Level",
+          "type": "select",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "required": true
+        },
+        {
+          "name": "text",
+          "label": "Text",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "defaults": {
+        "level": "2",
+        "text": "Heading"
+      }
+    }
+  ],
+  "collections": [
+    {
+      "slug": "containers",
+      "name": "Containers",
+      "enable_blocks": false,
+      "schema": {
+        "fields": [
+          {
+            "name": "image",
+            "label": "Photo",
+            "type": "asset"
+          },
+          {
+            "name": "price",
+            "label": "Price ($)",
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "label": "Size",
+            "type": "string",
+            "help": "e.g. 20 ft. The filters drop a trailing \"ft\"."
+          },
+          {
+            "name": "height",
+            "label": "Height",
+            "type": "string"
+          },
+          {
+            "name": "condition",
+            "label": "Condition",
+            "type": "select",
+            "options": [
+              "new",
+              "used"
+            ]
+          },
+          {
+            "name": "delivery_time",
+            "label": "Delivery time",
+            "type": "string",
+            "help": "Blank shows 3-5 days."
+          },
+          {
+            "name": "link",
+            "label": "Link",
+            "type": "link"
+          },
+          {
+            "name": "button_label",
+            "label": "Button text",
+            "type": "string",
+            "help": "Blank shows Get a quote."
+          },
+          {
+            "name": "categories",
+            "label": "Categories",
+            "type": "string_list"
+          },
+          {
+            "name": "order",
+            "label": "Order",
+            "type": "integer"
+          }
+        ]
+      }
+    }
+  ],
+  "globals": [
+    {
+      "slug": "footer",
+      "name": "Footer",
+      "data": {
+        "logo": "116",
+        "columns": [
+          {
+            "heading": "About",
+            "items": [
+              {
+                "label": "How it Works",
+                "link": {
+                  "kind": "url",
+                  "value": "/portable-container-sizes"
+                }
+              },
+              {
+                "label": "Contact Us",
+                "link": {
+                  "kind": "page",
+                  "value": "contact-us"
+                }
+              },
+              {
+                "label": "About Us",
+                "link": {
+                  "kind": "url",
+                  "value": "/who-we-are"
+                }
+              }
+            ]
+          },
+          {
+            "heading": "Services",
+            "items": [
+              {
+                "label": "Moving",
+                "link": {
+                  "kind": "url",
+                  "value": "/moving-overview"
+                }
+              },
+              {
+                "label": "Storage",
+                "link": {
+                  "kind": "url",
+                  "value": "/storage-overview"
+                }
+              },
+              {
+                "label": "Affordabox Portable Storage Containers",
+                "link": {
+                  "kind": "url",
+                  "value": "/portable-container-sizes"
+                }
+              }
+            ]
+          },
+          {
+            "heading": "Resources",
+            "items": [
+              {
+                "label": "FAQs",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Locations",
+                "link": {
+                  "kind": "url",
+                  "value": "/locations"
+                }
+              },
+              {
+                "label": "What To Expect When Moving",
+                "link": {
+                  "kind": "url",
+                  "value": "/storage-tips"
+                }
+              }
+            ]
+          }
+        ],
+        "socials_heading": "Follow Us",
+        "socials": [
+          {
+            "label": "Facebook",
+            "link": {
+              "kind": "url",
+              "value": "Facebook"
+            },
+            "icon": "117"
+          },
+          {
+            "label": "Youtube",
+            "link": {
+              "kind": "url",
+              "value": "Youtube"
+            },
+            "icon": "118"
+          },
+          {
+            "label": "Instagram",
+            "link": {
+              "kind": "url",
+              "value": "Instagram"
+            },
+            "icon": "119"
+          }
+        ],
+        "legal_links": [
+          {
+            "label": "Terms & Conditions",
+            "link": {
+              "kind": "url",
+              "value": "/terms-and-conditions"
+            }
+          },
+          {
+            "label": "Privacy Policy",
+            "link": {
+              "kind": "url",
+              "value": "/privacy-policy"
+            }
+          }
+        ],
+        "copyright": "{year} - AffordaBox. All rights reserved."
+      },
+      "fields": [
+        {
+          "name": "logo",
+          "label": "Logo",
+          "type": "asset"
+        },
+        {
+          "name": "columns",
+          "label": "Columns",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string"
+            },
+            {
+              "name": "items",
+              "label": "Links",
+              "type": "repeater",
+              "of": [
+                {
+                  "name": "label",
+                  "label": "Label",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "link",
+                  "label": "Link",
+                  "type": "link"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "socials_heading",
+          "label": "Social heading",
+          "type": "string"
+        },
+        {
+          "name": "socials",
+          "label": "Social links",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "label",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            },
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "asset"
+            }
+          ]
+        },
+        {
+          "name": "legal_links",
+          "label": "Legal links",
+          "type": "repeater",
+          "of": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            }
+          ]
+        },
+        {
+          "name": "copyright",
+          "label": "Copyright line",
+          "type": "string",
+          "help": "{year} is this year."
+        }
+      ]
+    },
+    {
+      "slug": "nav",
+      "name": "Top bar",
+      "data": {
+        "items": [
+          {
+            "label": "Container Sales",
+            "link": {
+              "kind": "page",
+              "value": "shipping-containers-sale"
+            },
+            "icon": "104"
+          },
+          {
+            "label": "Portable Storage",
+            "icon": "105"
+          },
+          {
+            "label": "Self-Storage",
+            "link": {
+              "kind": "page",
+              "value": "storage-locations"
+            },
+            "icon": "106"
+          },
+          {
+            "label": "Dumpster Rentals",
+            "link": {
+              "kind": "page",
+              "value": "dumpster-rentals"
+            },
+            "icon": "104"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "name": "items",
+          "label": "Items",
+          "type": "repeater",
+          "help": "The icon links across the top of pages with the standard top bar.",
+          "of": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            },
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "asset"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "scripts",
+      "name": "Scripts",
+      "data": {
+        "items": []
+      },
+      "fields": [
+        {
+          "name": "items",
+          "label": "Scripts",
+          "type": "repeater",
+          "help": "Add one entry per script (analytics, pixels, fonts, etc.).",
+          "of": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true,
+              "help": "Internal label, e.g. 'GA4', 'Meta Pixel'."
+            },
+            {
+              "name": "head",
+              "label": "Head",
+              "type": "text",
+              "help": "Pasted into <head>."
+            },
+            {
+              "name": "body",
+              "label": "Body",
+              "type": "text",
+              "help": "Pasted just before the closing </body> tag."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sidebar",
+      "name": "Sidebar",
+      "data": {
+        "logo": "107",
+        "phone": "(833) 468-2269",
+        "items": [
+          {
+            "label": "Shipping Container Sales",
+            "link": {
+              "kind": "page",
+              "value": "shipping-containers-sale"
+            },
+            "icon": "108"
+          },
+          {
+            "label": "Shipping Container Rentals",
+            "link": {
+              "kind": "page",
+              "value": "shipping-containers-rental"
+            },
+            "icon": "108"
+          },
+          {
+            "label": "Dumpster Rentals",
+            "link": {
+              "kind": "page",
+              "value": "dumpster-rentals"
+            },
+            "icon": "109"
+          },
+          {
+            "label": "Portable Storage & Moving",
+            "icon": "110"
+          },
+          {
+            "label": "Self-Storage Monticello",
+            "link": {
+              "kind": "page",
+              "value": "self-storage-monticello"
+            },
+            "icon": "111"
+          },
+          {
+            "label": "Self-Storage St. Michael",
+            "link": {
+              "kind": "page",
+              "value": "self-storage-st-michael"
+            },
+            "icon": "112"
+          },
+          {
+            "label": "Gallery",
+            "link": {
+              "kind": "page",
+              "value": "gallery"
+            },
+            "icon": "113"
+          },
+          {
+            "label": "Search",
+            "link": {
+              "kind": "url",
+              "value": "#"
+            },
+            "icon": "114"
+          },
+          {
+            "label": "Contact Us",
+            "link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "icon": "115"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "name": "logo",
+          "label": "Logo",
+          "type": "asset"
+        },
+        {
+          "name": "phone",
+          "label": "Phone number",
+          "type": "string"
+        },
+        {
+          "name": "items",
+          "label": "Items",
+          "type": "repeater",
+          "help": "The sidebar's links; the compact top bar shows the first five, then a More menu.",
+          "of": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "link",
+              "label": "Link",
+              "type": "link"
+            },
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "asset"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "site_settings",
+      "name": "Site settings",
+      "data": {
+        "favicon": "120",
+        "listing": {
+          "process_heading": "Buying online is easy",
+          "steps": [
+            {
+              "title": "Choose container",
+              "icon": "121"
+            },
+            {
+              "title": "Pick delivery date",
+              "icon": "122"
+            },
+            {
+              "title": "Receive container",
+              "icon": "123"
+            }
+          ],
+          "reasons_heading": "Why buy from Affordabox?",
+          "reasons": [
+            {
+              "text": "we **Service and deliver** your container",
+              "icon": "124"
+            },
+            {
+              "text": "**Shortest** lead time in industry",
+              "icon": "125"
+            },
+            {
+              "text": "**Warranty** on all of our container",
+              "icon": "127"
+            }
+          ]
+        },
+        "not_found": {
+          "heading": "Page not found",
+          "body": "The page you're looking for isn't here. It may have moved, or the link may be mistyped.",
+          "button_label": "Back to Home"
+        }
+      },
+      "fields": [
+        {
+          "name": "favicon",
+          "label": "Favicon",
+          "type": "asset"
+        },
+        {
+          "name": "share_image",
+          "label": "Default sharing image",
+          "type": "asset"
+        },
+        {
+          "name": "listing",
+          "label": "Container listing sidebar",
+          "type": "group",
+          "of": [
+            {
+              "name": "process_heading",
+              "label": "Process heading",
+              "type": "string"
+            },
+            {
+              "name": "steps",
+              "label": "Process steps",
+              "type": "repeater",
+              "of": [
+                {
+                  "name": "title",
+                  "label": "Step",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "icon",
+                  "label": "Icon",
+                  "type": "asset"
+                }
+              ]
+            },
+            {
+              "name": "reasons_heading",
+              "label": "Reasons heading",
+              "type": "string"
+            },
+            {
+              "name": "reasons",
+              "label": "Reasons",
+              "type": "repeater",
+              "of": [
+                {
+                  "name": "text",
+                  "label": "Reason",
+                  "type": "markdown",
+                  "required": true
+                },
+                {
+                  "name": "icon",
+                  "label": "Icon",
+                  "type": "asset"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "not_found",
+          "label": "Page not found",
+          "type": "group",
+          "of": [
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "label": "Words",
+              "type": "text"
+            },
+            {
+              "name": "button_label",
+              "label": "Button",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "path": "thank-you",
+      "slug": "thank-you",
+      "title": "Thank you",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "thank_you",
+          "version": 1,
+          "data": {
+            "heading": "Thank You!",
+            "body": "We've received your request and a storage specialist is already on it. Keep an eye on your inbox — a confirmation is on its way.",
+            "call_label": "Need it sooner? Call {phone}",
+            "home_label": "Back to Home",
+            "steps_heading": "What Happens Next",
+            "steps": [
+              {
+                "title": "We review your request",
+                "body": "A specialist reads through the details you sent and puts together pricing for your location."
+              },
+              {
+                "title": "We reach out",
+                "body": "You'll hear from us by phone or email, usually the same business day, with your quote and available delivery dates."
+              },
+              {
+                "title": "We deliver",
+                "body": "Pick the option that fits, and we'll schedule the drop-off on the day you need it."
+              }
+            ],
+            "footnote": "Didn't get a confirmation email? Check your spam folder, or call us at {phone}."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {
+        "meta_title": "Thank You | Affordabox",
+        "meta_description": "Thanks for reaching out to Affordabox. A specialist will be in touch with your quote shortly.",
+        "noindex": true
+      }
+    },
+    {
+      "path": "test",
+      "slug": "test",
+      "title": "test",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "test-1",
+              "ttttttt-2"
+            ],
+            "sidebar": "## Have questions?\nCall our specialists at\n\n[(833) 468-2269](tel:18334682269). We are open Mon-Fri 8am-4pm CST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "storage-locations",
+      "slug": "storage-locations",
+      "title": "Self Storage Location",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "main_hero",
+          "version": 1,
+          "data": {
+            "title": "Premier Self Storage Serving Monticello & St. Michael",
+            "background": "image",
+            "image": "102",
+            "buttons": [
+              {
+                "label": "Monticello Location",
+                "link": {
+                  "kind": "page",
+                  "value": "self-storage-monticello"
+                }
+              },
+              {
+                "label": "St. Michael Location"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "# **St. Michael Storage Unit Rentals**\n\nAffordable Storage is a convenient self storage facility in Saint Michael that offers hundreds of affordable storage unit options for household items, furnishings, tools, and more. We specialize in drive-up & climate controlled storage units that are secure, clean & easily accessible. \n\nWe are conveniently located off highway 19 with easy access off 30th street. Our location is well marked with signage from all major roadways.\n\n Whether you're moving and temporarily need storage or simply just need some extra space to store your things, Affordable Storage has the size you need at a competitive price you will enjoy. Call today and learn more about our move-in discounts!",
+            "image": "57",
+            "image_on_left": false,
+            "sticky_image": false
+          }
+        },
+        {
+          "type": "hours",
+          "version": 1,
+          "data": {
+            "heading": "About This Location",
+            "columns": [
+              {
+                "title": "Office Hours",
+                "show_features": false,
+                "rows": [
+                  {
+                    "day": "Monday",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Tuesday",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Wednesday",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Thursday",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Friday",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Saturday",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Sunday",
+                    "time": "Closed",
+                    "bold": false
+                  }
+                ]
+              },
+              {
+                "title": "Access Hours",
+                "show_features": false,
+                "rows": [
+                  {
+                    "day": "Monday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Tuesday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Wednesday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Thursday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Friday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Saturday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Sunday",
+                    "time": "6am - 10pm",
+                    "bold": false
+                  }
+                ]
+              },
+              {
+                "title": "Features and Amenities",
+                "show_features": true,
+                "rows": [
+                  {
+                    "day": "Drive-Up Storage",
+                    "bold": false
+                  },
+                  {
+                    "day": "Climate Controlled Storage",
+                    "bold": false
+                  },
+                  {
+                    "bold": false
+                  }
+                ],
+                "features": [
+                  "Drive-Up Storage",
+                  "Climate Controlled Storage",
+                  "Electronic Gate Access",
+                  "Security Cameras Throughout",
+                  "Month to Month Rentals"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "image_cta",
+          "version": 1,
+          "data": {
+            "title": "Learn More About Our St. Michael Location",
+            "background": "103",
+            "button_label": "Monticello Location",
+            "button_link": {
+              "kind": "page",
+              "value": "self-storage-monticello"
+            }
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "nationwide-inventory",
+      "slug": "nationwide-inventory",
+      "title": "Inventory",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "single_hero",
+          "version": 1,
+          "data": {
+            "title": "Nationwide Shipping Container Inventory"
+          }
+        },
+        {
+          "type": "rich_text",
+          "version": 1,
+          "data": {
+            "body": "[**Log-in**](https://www.conexwest.com/register)**to access container inventory. If you don't have an account, please [register](https://www.conexwest.com/register) for access.**\n\n**NOTES** ST= Standard / STL = Steel / ALU = Aluminum / HC = High Cube / OS = Open Side / DD = Doors on both ends / OT = Open Top/ FR = Flat Rack / RF = Refrigerated Container\n\n[**Log**](https://www.conexwest.com/register)",
+            "centered": true
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        },
+        {
+          "type": "hours",
+          "version": 1,
+          "data": {
+            "heading": "About This Location",
+            "columns": [
+              {
+                "title": "Access Hours",
+                "show_features": false,
+                "rows": [
+                  {
+                    "day": "Mon",
+                    "time": "6:00am - 9:00pm",
+                    "bold": true
+                  },
+                  {
+                    "day": "Tue",
+                    "time": "6:00am - 9:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Wed",
+                    "time": "6:00am - 9:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Thu",
+                    "time": "6:00am - 9:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Fri",
+                    "time": "6:00am - 9:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Sat",
+                    "time": "6:00am - 9:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Sun",
+                    "time": "6:00am - 9:00pm",
+                    "bold": false
+                  }
+                ]
+              },
+              {
+                "title": "Office Hours",
+                "show_features": false,
+                "rows": [
+                  {
+                    "day": "Mon",
+                    "time": "9:30am - 6:00pm",
+                    "bold": true
+                  },
+                  {
+                    "day": "Tue",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Wed",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Thu",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Fri",
+                    "time": "9:30am - 6:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Sat",
+                    "time": "8:30am - 5:00pm",
+                    "bold": false
+                  },
+                  {
+                    "day": "Sun",
+                    "time": "Closed",
+                    "bold": false
+                  }
+                ]
+              },
+              {
+                "title": "Features and Amenities",
+                "show_features": true,
+                "features": [
+                  "Drive Up Access",
+                  "Electronic Gated Access",
+                  "Video Recording",
+                  "Employee(s) Speak Spanish",
+                  "Kure It Certified Location"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "faqs",
+          "version": 1,
+          "data": {
+            "title": "Frequently Asked Questions",
+            "items": [
+              {
+                "question": "How long does delivery take?"
+              },
+              {
+                "question": "How much does it cost to deliver a shipping container?"
+              },
+              {
+                "question": "Does it cost more to deliver a 40ft shipping container than a 20ft container?"
+              },
+              {
+                "question": "Can I inspect the shipping container before purchasing?"
+              },
+              {
+                "question": "Is there sales tax on the purchase of a shipping container?"
+              },
+              {
+                "question": "Do you offer discounts for bulk purchases?"
+              },
+              {
+                "question": "Can I customize my shipping container?"
+              },
+              {
+                "question": "How secure are Affordabox containers?"
+              },
+              {
+                "question": "Do you sell refrigerated or insulated containers?"
+              },
+              {
+                "question": "How should I prepare my site for delivery?"
+              },
+              {
+                "question": "What payment options are available?"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "shipping-containers-rental",
+      "slug": "shipping-containers-rental",
+      "title": "Shipping Containers Rental",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "title_bar",
+          "version": 1,
+          "data": {
+            "title": "Shipping Container Rentals",
+            "image": "101"
+          }
+        },
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "20-standard-7d71c6",
+              "20-standard-double-door-1-trip-ddf302",
+              "20-hc-new-one-trip-1eab05",
+              "40-standard-90cf9a",
+              "40-one-trip-high-cube-a58581",
+              "40-hc-double-door-7b4a3c"
+            ],
+            "sidebar": "## Have questions?\nCall our specialists at\n\n[(833) 468-2269](tel:18334682269). We are open Mon-Fri 8am-4pm CST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        },
+        {
+          "type": "faqs",
+          "version": 1,
+          "data": {
+            "title": "FAQS",
+            "items": [
+              {
+                "question": "How much space do I need for delivery?",
+                "answer": "<ul>\n<li data-start=\"1192\" data-end=\"1241\">\n<p data-start=\"1194\" data-end=\"1241\"><strong data-start=\"1194\" data-end=\"1213\">20ft container:</strong> approx. 60ft of clearance</p>\n</li>\n<li data-start=\"1242\" data-end=\"1292\">\n<p data-start=\"1244\" data-end=\"1292\"><strong data-start=\"1244\" data-end=\"1263\">40ft container:</strong> approx. 100ft of clearance</p>\n</li>\n<li data-start=\"1293\" data-end=\"1376\">\n<p data-start=\"1295\" data-end=\"1376\">A flat, solid surface is recommended (asphalt, concrete, gravel, or firm ground).</p>\n</li>\n</ul>"
+              },
+              {
+                "question": "What condition are the containers in?",
+                "answer": "<p data-start=\"1434\" data-end=\"1486\">We offer <strong data-start=\"1443\" data-end=\"1461\">new (one-trip)</strong> and <strong data-start=\"1466\" data-end=\"1474\">used</strong> containers:</p>\n<ul data-start=\"1487\" data-end=\"1603\">\n<li data-start=\"1487\" data-end=\"1531\">\n<p data-start=\"1489\" data-end=\"1531\"><em data-start=\"1489\" data-end=\"1494\">New</em>: clean, weatherproof, minimal wear</p>\n</li>\n<li data-start=\"1532\" data-end=\"1603\">\n<p data-start=\"1534\" data-end=\"1603\"><em data-start=\"1534\" data-end=\"1540\">Used</em>: fully wind- and water-tight, checked for structural integrity</p>\n</li>\n</ul>"
+              },
+              {
+                "question": "Do I need any permits?",
+                "answer": "<p>Most customers <strong data-start=\"1661\" data-end=\"1684\">do not need permits</strong> for temporary storage.<br data-start=\"1707\" data-end=\"1710\">Permanent placement may require local approval &mdash; it depends on your city/county rules.</p>"
+              },
+              {
+                "question": "Can the container be placed on grass or dirt?",
+                "answer": "<p>Yes, but a <strong data-start=\"1873\" data-end=\"1910\">level, solid surface is preferred</strong>. Blocks or railroad ties can be used to improve leveling.</p>"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "buy",
+      "slug": "buy",
+      "title": "Buy",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "title_bar",
+          "version": 1,
+          "data": {
+            "title": "Shipping containers for sale"
+          }
+        },
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "20ft-used-certified-shipping-container-1267a4",
+              "40ft-used-certified-shipping-container-68db3b",
+              "20-high-cube-001ee8",
+              "40-high-cube-6793a7",
+              "20-side-door-ab91ac",
+              "40-side-door-4106b6",
+              "40-double-door-9468d2",
+              "20-double-door-0e8d9e",
+              "40-shipping-container-939553",
+              "20-standard-container-92ff61",
+              "15-yard-dumpster-143995",
+              "25-yard-dumpster-56e22e",
+              "20-yard-dumpster-85d344",
+              "10-yard-dumpster-b7ee06"
+            ],
+            "sidebar": "## Have questions?\nCall our specialists at\n\n(855) 878-5233. We are open Mon-Fri 8am-4pm CST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "cart",
+      "slug": "cart",
+      "title": "Cart",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "two_col_banner",
+          "version": 1,
+          "data": {
+            "heading": "Shopping Cart",
+            "background": "3"
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "delivery",
+      "slug": "delivery",
+      "title": "Delivery",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "single_hero",
+          "version": 1,
+          "data": {
+            "title": "Reliable Container Delivery Service"
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "Container & White Box Delivery Options",
+            "button_label": "Shop all containers",
+            "button_link": {
+              "kind": "url",
+              "value": "#"
+            },
+            "filters": [
+              {
+                "label": "The Mule Delivery System",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Tilt Bed Truck & Trailer",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ],
+            "cards": [
+              {
+                "image": "20",
+                "label": "20' Shipping Container",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "27",
+                "label": "Rent 15 Yard Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## **Tilt-Bed Truck Delivery**\n\n### _Best for urban areas, tight spaces, and limited-access sites._\n\nOur **Tilt-Bed Truck** is ideal for delivering shipping containers up to **24 feet in length** or a combination of smaller units (e.g., two 10-foot containers). This is our most compact delivery truck, designed for **tight spaces, city deliveries, mountain roads, and restricted-access locations**.\n\n✅ **Delivery Process:**\n\n• The truck backs up to the designated drop-off location.\n\n• The bed tilts, allowing the container to slide off smoothly into position.\n\n• Requires a **minimum of 60 feet of straight-line clearance** for safe unloading.\n\n🚛 **Important Considerations:**\n\n• Let us know if you have clearance concerns at the site or along the delivery route.\n\n• We can preview the route before delivery to ensure a smooth process.\n\n• When placing your order, you’ll choose whether the container doors face the cab or rear of the truck—this determines the final door placement upon delivery.\n\n• **Best for 24’ and smaller rental storage containers.**\n\nGet a Quote",
+            "image": "99",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## **Tilt-Bed Truck & Trailer Delivery**\n\n### _Ideal for larger containers and multi-container deliveries._\n\nFor **containers up to 45 feet in length**, we use a **Tilt-Bed Truck & Trailer** combo. This setup can transport **multiple units**, including **two 20-foot containers or four 10-foot containers**, making it a great option for bulk deliveries.\n\n✅ **Delivery Process:**\n\n• The truck backs up to your desired placement location.\n\n• The trailer tilts, and the container smoothly rolls off into position.\n\n• Requires **at least 100 feet of straight-line clearance** for proper unloading.\n\n🚛 **Important Considerations:**\n\n• Ensure adequate clearance at the delivery site and along the access route.\n\n• We offer **route previews** to confirm delivery feasibility.\n\n• Specify whether you want the container doors facing the **cab or rear of the truck** before delivery.\n\n• **Best for larger storage solutions, including 40’ standard, 40’ high cube, and 45’ high cube containers.**",
+            "image": "100",
+            "image_on_left": false,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## Delivery requirements\n\nTo ensure a **smooth and hassle-free** container delivery using our **hydraulic tilt trailer**, please ensure the following space requirements:\n\n**Straight, Unobstructed Space Needed:**\n\n• **20-Foot Container** – At least **110 feet** of straight, open space.\n\n• **40-Foot Container** – At least **130 feet** of straight, open space.\n\n**Height Clearance:**\n\n• **Driving Clearance** – A minimum of **14 feet** required.\n\n• **Unloading Clearance** – A minimum of **22 feet** along the entire unloading path to accommodate the trailer’s lift.\n\n**Width Clearance:**\n\n• A **minimum of 10 feet** is required along the delivery path.\n\n**Important Considerations:**\n\n• Measurement starts from where the container will be placed and extends **forward in a straight line**.\n\n• The delivery truck **cannot turn** within the **110’ or 130’ required space**.",
+            "image": "101",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        },
+        {
+          "type": "faqs",
+          "version": 1,
+          "data": {
+            "title": "Frequently Asked Questions",
+            "items": [
+              {
+                "question": "How long does delivery take?"
+              },
+              {
+                "question": "How much does it cost to deliver a shipping container?"
+              },
+              {
+                "question": "Does it cost more to deliver a 40ft shipping container than a 20ft container?"
+              },
+              {
+                "question": "Can I inspect the shipping container before purchasing?"
+              },
+              {
+                "question": "Is there sales tax on the purchase of a shipping container?"
+              },
+              {
+                "question": "Do you offer discounts for bulk purchases?"
+              },
+              {
+                "question": "Can I customize my shipping container?"
+              },
+              {
+                "question": "How secure are Affordabox containers?"
+              },
+              {
+                "question": "Do you sell refrigerated or insulated containers?"
+              },
+              {
+                "question": "Do you sell 53’ shipping containers?"
+              },
+              {
+                "question": "How should I prepare my site for delivery?"
+              },
+              {
+                "question": "What payment options are available?"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "self-storage-saint-michael",
+      "slug": "self-storage-saint-michael",
+      "title": "Self Storage - Saint Michael",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "single_hero",
+          "version": 1,
+          "data": {
+            "title": "Drive-Up Storage Units in Monticello, MN",
+            "description": "Fast & friendly service. Variety of sizes. Secure PIN access.",
+            "image": "57"
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "Storage Unit Sizes",
+            "filters": [
+              {
+                "label": "Drive-Up Storage",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Drive-Up Storage X-Large Roll-Up Door",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ],
+            "cards": [
+              {
+                "image": "68",
+                "label": "5' x 10' Drive-Up",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "69",
+                "label": "10' x 10' Drive Up",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "70",
+                "label": "10' x 15' Drive-Up"
+              },
+              {
+                "image": "71",
+                "label": "10' x 20' Drive-Up"
+              },
+              {
+                "image": "72",
+                "label": "10' x 30' Drive-Up"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "**What is Drive-Up Storage?**\nDrive-up storage is the gold standard for accessibility in the self-storage industry. Imagine an extension of your own garage that you can access on your schedule—that is essentially what a drive-up unit offers. Unlike interior climate-controlled units that might require navigating hallways or elevators, drive-up units are located on the ground level with exterior roll-up doors.\n\nYou simply pull your vehicle directly up to the door of your unit, roll it up, and start loading or unloading. There is no need to carry heavy boxes across icy parking lots or maneuver awkward furniture through narrow corridors. It is a straightforward, \"park and load\" experience designed to save you time and physical effort.\n\n**The Benefits of Drive-Up Storage**\nFor our Monticello customers, drive-up access is more than just a convenience—it’s a necessity for the seasons. Here is why this feature is our most requested:\n\n- **Effortless Loading in Any Weather:** In Minnesota, speed matters when the temperature drops. Drive-up access allows you to back your vehicle right up to the unit lip, minimizing the time you spend exposed to the elements.\n\n- **Ideal for Heavy & Bulky Items:** If you are a contractor storing tools or a homeowner moving a sectional sofa, avoiding long walks and elevators is a game-changer. You can transfer items directly from your truck bed or trailer into the unit with zero hassle.\n\n- **Vehicle & Recreational Storage:** Our larger drive-up units (such as the 10’x24’, 10’x30’, and 20’x30’ sizes) are perfect for storing the toys that make living in Wright County fun. Many of our units feature extra-large 10’x10’ overhead doors, specifically designed to accommodate taller items like boats with wakeboard towers, fish houses, or campers.\n\n- **Time Efficiency:** Whether you are grabbing camping gear for a weekend at Lake Maria State Park or picking up inventory for your business, you can get in and out in minutes.",
+            "image": "21",
+            "image_on_left": false,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "features",
+          "version": 1,
+          "data": {
+            "title": "Locally Owned Self Storage Units in Monticello, MN",
+            "description": "Offering you down-to-earth service & online-discounts.",
+            "items": [
+              {
+                "icon": "76",
+                "title": "Secure Facility"
+              },
+              {
+                "icon": "76",
+                "title": "Excellent Customer Service"
+              },
+              {
+                "icon": "76",
+                "title": "Gate Access"
+              },
+              {
+                "icon": "76",
+                "title": "Drive-Up Storage Units"
+              },
+              {
+                "icon": "76",
+                "title": "Convenient"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "**Why Choose Affordable Storage?**\nWith other options available in Wright County, why is Affordable Storage the top choice for Monticello residents?\n\n**Massive Variety of Sizes:** We don’t believe in \"one size fits all.\" We offer a huge range of sizes, from compact 5’x10’ units for seasonal decluttering to massive 20’x30’ units that can hold the contents of a five-bedroom home or a fleet of business equipment.\n\n**Specialized Doors for MN Toys:** Unlike many competitors, our larger units feature optional 10’x10’ doors, ensuring your tall boat or trailer actually fits.\n\n**Local Ownership:** We are proud to serve the local community, from Monticello and St. Michael to Albertville and Otsego. We also operate Affordabox, our sister company for portable storage needs, showing our dedication to solving every storage problem you might have.\n\n**Flexible & Economical:** As our name suggests, we are committed to providing premium storage solutions that are actually affordable. We offer competitive rates and a straightforward rental process.\n\nAt Affordable Storage, we are dedicated to simplifying your life by giving you the space you need. Contact us today to reserve your drive-up unit and experience the difference of storing with the best in Monticello.",
+            "image": "98",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "image_gallery",
+          "version": 1,
+          "data": {
+            "title": "Gallery",
+            "images": [
+              {
+                "image": "78"
+              },
+              {
+                "image": "79"
+              },
+              {
+                "image": "80"
+              },
+              {
+                "image": "81"
+              },
+              {
+                "image": "82"
+              },
+              {
+                "image": "83"
+              },
+              {
+                "image": "53"
+              },
+              {
+                "image": "84"
+              },
+              {
+                "image": "85"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locations",
+          "version": 1,
+          "data": {
+            "title": "Our Local Minnesota Locations",
+            "description": "Our two beautiful self-storage facilities featuring drive-up, indoor & climate controlled storage units in Monticello & St. Michael.",
+            "button_label": "View Location",
+            "cards": [
+              {
+                "image": "86",
+                "title": "Affordable Storage Monticello",
+                "address": "10111 Innsbrook Dr, Monticello, MN 55362",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "57",
+                "title": "Self Storage St. Michael",
+                "address": "10959 30th St NE, St Michael, MN 55376",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        },
+        {
+          "type": "testimonials",
+          "version": 1,
+          "data": {
+            "title": "5 out of 5 Stars Can't Be Wrong",
+            "items": [
+              {
+                "rating": 5,
+                "quote": "<p>I had a great and wonderful experience at this place for a whole year. Kris was the person who I was in contact with at all time. She was very awesome, kind, humble, easy to talk to and work with. She listens to you and directs you to the right directions to go. Kris, thank you so much for you time and effort...and your kindness...may God bless u...keep up the good works</p>",
+                "name": "Love Okojie",
+                "designation": "Google"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {
+        "meta_title": "Self Storage - Saint Michael"
+      }
+    },
+    {
+      "path": "dumpster-rentals",
+      "slug": "dumpster-rentals",
+      "title": "Dumpster Rentals",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "title_bar",
+          "version": 1,
+          "data": {
+            "title": "Roll Off Dumpster Rentals",
+            "image": "56"
+          }
+        },
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "10-yard-dumpster-b7ee06",
+              "15-yard-dumpster-143995",
+              "20-yard-dumpster-85d344",
+              "25-yard-dumpster-56e22e",
+              "30-yard-dumpster-ccf193"
+            ],
+            "sidebar": "## Have questions?\nCall our specialists at\n\n[(833) 468-2269](tel:18334682269). We are open Mon-Fri 8am-4pm CST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        },
+        {
+          "type": "faqs",
+          "version": 1,
+          "data": {
+            "title": "FAQs",
+            "items": [
+              {
+                "question": "How long is the standard rental period?",
+                "answer": "<p data-start=\"302\" data-end=\"453\">Your standard rental includes a <strong>7-day rental period</strong>.</p>"
+              },
+              {
+                "question": "What is the weight limit included in the base price?",
+                "answer": "<p data-start=\"538\" data-end=\"659\">Your rental covers up to <strong>5,000 lbs</strong> of waste.</p>"
+              },
+              {
+                "question": "What happens if I go over the 5,000 lb weight limit?",
+                "answer": "<p data-start=\"828\" data-end=\"941\">Any weight exceeding 5,000 lbs will be charged at <strong>$0.10 per pound</strong>. This overage fee is charged once the dumpster is weighed at the landfill.</p>"
+              },
+              {
+                "question": "Is there a line I need to be aware of when filling the dumpster?",
+                "answer": "<p>Yes. <strong>Please do not fill the dumpster above the \"Do Not Fill Above\" line.</strong></p>"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "self-storage-st-michael",
+      "slug": "self-storage-st-michael",
+      "title": "Self-Storage St. Michael",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "single_hero",
+          "version": 1,
+          "data": {
+            "title": "Drive-Up & Climate Controlled Storage Units in St. Michael",
+            "description": "Fast & friendly service. Secure & well lit. Security PIN access.",
+            "image": "57"
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "Storage Unit Selection",
+            "filters": [
+              {
+                "label": "Drive-Up Storage"
+              },
+              {
+                "label": "Climate Controlled Storage"
+              }
+            ],
+            "cards": [
+              {
+                "image": "87",
+                "label": "5x10 Drive-Up"
+              },
+              {
+                "image": "88",
+                "label": "10x10 Drive-Up"
+              },
+              {
+                "image": "89",
+                "label": "10x15 Drive-Up"
+              },
+              {
+                "image": "90",
+                "label": "10x20 Climate Controlled"
+              },
+              {
+                "image": "91",
+                "label": "10x25 Drive-Up"
+              },
+              {
+                "image": "92",
+                "label": "10x30 Drive-Up"
+              },
+              {
+                "image": "93",
+                "label": "11x30 (features a large 10’x10’ door)"
+              },
+              {
+                "image": "94",
+                "label": "12x30 (features a optional large 10’x10’ door)"
+              },
+              {
+                "image": "95",
+                "label": "14x30 (features a large 10’x10’ door)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "testimonials",
+          "version": 1,
+          "data": {
+            "title": "Testimonial",
+            "items": [
+              {
+                "rating": 5,
+                "quote": "<p>Easy to deal with, responsive nice people if you need to call, and easy access! Looking forward to<br>parking our new RV there!</p>",
+                "name": "Andrew Terrell",
+                "designation": "Storage on the Fly"
+              },
+              {
+                "rating": 5,
+                "quote": "<p>Easy to deal with, responsive nice people if you need to call, and easy access! Looking forward to<br>parking our new RV there!</p>",
+                "name": "Andrew Terrell",
+                "designation": "Storage on the Fly"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## **Tilt-Bed Truck Delivery**\n\n### _Best for urban areas, tight spaces, and limited-access sites._\n\nOur **Tilt-Bed Truck** is ideal for delivering shipping containers up to **24 feet in length** or a combination of smaller units (e.g., two 10-foot containers). This is our most compact delivery truck, designed for **tight spaces, city deliveries, mountain roads, and restricted-access locations**.\n\n✅ **Delivery Process:**\n\n• The truck backs up to the designated drop-off location.\n\n• The bed tilts, allowing the container to slide off smoothly into position.\n\n• Requires a **minimum of 60 feet of straight-line clearance** for safe unloading.\n\n🚛 **Important Considerations:**\n\n• Let us know if you have clearance concerns at the site or along the delivery route.\n\n• We can preview the route before delivery to ensure a smooth process.\n\n• When placing your order, you’ll choose whether the container doors face the cab or rear of the truck—this determines the final door placement upon delivery.\n\n• **Best for 24’ and smaller rental storage containers.**\n\nGet a Quote",
+            "image": "96",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## **Tilt-Bed Truck Delivery**\n\n### _Best for urban areas, tight spaces, and limited-access sites._\n\nOur **Tilt-Bed Truck** is ideal for delivering shipping containers up to **24 feet in length** or a combination of smaller units (e.g., two 10-foot containers). This is our most compact delivery truck, designed for **tight spaces, city deliveries, mountain roads, and restricted-access locations**.\n\n✅ **Delivery Process:**\n\n• The truck backs up to the designated drop-off location.\n\n• The bed tilts, allowing the container to slide off smoothly into position.\n\n• Requires a **minimum of 60 feet of straight-line clearance** for safe unloading.\n\n🚛 **Important Considerations:**\n\n• Let us know if you have clearance concerns at the site or along the delivery route.\n\n• We can preview the route before delivery to ensure a smooth process.\n\n• When placing your order, you’ll choose whether the container doors face the cab or rear of the truck—this determines the final door placement upon delivery.\n\n• **Best for 24’ and smaller rental storage containers.**\n\nGet a Quote",
+            "image": "61",
+            "image_on_left": false,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "image_text",
+          "version": 1,
+          "data": {
+            "image": "47",
+            "body": "<h2>Remote temperature monitoring with real-time alerts</h2>\n<p><br>This system allows real-time tracking and alerts for temperature fluctuations, ensuring that<br>your perishable goods remain within the required range, whether you're onsite or managing<br>multiple units remotely.<br><strong>Real-time alerts</strong>: Immediate notifications if temperatures deviate, protecting your<br>inventory.<br><strong>Remote access:</strong> Monitor and adjust settings from anywhere via a secure interface.<br><strong>Data logging:</strong> Track temperature history for compliance and quality control.</p>"
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "self-storage-monticello",
+      "slug": "self-storage-monticello",
+      "title": "Self-Storage Monticello",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "single_hero",
+          "version": 1,
+          "data": {
+            "title": "Drive-Up Storage Units in Monticello, MN",
+            "description": "Fast & friendly service. Variety of sizes. Secure PIN access.",
+            "image": "67"
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "Storage Unit Sizes",
+            "filters": [
+              {
+                "label": "Drive-Up Storage",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Drive-Up Storage X-Large Roll-Up Door",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ],
+            "cards": [
+              {
+                "image": "68",
+                "label": "5' x 10' Drive-Up",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "69",
+                "label": "10' x 10' Drive Up",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "70",
+                "label": "10' x 15' Drive-Up"
+              },
+              {
+                "image": "71",
+                "label": "10' x 20' Drive-Up"
+              },
+              {
+                "image": "72",
+                "label": "10' x 30' Drive-Up"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "**What is Drive-Up Storage?**\nDrive-up storage is the gold standard for accessibility in the self-storage industry. Imagine an extension of your own garage that you can access on your schedule—that is essentially what a drive-up unit offers. Unlike interior climate-controlled units that might require navigating hallways or elevators, drive-up units are located on the ground level with exterior roll-up doors.\n\nYou simply pull your vehicle directly up to the door of your unit, roll it up, and start loading or unloading. There is no need to carry heavy boxes across icy parking lots or maneuver awkward furniture through narrow corridors. It is a straightforward, \"park and load\" experience designed to save you time and physical effort.\n\n**The Benefits of Drive-Up Storage**\nFor our Monticello customers, drive-up access is more than just a convenience—it’s a necessity for the seasons. Here is why this feature is our most requested:\n\n- **Effortless Loading in Any Weather:** In Minnesota, speed matters when the temperature drops. Drive-up access allows you to back your vehicle right up to the unit lip, minimizing the time you spend exposed to the elements.\n\n- **Ideal for Heavy & Bulky Items:** If you are a contractor storing tools or a homeowner moving a sectional sofa, avoiding long walks and elevators is a game-changer. You can transfer items directly from your truck bed or trailer into the unit with zero hassle.\n\n- **Vehicle & Recreational Storage:** Our larger drive-up units (such as the 10’x24’, 10’x30’, and 20’x30’ sizes) are perfect for storing the toys that make living in Wright County fun. Many of our units feature extra-large 10’x10’ overhead doors, specifically designed to accommodate taller items like boats with wakeboard towers, fish houses, or campers.\n\n- **Time Efficiency:** Whether you are grabbing camping gear for a weekend at Lake Maria State Park or picking up inventory for your business, you can get in and out in minutes.",
+            "image": "73",
+            "image_on_left": false,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "features",
+          "version": 1,
+          "data": {
+            "title": "Locally Owned Self Storage Units in Monticello, MN",
+            "description": "Offering you down-to-earth service & online-discounts.",
+            "items": [
+              {
+                "icon": "74",
+                "title": "Secure Facility"
+              },
+              {
+                "icon": "74",
+                "title": "Excellent Customer Service"
+              },
+              {
+                "icon": "74",
+                "title": "Gate Access"
+              },
+              {
+                "icon": "74",
+                "title": "Drive-Up Storage Units"
+              },
+              {
+                "icon": "75",
+                "title": "Convenient"
+              },
+              {
+                "icon": "76",
+                "title": "Friendly Service"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "**Why Choose Affordable Storage?**\nWith other options available in Wright County, why is Affordable Storage the top choice for Monticello residents?\n\n**Massive Variety of Sizes:** We don’t believe in \"one size fits all.\" We offer a huge range of sizes, from compact 5’x10’ units for seasonal decluttering to massive 20’x30’ units that can hold the contents of a five-bedroom home or a fleet of business equipment.\n\n**Specialized Doors for MN Toys:** Unlike many competitors, our larger units feature optional 10’x10’ doors, ensuring your tall boat or trailer actually fits.\n\n**Local Ownership:** We are proud to serve the local community, from Monticello and St. Michael to Albertville and Otsego. We also operate Affordabox, our sister company for portable storage needs, showing our dedication to solving every storage problem you might have.\n\n**Flexible & Economical:** As our name suggests, we are committed to providing premium storage solutions that are actually affordable. We offer competitive rates and a straightforward rental process.\n\nAt Affordable Storage, we are dedicated to simplifying your life by giving you the space you need. Contact us today to reserve your drive-up unit and experience the difference of storing with the best in Monticello.",
+            "image": "77",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "image_gallery",
+          "version": 1,
+          "data": {
+            "title": "Gallery",
+            "images": [
+              {
+                "image": "78"
+              },
+              {
+                "image": "79"
+              },
+              {
+                "image": "80"
+              },
+              {
+                "image": "81"
+              },
+              {
+                "image": "82"
+              },
+              {
+                "image": "83"
+              },
+              {
+                "image": "53"
+              },
+              {
+                "image": "84"
+              },
+              {
+                "image": "85"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locations",
+          "version": 1,
+          "data": {
+            "title": "Our Local Minnesota Locations",
+            "description": "Our two beautiful self-storage facilities featuring drive-up, indoor & climate controlled storage units in Monticello & St. Michael.",
+            "button_label": "View Location",
+            "cards": [
+              {
+                "image": "86",
+                "title": "Affordable Storage Monticello",
+                "address": "10111 Innsbrook Dr, Monticello, MN 55362",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "57",
+                "title": "Self Storage St. Michael",
+                "address": "10959 30th St NE, St Michael, MN 55376",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        },
+        {
+          "type": "testimonials",
+          "version": 1,
+          "data": {
+            "title": "5 out of 5 Stars Can't Be Wrong",
+            "items": [
+              {
+                "rating": 5,
+                "quote": "<p>I had a great and wonderful experience at this place for a whole year. Kris was the person who I was in contact with at all time. She was very awesome, kind, humble, easy to talk to and work with. She listens to you and directs you to the right directions to go. Kris, thank you so much for you time and effort...and your kindness...may God bless u...keep up the good works</p>",
+                "name": "Love Okojie",
+                "designation": "Google"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "shipping-containers-sale",
+      "slug": "shipping-containers-sale",
+      "title": "Shipping Container Sales",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "title_bar",
+          "version": 1,
+          "data": {
+            "title": "Shipping Containers for Sale",
+            "image": "63"
+          }
+        },
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "10-standard-4d3ce8",
+              "20-standard-f30ee1",
+              "20-standard-double-door-1-trip-424829",
+              "20-standard-used-878de0",
+              "20-hc-new-one-trip-58d4ef",
+              "20-one-trip-side-door-df63b2",
+              "40-standard-6e29cd",
+              "40-one-trip-high-cube-d1cc5f",
+              "40-hc-double-door-b239e3",
+              "40-used-cargo-worthy-c0ff38"
+            ],
+            "sidebar": "## Have questions?\nCall our specialists at\n\n[(833) 468-2269](tel:18334682269). We are open Mon-Fri 7am-6pm PST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        },
+        {
+          "type": "faqs",
+          "version": 1,
+          "data": {
+            "title": "Frequently Asked Questions",
+            "items": [
+              {
+                "question": "How much space is required on-site for a successful delivery?",
+                "answer": "<p data-path-to-node=\"5,0,0\">Delivery is typically performed using a <strong>tilt-bed truck</strong>, which needs a significant amount of space to safely unload.</p>\n<ul data-path-to-node=\"5,0,1\">\n<li>\n<p data-path-to-node=\"5,0,1,0,0\"><strong>20-foot container:</strong> Requires approximately <strong>70 feet</strong> of straight-line clearance.</p>\n</li>\n<li>\n<p data-path-to-node=\"5,0,1,1,0\"><strong>40-foot container:</strong> Requires approximately <strong>120 feet</strong> of straight-line clearance.</p>\n</li>\n<li>\n<p data-path-to-node=\"5,0,1,2,0\">In both cases, you need a minimum of <strong>10 feet</strong> of width and <strong>16 feet</strong> of overhead clearance (since the truck tilts up). The site must be clear of low wires, trees, and obstacles.</p>\n</li>\n</ul>"
+              },
+              {
+                "question": "What kind of ground preparation is needed for the container?",
+                "answer": "<p data-path-to-node=\"7,0,0\">The container must be placed on <strong>hard, dry, and level ground</strong>. Unloading on soft, muddy, or severely uneven surfaces can lead to the truck getting stuck or the container twisting once placed (which makes the doors difficult to open).</p>\n<ul data-path-to-node=\"7,0,1\">\n<li>\n<p data-path-to-node=\"7,0,1,0,0\"><strong>Ideal surfaces:</strong> Asphalt, concrete, gravel, or compacted soil.</p>\n</li>\n<li>\n<p data-path-to-node=\"7,0,1,1,0\"><strong>Foundation:</strong> We strongly recommend placing the container on <strong>level supports</strong> (like railroad ties, concrete blocks, or a gravel bed) at the four corners to prevent sinking and to allow air circulation, which prevents rust and moisture build-up underneath.</p>\n</li>\n</ul>"
+              },
+              {
+                "question": "How is the container actually unloaded from the truck?",
+                "answer": "<ol start=\"1\" data-path-to-node=\"9,0,1\">\n<li>\n<p data-path-to-node=\"9,0,1,0,0\">The driver backs the truck into the designated spot.</p>\n</li>\n<li>\n<p data-path-to-node=\"9,0,1,1,0\">The trailer bed is raised to an angle, and the container is slowly slid off the back, using a winch to control the descent.</p>\n</li>\n<li>\n<p data-path-to-node=\"9,0,1,2,0\">The truck pulls forward as the container rolls onto the ground.</p>\n</li>\n</ol>\n<ul data-path-to-node=\"9,0,2\">\n<li>\n<p data-path-to-node=\"9,0,2,0,0\"><strong>Alternative:</strong> For tight spots or over obstacles, a <strong>side-loader</strong> or <strong>crane (HIAB)</strong> truck may be required, which typically incurs an additional fee.</p>\n</li>\n</ul>"
+              },
+              {
+                "question": "Can I specify which way the container doors face?",
+                "answer": "<p data-path-to-node=\"11,0,0\">Yes, you must specify your preference when ordering.</p>\n<ul data-path-to-node=\"11,0,1\">\n<li>\n<p data-path-to-node=\"11,0,1,0,0\">Since the container is slid off the back of the truck, the door placement is determined by how the driver loads it onto the trailer at the depot.</p>\n</li>\n<li>\n<p data-path-to-node=\"11,0,1,1,0\">You will choose either <strong>\"Doors to the Cab\"</strong> (doors are the last thing off the truck, landing furthest from the road) or <strong>\"Doors to the Rear\"</strong> (doors are the first thing off the truck, landing closest to the road).</p>\n</li>\n</ul>"
+              },
+              {
+                "question": "What happens if the delivery driver cannot access the site?",
+                "answer": "<p data-path-to-node=\"13,0,0\">If the site is inaccessible due to obstacles, soft ground, insufficient clearance, or an unprepared foundation, the driver cannot safely unload the container.</p>\n<ul data-path-to-node=\"13,0,1\">\n<li>\n<p data-path-to-node=\"13,0,1,0,0\">This may result in a <strong>\"failed delivery\"</strong> charge and the need to reschedule after the site issues have been corrected. To avoid this, please review the clearance requirements and site preparation steps carefully before the delivery date.</p>\n</li>\n</ul>"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {
+        "meta_title": "Shipping Container Rentals, MN | AffordABox",
+        "meta_description": "20' & 40' shipping container rentals delivered direct across Minnesota.  Get a free online quote or call today & save."
+      }
+    },
+    {
+      "path": "rent-storage-container",
+      "slug": "rent-storage-container",
+      "title": "Rent",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "title_bar",
+          "version": 1,
+          "data": {
+            "title": "Rent storage container",
+            "image": "4"
+          }
+        },
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "20ft-used-certified-shipping-container-1267a4",
+              "40ft-used-certified-shipping-container-68db3b",
+              "20-standard-container-92ff61",
+              "20-high-cube-001ee8",
+              "40-high-cube-6793a7",
+              "20-side-door-ab91ac",
+              "40-side-door-4106b6",
+              "40-double-door-9468d2",
+              "20-double-door-0e8d9e",
+              "40-shipping-container-939553",
+              "15-yard-dumpster-143995",
+              "25-yard-dumpster-56e22e",
+              "20-yard-dumpster-85d344",
+              "10-yard-dumpster-b7ee06"
+            ],
+            "sidebar": "Have questions?\nCall our specialists at\n\n(855) 878-5233. We are open Mon-Fri 7am-6pm PST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "cold-storage",
+      "slug": "cold-storage",
+      "title": "Cold Storage",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "main_hero",
+          "version": 1,
+          "data": {
+            "title": "Temperature Controlled Storage",
+            "background": "video",
+            "video": "58",
+            "buttons": [
+              {
+                "label": "Get a quote",
+                "link": {
+                  "kind": "page",
+                  "value": "contact-us"
+                }
+              },
+              {
+                "label": "(833) 468-2269",
+                "link": {
+                  "kind": "url",
+                  "value": "tel:(833) 468-2269"
+                }
+              }
+            ],
+            "highlights": [
+              {
+                "icon": "49",
+                "title": "Short term rentals"
+              },
+              {
+                "icon": "48",
+                "title": "Serving MN, ND, SD, TX"
+              },
+              {
+                "icon": "50",
+                "title": "Custom modifications"
+              },
+              {
+                "icon": "51",
+                "title": "Fast lead time"
+              }
+            ]
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "20ft Blast Freezer Container- 40°F to 70°F",
+            "button_label": "View All",
+            "button_link": {
+              "kind": "url",
+              "value": "#"
+            },
+            "filters": [
+              {
+                "label": "+15º to 50ºF",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "-20º to 70ºF",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "-20º to +14ºF",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ],
+            "cards": [
+              {
+                "image": "59",
+                "label": "Rent 10 yd Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "60",
+                "label": "Rent 15 yd Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "bento_grid",
+          "version": 1,
+          "data": {}
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## Industry-leading container solution\n\nTrusted by\n\n**26,000+** **Customers** \n\n**Containers for Sale: New, Used, and Refurbished**\n\nWe offer a wide selection of ISO and specialized containers for sale, including options for:\n\n*   Energy storage\n*   Generator enclosures\n*   Refrigeration\n*   Hazardous material containment\n*   Workforce housing\n*   Restrooms\n*   Off-grid infrastructure solutions\n\n**Industry-Leading Rental Fleet**\n\nOur rental fleet includes 10-45ft storage containers, ground-level offices, and refrigeration containers. With fast lead times, our award-winning service and professional delivery teams ensure your projects stay on schedule.",
+            "image": "4",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "monticello-self-storage",
+      "slug": "monticello-self-storage",
+      "title": "Monticello self storage",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "single_hero",
+          "version": 1,
+          "data": {
+            "title": "Reliable Container Delivery Service",
+            "image": "44"
+          }
+        },
+        {
+          "type": "testimonials",
+          "version": 1,
+          "data": {
+            "title": "Testimonial",
+            "items": [
+              {
+                "rating": 5,
+                "quote": "<p>Easy to deal with, responsive nice people if you need to call, and easy access! Looking forward to<br>parking our new RV there!</p>",
+                "name": "Andrew Terrell",
+                "designation": "Storage on the Fly"
+              },
+              {
+                "rating": 5,
+                "quote": "<p>Easy to deal with, responsive nice people if you need to call, and easy access! Looking forward to<br>parking our new RV there!</p>",
+                "name": "Andrew Terrell",
+                "designation": "Storage on the Fly"
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## **Tilt-Bed Truck Delivery**\n\n### _Best for urban areas, tight spaces, and limited-access sites._\n\nOur **Tilt-Bed Truck** is ideal for delivering shipping containers up to **24 feet in length** or a combination of smaller units (e.g., two 10-foot containers). This is our most compact delivery truck, designed for **tight spaces, city deliveries, mountain roads, and restricted-access locations**.\n\n✅ **Delivery Process:**\n\n• The truck backs up to the designated drop-off location.\n\n• The bed tilts, allowing the container to slide off smoothly into position.\n\n• Requires a **minimum of 60 feet of straight-line clearance** for safe unloading.\n\n🚛 **Important Considerations:**\n\n• Let us know if you have clearance concerns at the site or along the delivery route.\n\n• We can preview the route before delivery to ensure a smooth process.\n\n• When placing your order, you’ll choose whether the container doors face the cab or rear of the truck—this determines the final door placement upon delivery.\n\n• **Best for 24’ and smaller rental storage containers.**\n\nGet a Quote",
+            "image": "56",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "## **Tilt-Bed Truck Delivery**\n\n### _Best for urban areas, tight spaces, and limited-access sites._\n\nOur **Tilt-Bed Truck** is ideal for delivering shipping containers up to **24 feet in length** or a combination of smaller units (e.g., two 10-foot containers). This is our most compact delivery truck, designed for **tight spaces, city deliveries, mountain roads, and restricted-access locations**.\n\n✅ **Delivery Process:**\n\n• The truck backs up to the designated drop-off location.\n\n• The bed tilts, allowing the container to slide off smoothly into position.\n\n• Requires a **minimum of 60 feet of straight-line clearance** for safe unloading.\n\n🚛 **Important Considerations:**\n\n• Let us know if you have clearance concerns at the site or along the delivery route.\n\n• We can preview the route before delivery to ensure a smooth process.\n\n• When placing your order, you’ll choose whether the container doors face the cab or rear of the truck—this determines the final door placement upon delivery.\n\n• **Best for 24’ and smaller rental storage containers.**\n\nGet a Quote",
+            "image": "57",
+            "image_on_left": false,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "image_text",
+          "version": 1,
+          "data": {
+            "image": "30",
+            "body": "<h2>Remote temperature monitoring with real-time alerts</h2>\n<p><br>This system allows real-time tracking and alerts for temperature fluctuations, ensuring that<br>your perishable goods remain within the required range, whether you're onsite or managing<br>multiple units remotely.<br><strong>Real-time alerts</strong>: Immediate notifications if temperatures deviate, protecting your<br>inventory.<br><strong>Remote access:</strong> Monitor and adjust settings from anywhere via a secure interface.<br><strong>Data logging:</strong> Track temperature history for compliance and quality control.</p>"
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "contact-us",
+      "slug": "contact-us",
+      "title": "Contact Us",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "home",
+      "slug": "home",
+      "title": "Home",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "main_hero",
+          "version": 1,
+          "data": {
+            "title": "Your One-Stop Solution for Storage, Containers & Dumpsters.",
+            "background": "video",
+            "video": "46",
+            "image": "47",
+            "buttons": [
+              {
+                "label": "Get a quote",
+                "link": {
+                  "kind": "page",
+                  "value": "contact-us"
+                }
+              },
+              {
+                "label": "(833) 468-2269",
+                "link": {
+                  "kind": "url",
+                  "value": "tel:(833) 468-2269"
+                }
+              }
+            ],
+            "highlights": [
+              {
+                "icon": "48",
+                "title": "Serving MN, ND, SD, TX"
+              },
+              {
+                "icon": "49",
+                "title": "Short term rentals"
+              },
+              {
+                "icon": "50",
+                "title": "Custom modifications"
+              },
+              {
+                "icon": "51",
+                "title": "Fast lead time"
+              }
+            ]
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "Storage · Containers · Dumpsters",
+            "button_label": "Shop all containers",
+            "button_link": {
+              "kind": "url",
+              "value": "#"
+            },
+            "filters": [
+              {
+                "label": "Buy Containers",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Rent Containers",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Rent Portable Storage White Boxes",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Rent Dumpsters",
+                "link": {
+                  "kind": "url",
+                  "value": "X"
+                }
+              }
+            ],
+            "cards": [
+              {
+                "image": "19",
+                "label": "Rent 10 Yard Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "27",
+                "label": "Rent 15 Yard Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "18",
+                "label": "Rent 20 Yard Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "45",
+                "label": "Rent 25 Yard Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "20",
+                "label": "20' Shipping Container",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "15",
+                "label": "40' Shipping Container"
+              }
+            ]
+          }
+        },
+        {
+          "type": "bento_grid",
+          "version": 1,
+          "data": {
+            "cards": [
+              {
+                "image": "47",
+                "tagline": "Rugged. Reliable. Ready to Roll.",
+                "title": "Shipping Container Sales & Rentals.",
+                "body": "Buy new and used shipping containers in 20' & 40' sizes. Delivered fast. Call for a free quote.",
+                "button_label": "View All",
+                "button_link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "52",
+                "tagline": "Fast Delivery. Fair Prices. No Hassle.",
+                "title": "Roll-Off Dumpster Rentals",
+                "body": "Customize your container with expert, tailored modification services.",
+                "button_label": "View modifications",
+                "button_link": {
+                  "kind": "page",
+                  "value": "dumpster-rentals"
+                }
+              },
+              {
+                "image": "44",
+                "tagline": "Your Space, Your Schedule, Our Box.",
+                "title": "White Box Portable Storage Rental",
+                "body": "Your locally owned portable storage & moving solution.",
+                "button_label": "Get a quote",
+                "button_link": {
+                  "kind": "page",
+                  "value": "contact-us"
+                }
+              },
+              {
+                "image": "53",
+                "tagline": "Small-Town Values. Big-Time Storage.",
+                "title": "Self-Storage",
+                "body": "Enhance your containers with doors, windows, shelving, and insulation.",
+                "button_label": "View All",
+                "button_link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "54",
+                "tagline": "Storage - Containers - Dumpsters",
+                "title": "Affordabox Gallery",
+                "body": "Explore our gallery for innovative container solutions, from offices to custom storage.",
+                "button_label": "View Gallery",
+                "button_link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "container_slider",
+          "version": 1,
+          "data": {
+            "title": "Container & White Box Delivery Options",
+            "button_label": "Shop all containers",
+            "button_link": {
+              "kind": "url",
+              "value": "#"
+            },
+            "filters": [
+              {
+                "label": "The Mule Delivery System",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "label": "Tilt Bed Truck & Trailer",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ],
+            "cards": [
+              {
+                "image": "20",
+                "label": "20' Shipping Container",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "image": "27",
+                "label": "Rent 15 Yard Dumpster",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "two_col",
+          "version": 1,
+          "data": {
+            "body": "At **Affordabox**, we believe storage shouldn’t be stressful — it should be simple, secure, and affordable.\n\nWhat started as a small, family-owned operation has grown into a trusted name for **portable storage, shipping containers, dumpsters, and self-storage** across the Midwest and beyond. Whether you’re a homeowner tackling a remodel, a contractor managing a job site, or a business owner needing extra space, we’ve built our services around one promise: we make your project easier.\n\nFrom our clean, **weather-proof white box containers** to our **durable 20’ and 40’ shipping containers** and quick-turn **roll-off dumpsters**, every delivery is handled with care and precision. Our team uses advanced “Mule” technology for tight-space placement and prides itself on doing business the right way — with honesty, communication, and that neighborly touch you only get from a local company.\n\nBecause to us, it’s not just about delivering a box — it’s about delivering peace of mind.\n\n**Local service, fast delivery, and fair pricing — that’s the Affordabox way.**",
+            "image": "47",
+            "image_on_left": true,
+            "sticky_image": true
+          }
+        },
+        {
+          "type": "logo_slider",
+          "version": 1,
+          "data": {
+            "logos": [
+              {
+                "image": "55"
+              },
+              {
+                "image": "55"
+              },
+              {
+                "image": "55"
+              },
+              {
+                "image": "55"
+              },
+              {
+                "image": "55"
+              },
+              {
+                "image": "55"
+              },
+              {
+                "image": "55"
+              }
+            ]
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "standard",
+        "hide_sidebar": false
+      },
+      "seo": {
+        "meta_title": "Affordabox, the best portable storage solution",
+        "meta_description": "Affordabox, the best portable storage solution",
+        "og_image_id": "44"
+      }
+    },
+    {
+      "path": "portable-storage",
+      "slug": "portable-storage",
+      "title": "Portable Storage",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "container_listing",
+          "version": 1,
+          "data": {
+            "containers": [
+              "portable-storage-918215",
+              "portable-storage-81dbe5",
+              "portable-storage-5865ed",
+              "portable-storage-f4e69b",
+              "portable-storage-33d7e6"
+            ],
+            "sidebar": "## Have questions?\nCall our specialists at\n\n[(833) 468-2269](tel:18334682269). We are open Mon-Fri 7am-6pm PST.",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            },
+            "show_more_label": "Show More"
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "compact",
+        "hide_sidebar": true
+      },
+      "seo": {}
+    },
+    {
+      "path": "gallery",
+      "slug": "gallery",
+      "title": "Gallery",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "two_col_banner",
+          "version": 1,
+          "data": {
+            "heading": "Our Projects",
+            "body": "Subscribe to our YouTube channel",
+            "background": "3",
+            "image": "8",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            }
+          }
+        },
+        {
+          "type": "photo_gallery",
+          "version": 1,
+          "data": {
+            "title": "Our Gallery",
+            "items": [
+              {
+                "image": "9",
+                "title": "White Box & Dumpster",
+                "description": "Image"
+              },
+              {
+                "image": "10",
+                "title": "Affordabox Dumpsters",
+                "description": "image"
+              },
+              {
+                "image": "11",
+                "title": "Affordabox Headquarters",
+                "description": "image"
+              },
+              {
+                "image": "12",
+                "title": "Affordabox - Forklift Moving Shipping Container",
+                "description": "image"
+              },
+              {
+                "image": "13",
+                "title": "20' Standard Shipping Container",
+                "description": "Image"
+              },
+              {
+                "image": "14",
+                "title": "20' Standard Shipping Container",
+                "description": "image"
+              },
+              {
+                "image": "15",
+                "title": "40' Used Shipping Container"
+              },
+              {
+                "image": "16",
+                "title": "Affordabox Truck"
+              },
+              {
+                "image": "17",
+                "title": "Affordabox Owners - Keith & Kris Burnham"
+              },
+              {
+                "image": "18",
+                "title": "Dumpster"
+              },
+              {
+                "image": "19",
+                "title": "Dumpster"
+              },
+              {
+                "image": "20",
+                "title": "Shipping Container"
+              },
+              {
+                "image": "21",
+                "title": "40' Specialty Shipping Container"
+              },
+              {
+                "image": "22",
+                "title": "40' Specialty Shipping Container"
+              },
+              {
+                "image": "23",
+                "title": "40' Specialty Shipping Container"
+              },
+              {
+                "image": "24",
+                "title": "20' Specialty Shipping Container"
+              },
+              {
+                "image": "25",
+                "title": "20' Specialty Shipping Container"
+              },
+              {
+                "image": "26",
+                "title": "Dumpster Truck"
+              },
+              {
+                "image": "27",
+                "title": "Dumpster"
+              },
+              {
+                "image": "28",
+                "title": "Dumpster Truck"
+              },
+              {
+                "image": "29",
+                "title": "20' Specialty Shipping Container"
+              },
+              {
+                "image": "30",
+                "title": "25 Yard Dumpster"
+              },
+              {
+                "image": "31",
+                "title": "Dumpsters"
+              },
+              {
+                "image": "32",
+                "title": "Owner & Dumpster Truck"
+              },
+              {
+                "image": "33",
+                "title": "Affordabox Headquarters"
+              },
+              {
+                "image": "34",
+                "title": "Affordabox Fleet"
+              },
+              {
+                "image": "35",
+                "title": "Affordabox Self-Storage (Monticello)"
+              },
+              {
+                "image": "36",
+                "title": "Affordabox Self-Storage (Monticello)"
+              },
+              {
+                "image": "37",
+                "title": "Affordabox Self-Storage (Monticello)"
+              },
+              {
+                "image": "38",
+                "title": "Affordabox Self-Storage (Monticello)"
+              },
+              {
+                "image": "39",
+                "title": "Affordabox Self-Storage (Monticello)"
+              },
+              {
+                "image": "40",
+                "title": "Affordabox Self-Storage (Monticello)"
+              },
+              {
+                "image": "41",
+                "title": "Affordabox Self-Storage (St Michael)"
+              },
+              {
+                "image": "42",
+                "title": "Affordabox Self-Storage (St Michael)"
+              },
+              {
+                "image": "43",
+                "title": "Mule Delivery System"
+              },
+              {
+                "image": "44",
+                "title": "Mule Delivery System"
+              }
+            ]
+          }
+        },
+        {
+          "type": "quote_form",
+          "version": 1,
+          "data": {
+            "eyebrow": "Get a Quote",
+            "heading": "Request a Quote",
+            "intro": "Please fill out the form below and we’ll get back to you as soon as possible."
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "none",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    },
+    {
+      "path": "our-team",
+      "slug": "our-team",
+      "title": "Our Team",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "two_col_banner",
+          "version": 1,
+          "data": {
+            "heading": "Our Team",
+            "body": "Custom solution for new, used, refurbished & specialty containers.",
+            "background": "3",
+            "image": "4",
+            "button_label": "Get a quote",
+            "button_link": {
+              "kind": "page",
+              "value": "contact-us"
+            }
+          }
+        },
+        {
+          "type": "products",
+          "version": 1,
+          "data": {
+            "title": "Steel man doors",
+            "button_label": "Learn More",
+            "cards": [
+              {
+                "title": "Steel man doors",
+                "image": "5",
+                "description": "Secure, durable doors built for easy access and long-lasting performance.",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "title": "Steel man doors",
+                "image": "6",
+                "description": "Secure, durable doors built for easy access and long-lasting performance.",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "title": "Steel man doors",
+                "image": "7",
+                "description": "Secure, durable doors built for easy access and long-lasting performance.",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              },
+              {
+                "title": "Steel man doors",
+                "description": "Secure, durable doors built for easy access and long-lasting performance.",
+                "link": {
+                  "kind": "url",
+                  "value": "#"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "navbar": "none",
+        "hide_sidebar": false
+      },
+      "seo": {}
+    }
+  ],
+  "entries": [
+    {
+      "collection": "containers",
+      "slug": "ttttttt-2",
+      "title": "ttttttt",
+      "locale": "en",
+      "frontmatter": {
+        "price": 43434,
+        "size": "23 ft",
+        "height": "45 ft",
+        "condition": "new",
+        "delivery_time": "1 - 3days",
+        "link": {
+          "kind": "url",
+          "value": "/skdhskd"
+        },
+        "categories": [
+          "Shipping Container Sales"
+        ],
+        "order": 38
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "test-1",
+      "title": "test",
+      "locale": "en",
+      "frontmatter": {
+        "image": "27",
+        "price": 222,
+        "size": "222ft",
+        "height": "2222ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/dddd"
+        },
+        "categories": [
+          "Dumpster Rentals"
+        ],
+        "order": 37
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-hc-double-door-7b4a3c",
+      "title": "40' HC Double Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "15",
+        "size": "40",
+        "height": "9.5",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Dry",
+          "Specialty",
+          "Shipping Container Rentals"
+        ],
+        "order": 36
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-one-trip-high-cube-a58581",
+      "title": "40’ (One-Trip) High Cube",
+      "locale": "en",
+      "frontmatter": {
+        "image": "15",
+        "size": "40",
+        "height": "9.5",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Dry",
+          "Specialty",
+          "Shipping Container Rentals"
+        ],
+        "order": 35
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-standard-90cf9a",
+      "title": "40' Standard",
+      "locale": "en",
+      "frontmatter": {
+        "image": "15",
+        "size": "8",
+        "height": "40",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Dry",
+          "Shipping Container Rentals"
+        ],
+        "order": 34
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-hc-new-one-trip-1eab05",
+      "title": "20' HC NEW (One-Trip)",
+      "locale": "en",
+      "frontmatter": {
+        "image": "20",
+        "size": "8",
+        "height": "9.5",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Dry",
+          "Specialty",
+          "Double Door"
+        ],
+        "order": 33
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-standard-double-door-1-trip-ddf302",
+      "title": "20' Standard Double Door 1-trip",
+      "locale": "en",
+      "frontmatter": {
+        "image": "20",
+        "size": "8",
+        "height": "20",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Specialty",
+          "Dry",
+          "Shipping Container Rentals"
+        ],
+        "order": 32
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-standard-7d71c6",
+      "title": "20' Standard",
+      "locale": "en",
+      "frontmatter": {
+        "image": "20",
+        "size": "8",
+        "height": "20",
+        "categories": [
+          "Dry",
+          "Shipping Container Rentals"
+        ],
+        "order": 31
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "30-yard-dumpster-ccf193",
+      "title": "30 Yard Dumpster",
+      "locale": "en",
+      "frontmatter": {
+        "image": "97",
+        "size": "20' long",
+        "height": "10",
+        "delivery_time": "3-5 days",
+        "order": 30
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-used-cargo-worthy-c0ff38",
+      "title": "40' Used Cargo Worthy",
+      "locale": "en",
+      "frontmatter": {
+        "image": "20",
+        "size": "40",
+        "height": "8",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Specialty",
+          "New"
+        ],
+        "order": 29
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-hc-double-door-b239e3",
+      "title": "40' HC Double Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "15",
+        "size": "40",
+        "height": "9.5",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Double Door",
+          "New"
+        ],
+        "order": 28
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-one-trip-high-cube-d1cc5f",
+      "title": "40’ (One-Trip) High Cube",
+      "locale": "en",
+      "frontmatter": {
+        "image": "15",
+        "size": "40",
+        "height": "9.5",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "New",
+          "Specialty"
+        ],
+        "order": 27
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-standard-6e29cd",
+      "title": "40' Standard",
+      "locale": "en",
+      "frontmatter": {
+        "image": "66",
+        "size": "40",
+        "height": "8",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Shipping Container Sales",
+          "Dry",
+          "Shipping Container Rentals"
+        ],
+        "order": 26
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-one-trip-side-door-df63b2",
+      "title": "20' One Trip Side Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "25",
+        "size": "20",
+        "height": "8",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Side Door",
+          "New",
+          "Specialty"
+        ],
+        "order": 25
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-hc-new-one-trip-58d4ef",
+      "title": "20' HC NEW (One-Trip)",
+      "locale": "en",
+      "frontmatter": {
+        "image": "20",
+        "size": "20",
+        "height": "9.5",
+        "condition": "new",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Specialty",
+          "Dry",
+          "New"
+        ],
+        "order": 24
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-standard-used-878de0",
+      "title": "20' Standard Used",
+      "locale": "en",
+      "frontmatter": {
+        "image": "20",
+        "size": "20",
+        "height": "8",
+        "condition": "used",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Used",
+          "Dry"
+        ],
+        "order": 23
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-standard-double-door-1-trip-424829",
+      "title": "20' Standard Double Door 1-trip",
+      "locale": "en",
+      "frontmatter": {
+        "image": "14",
+        "size": "20",
+        "height": "8",
+        "condition": "new",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "categories": [
+          "Double Door"
+        ],
+        "order": 22
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-standard-f30ee1",
+      "title": "20' Standard",
+      "locale": "en",
+      "frontmatter": {
+        "image": "65",
+        "size": "20",
+        "height": "8",
+        "condition": "new",
+        "link": {
+          "kind": "page",
+          "value": "contact-us"
+        },
+        "order": 21
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "10-standard-4d3ce8",
+      "title": "10' Standard",
+      "locale": "en",
+      "frontmatter": {
+        "image": "64",
+        "size": "10'",
+        "height": "8'",
+        "condition": "new",
+        "delivery_time": "3-5 days",
+        "order": 20
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "10-yard-dumpster-b7ee06",
+      "title": "10 Yard Dumpster",
+      "locale": "en",
+      "frontmatter": {
+        "image": "19",
+        "price": 419,
+        "size": "10 yd",
+        "height": "3.5 ft",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Dumpster Rentals"
+        ],
+        "order": 19
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-yard-dumpster-85d344",
+      "title": "20 Yard Dumpster",
+      "locale": "en",
+      "frontmatter": {
+        "image": "62",
+        "price": 549,
+        "size": "20 yd",
+        "height": "5.5 ft",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Dumpster Rentals"
+        ],
+        "order": 18
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "25-yard-dumpster-56e22e",
+      "title": "25 Yard Dumpster",
+      "locale": "en",
+      "frontmatter": {
+        "image": "62",
+        "price": 629,
+        "size": "25 yd",
+        "height": "7 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Dumpster Rentals"
+        ],
+        "order": 17
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "15-yard-dumpster-143995",
+      "title": "15 Yard Dumpster",
+      "locale": "en",
+      "frontmatter": {
+        "image": "27",
+        "price": 499,
+        "size": "15 yd",
+        "height": "5.0 ft",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Dumpster Rentals"
+        ],
+        "order": 16
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-shipping-container-939553",
+      "title": "40' Shipping Container",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "price": 4575,
+        "size": "40 ft",
+        "height": "9.5 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Dry"
+        ],
+        "order": 15
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-double-door-0e8d9e",
+      "title": "20' Double Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "25",
+        "price": 4400,
+        "size": "20 ft",
+        "height": "9.5 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Specialty"
+        ],
+        "order": 14
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-double-door-9468d2",
+      "title": "40' Double Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "price": 5400,
+        "size": "40 ft",
+        "height": "9.5 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Specialty",
+          "Dry"
+        ],
+        "order": 13
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-side-door-4106b6",
+      "title": "40' Side Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "25",
+        "price": 8575,
+        "size": "40 ft",
+        "height": "9.5 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Specialty",
+          "Side Door"
+        ],
+        "order": 12
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-side-door-ab91ac",
+      "title": "20' Side Door",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "price": 6300,
+        "size": "20 ft",
+        "height": "8ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Dry",
+          "Specialty"
+        ],
+        "order": 11
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40-high-cube-6793a7",
+      "title": "40' High Cube",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "size": "40 ft",
+        "height": "9.5 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Dry"
+        ],
+        "order": 10
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-high-cube-001ee8",
+      "title": "20' High Cube",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "size": "20 ft",
+        "height": "8 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Specialty",
+          "Double Door"
+        ],
+        "order": 9
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20-standard-container-92ff61",
+      "title": "20' Standard Container",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "price": 3175,
+        "size": "20 ft",
+        "height": "8 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "/#quote-form"
+        },
+        "categories": [
+          "Dry"
+        ],
+        "order": 8
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "40ft-used-certified-shipping-container-68db3b",
+      "title": "40ft Used Certified Shipping Container",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "price": 1500,
+        "size": "40 ft",
+        "height": "9.5 ft",
+        "condition": "used",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Dry"
+        ],
+        "order": 7
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "20ft-used-certified-shipping-container-1267a4",
+      "title": "20ft Used Certified Shipping Container",
+      "locale": "en",
+      "frontmatter": {
+        "image": "61",
+        "price": 500,
+        "size": "20 ft",
+        "height": "9.5 ft",
+        "condition": "new",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Dry"
+        ],
+        "order": 6
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "portable-storage-33d7e6",
+      "title": "Portable Storage",
+      "locale": "en",
+      "frontmatter": {
+        "image": "30",
+        "price": 279,
+        "size": "8 ft",
+        "height": "20 ft",
+        "condition": "used",
+        "delivery_time": "3-5 days",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Portable Storage & Moving"
+        ],
+        "order": 5
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "portable-storage-f4e69b",
+      "title": "Portable Storage",
+      "locale": "en",
+      "frontmatter": {
+        "image": "45",
+        "size": "8 ft",
+        "height": "16 ft",
+        "condition": "new",
+        "delivery_time": "3-5 days",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Portable Storage & Moving"
+        ],
+        "order": 4
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "portable-storage-5865ed",
+      "title": "Portable storage",
+      "locale": "en",
+      "frontmatter": {
+        "image": "21",
+        "price": 179,
+        "size": "8",
+        "height": "12 ft",
+        "condition": "used",
+        "delivery_time": "3-5 days",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Portable Storage & Moving"
+        ],
+        "order": 3
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "portable-storage-81dbe5",
+      "title": "Portable storage",
+      "locale": "en",
+      "frontmatter": {
+        "image": "43",
+        "size": "8x8",
+        "height": "8 ft",
+        "condition": "new",
+        "delivery_time": "3-5 days",
+        "link": {
+          "kind": "url",
+          "value": "#"
+        },
+        "categories": [
+          "Portable Storage & Moving"
+        ],
+        "order": 2
+      },
+      "body_markdown": "",
+      "seo": {}
+    },
+    {
+      "collection": "containers",
+      "slug": "portable-storage-918215",
+      "title": "Portable Storage",
+      "locale": "en",
+      "frontmatter": {
+        "image": "44",
+        "price": 149,
+        "size": "7.5",
+        "height": "7.5",
+        "condition": "new",
+        "delivery_time": "3-5 days",
+        "categories": [
+          "Portable Storage & Moving"
+        ],
+        "order": 1
+      },
+      "body_markdown": "",
+      "seo": {}
+    }
+  ],
+  "forms": [
+    {
+      "slug": "quote",
+      "title": "Quote request",
+      "fields": [
+        {
+          "name": "inquiry_type",
+          "label": "What can we help you with?",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "shipping-container-rentals",
+              "label": "Shipping Containers Rentals"
+            },
+            {
+              "value": "shipping-container-sales",
+              "label": "Shipping Containers Sales"
+            },
+            {
+              "value": "dumpsters",
+              "label": "Dumpster Rentals"
+            },
+            {
+              "value": "self-storage",
+              "label": "Self Storage"
+            },
+            {
+              "value": "portable-storage",
+              "label": "Portable Storage & Moving"
+            },
+            {
+              "value": "general-inquiry",
+              "label": "General Inquiry / Contact Us"
+            }
+          ]
+        },
+        {
+          "name": "location",
+          "label": "Location",
+          "type": "select",
+          "options": [
+            {
+              "value": "Minnesota",
+              "label": "Minnesota"
+            },
+            {
+              "value": "North Dakota",
+              "label": "North Dakota"
+            },
+            {
+              "value": "South Dakota",
+              "label": "South Dakota"
+            },
+            {
+              "value": "Wisconsin",
+              "label": "Wisconsin"
+            },
+            {
+              "value": "Texas",
+              "label": "Texas"
+            }
+          ]
+        },
+        {
+          "name": "delivery_city",
+          "label": "Facility",
+          "type": "select",
+          "options": [
+            {
+              "value": "Monticello",
+              "label": "Monticello"
+            },
+            {
+              "value": "St. Michael",
+              "label": "St. Michael"
+            }
+          ]
+        },
+        {
+          "name": "delivery_zip",
+          "label": "Zip code",
+          "type": "text"
+        },
+        {
+          "name": "destination_zip_code",
+          "label": "Destination zip code",
+          "type": "text"
+        },
+        {
+          "name": "disposal_type",
+          "label": "What are you disposing of?",
+          "type": "select",
+          "options": [
+            {
+              "value": "Construction materials",
+              "label": "Construction materials"
+            },
+            {
+              "value": "Mixed rubbish/Household garbage",
+              "label": "Mixed rubbish/Household garbage"
+            },
+            {
+              "value": "Both",
+              "label": "Both"
+            },
+            {
+              "value": "Other",
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "name": "rental_duration",
+          "label": "Rental duration",
+          "type": "select",
+          "options": [
+            {
+              "value": "Two weeks or less",
+              "label": "Two weeks or less"
+            },
+            {
+              "value": "Three weeks or less",
+              "label": "Three weeks or less"
+            },
+            {
+              "value": "More than three weeks",
+              "label": "More than three weeks"
+            }
+          ]
+        },
+        {
+          "name": "service_type",
+          "label": "Service type",
+          "type": "select",
+          "options": [
+            {
+              "value": "store-it",
+              "label": "Store It"
+            },
+            {
+              "value": "move-it",
+              "label": "Move It"
+            },
+            {
+              "value": "keep-it",
+              "label": "Keep It"
+            },
+            {
+              "value": "dumpster-transit",
+              "label": "Dumpster"
+            },
+            {
+              "value": "shipping-container-rental",
+              "label": "Shipping container rental"
+            },
+            {
+              "value": "shipping-container-sale",
+              "label": "Shipping container sale"
+            }
+          ]
+        },
+        {
+          "name": "sizes_needed",
+          "label": "Size(s) needed",
+          "type": "text",
+          "help": "The site joins the sizes ticked, with commas."
+        },
+        {
+          "name": "rent_or_purchase",
+          "label": "Rent or purchase?",
+          "type": "select",
+          "options": [
+            {
+              "value": "Rent",
+              "label": "Rent"
+            },
+            {
+              "value": "Purchase",
+              "label": "Purchase"
+            }
+          ]
+        },
+        {
+          "name": "features_needed",
+          "label": "Container type",
+          "type": "select",
+          "options": [
+            {
+              "value": "Standard (8’)",
+              "label": "Standard (8’)"
+            },
+            {
+              "value": "High Cube (9.5’)",
+              "label": "High Cube (9.5’)"
+            },
+            {
+              "value": "Double Door",
+              "label": "Double Door"
+            },
+            {
+              "value": "Side Door",
+              "label": "Side Door"
+            },
+            {
+              "value": "Other",
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "name": "delivery_date",
+          "label": "Estimated move-in date",
+          "type": "text",
+          "help": "A date picker on the site."
+        },
+        {
+          "name": "what_storing",
+          "label": "What you're storing",
+          "type": "textarea"
+        },
+        {
+          "name": "first_name",
+          "label": "First name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "last_name",
+          "label": "Last name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "phone",
+          "label": "Phone",
+          "type": "tel",
+          "required": true
+        },
+        {
+          "name": "project_details",
+          "label": "How can we help you?",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "Tell us more about your project or any special requirements..."
+        },
+        {
+          "name": "gclid",
+          "label": "Gclid",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "gbraid",
+          "label": "Gbraid",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "wbraid",
+          "label": "Wbraid",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "fbclid",
+          "label": "Fbclid",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "msclkid",
+          "label": "Msclkid",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "ttclid",
+          "label": "Ttclid",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "utm_source",
+          "label": "UTM source",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "utm_medium",
+          "label": "UTM medium",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "utm_campaign",
+          "label": "UTM campaign",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "utm_term",
+          "label": "UTM term",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "utm_content",
+          "label": "UTM content",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "landing_page",
+          "label": "Landing page",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "referrer",
+          "label": "Referrer",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        },
+        {
+          "name": "page_url",
+          "label": "Page url",
+          "type": "text",
+          "help": "Filled in by the site: where the visitor came from."
+        }
+      ],
+      "submit_label": "Submit Inquiry",
+      "success_message": "Thank you! We'll be in touch shortly."
+    }
+  ],
+  "site": {
+    "name": "Affordabox",
+    "description": "Portable storage, shipping containers, dumpsters and self storage across the Midwest."
+  }
+}

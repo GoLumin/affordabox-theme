@@ -1,0 +1,17 @@
+<%# locals: (data:) -%>
+<%# A green band: a heading, a line, and icons with short labels (src/components/sections/Features.astro). %>
+<section class="bg-secondary py-16">
+  <div class="max-w-5xl mx-auto text-center text-white px-4">
+    <h2 class="text-3xl font-semibold mb-2"><%= data.title %></h2>
+    <p class="text-sm opacity-90 mb-10"><%= data.description %></p>
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-8 mt-8">
+      <% data.items.each_with_index do |item, index| %>
+        <%# herb:key index %>
+        <li class="flex items-center gap-3 text-white">
+          <span class="w-6 h-6 inline-flex"><%= website_image_tag item.icon, alt: "", sizes: "24px" %></span>
+          <span class="text-sm text-left"><%= item.title %></span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</section>

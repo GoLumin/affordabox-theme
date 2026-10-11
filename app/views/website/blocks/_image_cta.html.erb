@@ -1,0 +1,22 @@
+<%# locals: (data:) -%>
+<%# A heading, words and a button over a darkened photo, with a photo beside them (src/components/sections/Cta.astro). %>
+<div class="relative">
+  <div class="relative">
+    <%= website_image_tag data.background, alt: "", class: "absolute inset-0 w-full h-full object-cover" %>
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/80"></div>
+    <div class="custom-container !py-16 grid lg:grid-cols-2 gap-8 p-6 relative z-10">
+      <div class="flex flex-col items-start justify-center h-full text-white">
+        <h2 class="text-4xl font-bold"><%= data.title %></h2>
+        <p class="text-lg mt-4 text-white/80"><%= data.description %></p>
+        <% if data.button_label.present? %>
+          <div class="mt-8"><%= affordabox_button data.button_label, affordabox_href(data.button_link) %></div>
+        <% end %>
+      </div>
+      <% if data.image.present? %>
+        <div class="relative w-full overflow-hidden">
+          <%= website_image_tag data.image, class: "w-full h-full object-cover", sizes: "(min-width: 1024px) 50vw, 100vw" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

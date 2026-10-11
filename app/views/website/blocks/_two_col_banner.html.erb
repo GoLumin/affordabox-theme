@@ -1,0 +1,19 @@
+<%# locals: (data:) -%>
+<%# A heading, words and a button over a background photo (or the dark blue), with a glowing photo beside them (src/components/sections/TwoColBanner.astro). %>
+<% background = affordabox_background_url(data.background) %>
+<%= tag.section class: class_names("lg:!py-20 py-16 text-white gap-1 bg-cover bg-center bg-no-repeat relative", background ? "two-col-banner--photo" : "bg-[#061B23]"), style: ("--banner-photo: url('#{background}')" if background) do %>
+  <div class="flex flex-col md:flex-row items-center justify-between custom-container">
+    <div class="lg:w-1/2 w-full relative z-10">
+      <h2 class="text-5xl font-bold mb-9"><%= data.heading %></h2>
+      <p class="text-xl font-light mb-10"><%= data.body %></p>
+      <% if data.button_label.present? && (href = website_href(data.button_link)) %>
+        <div class="flex items-center gap-4"><%= affordabox_button data.button_label, href %></div>
+      <% end %>
+    </div>
+    <% if data.image.present? %>
+      <div class="lg:w-1/2 mt-8 lg:mt-0 relative z-10 visualize-image">
+        <%= website_image_tag data.image, alt: website_plain_text(data.heading.presence || "Banner image"), class: "rounded-xl shadow-lg w-full object-cover max-h-[400px] relative z-10", sizes: "(min-width: 1024px) 50vw, 100vw" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
