@@ -768,6 +768,14 @@ MOVED_PAGES = %w[our-team gallery contact-us monticello-self-storage rent-storag
 
 def entries_cache = @entries_cache ||= entries
 
+# UPLOAD_ONLY=1 sends the files and stops: nothing the site shows changes,
+# so the rest can then run in a minute, alongside the theme's update.
+if ENV["UPLOAD_ONLY"] == "1"
+  entries_cache; globals_data; pages
+  puts "Uploaded #{STATE["assets"].size} files; nothing else changed."
+  exit
+end
+
 puts "Block types"
 BLOCK_TYPES.each do |type|
   upsert("/block_types/#{type[:slug]}", "block_type", {"slug" => type[:slug], "label" => type[:label], "description" => type[:description],
