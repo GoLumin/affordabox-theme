@@ -4,11 +4,44 @@
 # is built around (site settings, the menu, the footer), its collections,
 # the page being drawn, JSON-LD, and the lead form's services.
 module AffordaboxHelper
-  # The lead form's services (the CMS's "lead" form has the same values);
-  # a block's "any" leaves the choice to the visitor.
+  # The lead form's fields the site fills in itself, never typed: the city
+  # and whether it's served (from the ZIP), the use-case pill, and where the
+  # visitor came from (affordabox/attribution.js).
+  LEAD_HIDDEN_FIELDS = %w[city in_area use_case gclid gbraid wbraid fbclid msclkid ttclid
+    utm_source utm_medium utm_campaign utm_term utm_content landing_page referrer page_url].freeze
+
+  # The lead form's first step, drawn by the theme around the ZIP check.
+  LEAD_FIRST_STEP = %w[zip service].freeze
+
+  # The lead form's services, from the CMS's "lead" form (its typed choices,
+  # or a collection's); a block's "any" leaves the choice to the visitor.
   def affordabox_services
     form = affordabox_lead_form
-    form ? Array(website_form_field(form, :service)["options"]).map { [it["value"], it["label"]] } : []
+    form ? affordabox_choices(website_form_field(form, :service)).map { [it["value"], it["label"]] } : []
+  end
+
+  # A choice field's options as the visitor picks from them: a collection's
+  # published entries (FormChoices) then the ones typed into Forms.
+  def affordabox_choices(field)
+    defined?(FormChoices) ? FormChoices.for(field) : Array(field["options"])
+  end
+
+  # The lead form's field by name, or nil when Forms › Lead doesn't have it.
+  def affordabox_lead_field(name)
+    affordabox_lead_form&.fields&.find { it["name"] == name.to_s }
+  end
+
+  # The lead form's last step: every field Forms › Lead has that the site
+  # doesn't fill in itself or ask first, in the form's order. A field added
+  # there shows up here.
+  def affordabox_lead_contact_fields
+    Array(affordabox_lead_form&.fields).reject { it["name"].in?(LEAD_HIDDEN_FIELDS) || it["name"].in?(LEAD_FIRST_STEP) }
+  end
+
+  # The browser's autofill hint for a lead form field, by its name or type.
+  def affordabox_autocomplete(field)
+    {"first_name" => "given-name", "last_name" => "family-name", "name" => "name", "zip" => "postal-code"}[field["name"]] ||
+      {"email" => "email", "tel" => "tel", "url" => "url"}[field["type"]]
   end
 
   # The page or entry being drawn (website/pages/show and the entry templates
