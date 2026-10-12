@@ -1,0 +1,64 @@
+<%# locals: (data:) -%>
+<%# A landing page's opening (paid traffic): the headline, the flat price and the lead form side by side above the fold, the phone beside them, and nothing that leads off the page. The form is #quote, where the page's other buttons send people. On phones the form comes right after the headline and price; the check marks and the call line follow it. A blank price on a dumpster page is the lowest in the Dumpster sizes collection. %>
+<% settings = affordabox_settings %>
+<% phone = affordabox_toll_free %>
+<% price = data.price_value.presence %>
+<% price ||= affordabox_entries(:dumpsters).filter_map { website_fields(it).price.presence }.min&.then { affordabox_usd(it) } if data.form_service == "Dumpster" %>
+<section class="relative overflow-hidden bg-ink-900 text-white">
+  <% if data.photo.present? %>
+    <%= website_image_tag data.photo, alt: "", class: "absolute inset-0 h-full w-full object-cover opacity-25", loading: :eager, fetchpriority: :high, "aria-hidden": "true" %>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-900/95 to-ink-900/70" aria-hidden="true"></div>
+  <% end %>
+  <div class="relative container-base pt-8 pb-12 lg:pt-14 lg:pb-20">
+    <div class="grid gap-x-12 gap-y-8 lg:grid-cols-2 lg:items-start">
+      <div>
+        <% if data.eyebrow.present? %>
+          <span class="eyebrow eyebrow-light"><%= affordabox_fill(data.eyebrow) %></span>
+        <% end %>
+        <h1 class="display mt-4 text-4xl sm:text-5xl lg:text-6xl text-white"><%= data.heading %></h1>
+        <% if data.body.present? %>
+          <div class="mt-5 max-w-xl text-lg leading-relaxed text-neutral-300 [&_strong]:font-semibold [&_strong]:text-white"><%= affordabox_markdown data.body %></div>
+        <% end %>
+        <% if price %>
+          <div class="mt-6 inline-flex items-center gap-4 rounded-lg border border-white/15 bg-white/5 px-5 py-3">
+            <div>
+              <span class="block text-xs font-semibold uppercase tracking-wide text-brand-300"><%= data.price_label.presence || "Flat rate from" %></span>
+              <span class="font-display text-4xl font-bold leading-none text-white"><%= price %></span>
+            </div>
+            <% if data.price_note.present? %>
+              <p class="max-w-[16rem] border-l border-white/15 pl-4 text-sm leading-snug text-neutral-300"><%= data.price_note %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div id="quote" class="scroll-mt-24 lg:row-span-2 lg:pl-4">
+        <%= render "website/shared/lead_form", variant: "full", heading: data.form_heading, service: data.form_service %>
+      </div>
+      <div>
+        <% if data.checklist.any? %>
+          <ul class="grid gap-2.5 text-base font-medium text-neutral-200 sm:grid-cols-2">
+            <% data.checklist.each_with_index do |item, index| %>
+              <%# herb:key index %>
+              <li class="flex items-start gap-2"><%= render "website/shared/check", class_name: "mt-1 w-4 h-4 shrink-0 text-brand-400" %><span><%= item %></span></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-white/10 pt-6">
+          <a href="<%= affordabox_tel(phone) %>" data-track="phone_click" class="group flex items-center gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand-500 transition-colors group-hover:bg-brand-600"><%= render "website/shared/phone_icon", class_name: "w-5 h-5 text-white" %></span>
+            <span>
+              <span class="block text-xs font-semibold uppercase tracking-wide text-neutral-400"><%= data.call_label.presence || "Rather talk? Call a real person" %></span>
+              <span class="font-display text-2xl font-bold tracking-tight text-white group-hover:text-brand-300"><%= phone %></span>
+            </span>
+          </a>
+          <% if settings.rating.present? %>
+            <div class="flex items-center gap-2 text-sm text-neutral-300">
+              <%= render "website/shared/stars", rating: settings.rating.to_f.round %>
+              <span><%= affordabox_rating_line %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

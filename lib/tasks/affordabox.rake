@@ -26,7 +26,7 @@ namespace :affordabox do
       "pages" => pages.map { keep.(it, "path", "slug", "title", "locale", "blocks", "frontmatter", "seo") },
       "entries" => entries.map { keep.(it, "collection", "slug", "title", "locale", "frontmatter", "body_markdown", "seo") },
       "forms" => cms.("forms")["forms"].map { keep.(it, "slug", "title", "fields", "submit_label", "success_message") },
-      "site" => keep.(cms.("get", "/api/v1/site")["data"], "name", "description")
+      "site" => cms.("get", "/settings/general")["setting"]["data"].then { {"name" => it["title"], "description" => it["description"]} }
     }
     path = Affordabox::Engine.root.join("spec/fixtures/cms/snapshot.json")
     path.write(JSON.pretty_generate(snapshot))
