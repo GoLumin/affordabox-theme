@@ -1,0 +1,52 @@
+<%# locals: (field:, id:, input:) -%>
+<%# One of the lead form's fields as Forms › Lead defines it: its label, type, placeholder, help, choices and whether it's required. %>
+<% name = field["name"] %>
+<% type = field["type"] %>
+<% required = field["required"] == true %>
+<% help_id = "#{id}-help" if field["help"].present? %>
+<% optional = required ? nil : tag.span("(optional)", class: "font-normal text-neutral-400") %>
+<% if type == "radio" %>
+  <fieldset data-lead-field="<%= name %>" data-lead-label="<%= field["label"] %>">
+    <legend class="block text-sm font-semibold text-ink-900"><%= field["label"] %> <%= optional %></legend>
+    <div class="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+      <% affordabox_choices(field).each_with_index do |option, index| %>
+        <%# herb:key index %>
+        <label class="inline-flex items-center gap-2 text-sm text-neutral-700">
+          <%= tag.input type: "radio", name:, value: option["value"], class: "h-4 w-4 accent-brand-500", required:, data: {lead_label: field["label"]} %>
+          <%= option["label"] %>
+        </label>
+      <% end %>
+    </div>
+    <% if help_id %><p id="<%= help_id %>" class="mt-1.5 text-xs text-neutral-500"><%= field["help"] %></p><% end %>
+  </fieldset>
+<% elsif type == "checkbox" %>
+  <div data-lead-field="<%= name %>">
+    <label class="inline-flex items-start gap-2 text-sm text-neutral-700">
+      <%= tag.input id:, type: "checkbox", name:, value: "yes", class: "mt-0.5 h-4 w-4 accent-brand-500", required:, data: {lead_label: field["label"]}, aria: {describedby: help_id} %>
+      <span><%= field["label"] %></span>
+    </label>
+    <% if help_id %><p id="<%= help_id %>" class="mt-1.5 text-xs text-neutral-500"><%= field["help"] %></p><% end %>
+  </div>
+<% else %>
+  <div data-lead-field="<%= name %>">
+    <label for="<%= id %>" class="block text-sm font-semibold text-ink-900"><%= field["label"] %> <%= optional %></label>
+    <% options = {id:, name:, class: input, placeholder: field["placeholder"].presence, required:, autocomplete: affordabox_autocomplete(field), data: {lead_label: field["label"]}, aria: {describedby: help_id}} %>
+    <% case type %>
+    <% when "textarea" %>
+      <%= tag.textarea(**options.merge(rows: 2)) %>
+    <% when "select" %>
+      <%= content_tag(:select, **options.merge(class: "#{input} bg-white")) do %>
+        <%= tag.option field["placeholder"].presence || "Choose…", value: "", selected: true, disabled: required %>
+        <% affordabox_choices(field).each_with_index do |option, index| %>
+          <%# herb:key index %>
+          <%= tag.option option["label"], value: option["value"] %>
+        <% end %>
+      <% end %>
+    <% when "file" %>
+      <%= tag.input(**options.merge(type: "file", accept: field["accept"].presence, multiple: field["multiple"] == true)) %>
+    <% else %>
+      <%= tag.input(**options.merge(type:, inputmode: {"tel" => "tel", "email" => "email", "url" => "url"}[type], data: {lead_label: field["label"], lead_phone: type == "tel" || nil, lead_email: type == "email" || nil})) %>
+    <% end %>
+    <% if help_id %><p id="<%= help_id %>" class="mt-1.5 text-xs text-neutral-500"><%= field["help"] %></p><% end %>
+  </div>
+<% end %>

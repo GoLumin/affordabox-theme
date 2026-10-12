@@ -118,6 +118,28 @@ RSpec.describe "The Affordabox website", type: :request, website: true do
     expect(response).to have_http_status(:unprocessable_content)
   end
 
+  it "draws the lead form as Forms › Lead defines it, fields added there included" do
+    lead = Form.find_by!(slug: "lead")
+    fields = lead.fields.map do |field|
+      case field["name"]
+      when "zip" then field.merge("label" => "Delivery ZIP", "placeholder" => "e.g. 55376", "required" => true)
+      when "email" then field.merge("required" => true)
+      else field
+      end
+    end
+    lead.update!(fields: fields + [{"name" => "company", "label" => "Company", "type" => "text", "help" => "If it's for a business."}])
+
+    get "/get-a-quote"
+    form = html.at_css("form[data-lead-form]")
+
+    expect(form.at_css("label[for$='-zip']").text).to include("Delivery ZIP")
+    expect(form.at_css("input[name=zip]")["placeholder"]).to eq("e.g. 55376")
+    expect(form.at_css("input[name=email]")["required"]).to be_present
+    expect(form.at_css("input[name=company]")).to be_present
+    expect(form.at_css("label[for$='-company']").text).to include("Company", "(optional)")
+    expect(form.text).to include("If it's for a business.")
+  end
+
   it "picks a page's service in its lead form" do
     get "/dumpster-rentals"
 

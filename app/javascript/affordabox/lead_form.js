@@ -1,5 +1,7 @@
 // The 3-step free-quote form (LeadForm.svelte): ZIP and service, what it's
-// for, then name and phone. The ZIP is checked against the cities served;
+// for, then name and phone. Forms › Lead decides the fields and which are
+// required; each step checks its own before moving on. The ZIP is checked
+// against the cities served;
 // the service, project, phone and email can come from the address
 // (/get-a-quote?service=Dumpster&use=Roofing). It posts to the Forms plugin
 // without leaving the page, then goes to the thank-you page.
@@ -36,6 +38,7 @@ function setup(form) {
   const service = form.querySelector("[data-lead-service]")
   const areas = JSON.parse(form.dataset.areas || "{}")
   const hidden = (name) => form.querySelector(`[data-lead-hidden="${name}"]`)
+  const last = steps.length
   let step = 1
 
   const fail = (message) => {
@@ -52,9 +55,29 @@ function setup(form) {
       bar.classList.toggle("bg-neutral-200", !on)
     })
     const label = card.querySelector("[data-lead-step-label]")
-    if (label) label.textContent = `Step ${n} of 3`
+    if (label) label.textContent = `Step ${n} of ${last}`
     fail("")
-    if (n === 3) renderTurnstile(form)
+    if (n === last) renderTurnstile(form)
+  }
+
+  // The first thing on this step that's required and empty, or isn't what
+  // its type wants (a phone needs 7 digits), as a message; or "".
+  const problem = (n) => {
+    const container = steps.find((el) => Number(el.dataset.leadStep) === n)
+    for (const control of container.querySelectorAll("input[name], select[name], textarea[name]")) {
+      if (control.type === "hidden") continue
+      const label = control.dataset.leadLabel || control.name
+      const value = control.type === "file" ? control.files.length : String(control.value || "").trim()
+      if (control.type === "radio" || control.type === "checkbox") {
+        if (control.required && !form.querySelector(`[name="${control.name}"]:checked`)) return `Please fill in “${label}”.`
+        continue
+      }
+      if (control.required && !value) return `Please fill in “${label}”.`
+      if (!value) continue
+      if (control.type === "tel" && String(value).replace(/\D/g, "").length < 7) return "Please enter a valid phone number."
+      if (control.type === "email" && !control.checkValidity()) return "Please enter a valid email address."
+    }
+    return ""
   }
 
   const checkZip = () => {
@@ -65,8 +88,8 @@ function setup(form) {
     inArea.hidden = !(valid && city)
     inArea.textContent = city ? `✓ Yes! We serve ${city}.` : ""
     form.querySelector("[data-lead-out-area]").hidden = !(valid && !city)
-    hidden("city").value = city || form.dataset.city || ""
-    hidden("in_area").value = valid ? (city ? "yes" : "no") : ""
+    if (hidden("city")) hidden("city").value = city || form.dataset.city || ""
+    if (hidden("in_area")) hidden("in_area").value = valid ? (city ? "yes" : "no") : ""
     return valid
   }
 
@@ -86,30 +109,29 @@ function setup(form) {
     })
     if (params.get("use") === pill.dataset.leadUse) pill.click()
   })
-  if (params.get("use") && !hidden("use_case").value) hidden("use_case").value = params.get("use")
+  if (params.get("use") && hidden("use_case") && !hidden("use_case").value) hidden("use_case").value = params.get("use")
 
   zip.addEventListener("input", checkZip)
   checkZip()
 
   form.querySelectorAll("[data-lead-next]").forEach((button) => button.addEventListener("click", () => {
-    if (step === 1) {
-      if (!checkZip()) return fail("Please enter a 5-digit ZIP code.")
-      if (!service.value) return fail("Please choose a service.")
-    }
-    show(Math.min(step + 1, 3))
+    if (step === 1 && (zip.required || zip.value.trim()) && !checkZip()) return fail("Please enter a 5-digit ZIP code.")
+    const message = problem(step)
+    if (message) return fail(message)
+    show(Math.min(step + 1, last))
   }))
   form.querySelectorAll("[data-lead-back]").forEach((button) => button.addEventListener("click", () => show(Math.max(step - 1, 1))))
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault()
-    if (step < 3) return
+    if (step < last) return
     const data = new FormData(form)
     const done = () => {
       window.gtag?.("event", "quote_complete", { service: service.value })
       window.location.href = form.dataset.redirect || "/thank-you"
     }
-    if (!String(data.get("first_name") || "").trim()) return fail("Please enter your name.")
-    if (String(data.get("phone") || "").replace(/\D/g, "").length < 7) return fail("Please enter a valid phone number.")
+    const message = problem(step)
+    if (message) return fail(message)
     const widget = form.querySelector(".cf-turnstile")
     if (widget && !data.get("cf-turnstile-response")) return fail("Please complete the verification.")
 
