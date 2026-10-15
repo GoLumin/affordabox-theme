@@ -1,7 +1,7 @@
 <%# Page not found (404.astro). Its words and the services to jump to are Site settings › Page not found. %>
 <% words = affordabox_settings.not_found %>
 <% heading = words.heading.presence || "Page not found" %>
-<% content_for :head, website_seo_tags(title: "#{heading} | Affordabox", description: words.body, noindex: true) %>
+<% content_for :head, website_seo_tags(title: "#{heading} | #{affordabox_name}", description: words.body, noindex: true) %>
 <section class="bg-neutral-50 min-h-[calc(100dvh-64px)] flex items-center">
   <div class="container-base max-w-2xl text-center section-padding">
     <span class="eyebrow eyebrow-center">— 404</span>

@@ -175,6 +175,51 @@ RSpec.describe "The Affordabox website", type: :request, website: true do
     expect(body.scan("data-cms-repeat").size + body.scan("{{").size).to eq(0)
   end
 
+  it "gives a facility its own office and gate hours, and only the unit sizes it has" do
+    facilities = Collection.find_by!(slug: "facilities")
+    monticello = facilities.entries.find_by!(slug: "monticello")
+    monticello.update!(frontmatter: monticello.frontmatter.merge("office_hours" => "Mon–Fri 9am–5pm", "access_hours" => "6am–10pm daily"))
+    units = Collection.find_by!(slug: "storage-units").entries
+    climate = units.find { it.frontmatter["category"] == "climate" }
+    climate.update!(frontmatter: climate.frontmatter.merge("facilities" => ["st-michael"]))
+    page = Page.find_by!(path: "self-storage/monticello")
+    page.update!(blocks: page.blocks.map { it["type"] == "storage_units" ? it.deep_merge("data" => {"facility" => "monticello"}) : it })
+
+    get "/self-storage/monticello"
+
+    details = html.at_css("dl").text
+    expect(details).to include("Mon–Fri 9am–5pm", "Gate access", "6am–10pm daily")
+    expect(details).not_to include(site_settings["hours"])
+    titles = html.css("section h3").map { it.text.strip }
+    expect(titles).not_to include(climate.title)
+    expect(titles).to include(*(units - [climate]).map(&:title))
+    local = html.css("script[type='application/ld+json']").map { JSON.parse(it.text) }.find { it["@type"] == "SelfStorage" }
+    expect(local).not_to have_key("openingHoursSpecification")
+
+    get "/self-storage/st-michael"
+
+    expect(html.at_css("dl").text).to include(site_settings["hours"])
+    expect(html.css("section h3").map { it.text.strip }).to include(climate.title)
+  end
+
+  it "says a city's services the way a person would" do
+    anoka = Collection.find_by!(slug: "locations").entries.find_by!(slug: "anoka")
+    anoka.update!(frontmatter: anoka.frontmatter.merge("services" => %w[dumpster container-buy container-rent portable]))
+
+    get "/locations/anoka"
+
+    expect(response.body).to include("Looking for dumpster rentals, shipping containers to buy or rent and portable storage in Anoka?")
+  end
+
+  it "fills {hours} in a closing band's note from Site settings" do
+    page = Page.find_by!(path: "about")
+    page.update!(blocks: page.blocks.map { it["type"] == "cta_band" ? it.deep_merge("data" => {"note" => "{hours} · No call centers"}) : it })
+
+    get "/about"
+
+    expect(response.body).to include("#{site_settings["hours"]} · No call centers")
+  end
+
   it "loads its own scripts, stylesheet and fonts, none of the admin's" do
     get "/"
 

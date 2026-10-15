@@ -1,5 +1,5 @@
 <%# locals: (data:) -%>
-<%# A facility's address, office hours, phone and features beside its Google map (self-storage/monticello.astro), with its SelfStorage structured data. %>
+<%# A facility's address, office and gate hours, phone and features beside its Google map (self-storage/monticello.astro), with its SelfStorage structured data. Its office hours are the facility's own, or Site settings › Hours when it has none; the structured hours by day are Site settings' and go out only then. %>
 <% facility = affordabox_entries(:facilities).find { it.slug == data.facility } %>
 <% if facility %>
   <% f = website_fields(facility) %>
@@ -20,8 +20,14 @@
             </div>
             <div>
               <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Office hours</dt>
-              <dd class="mt-1 text-ink-900"><%= settings.hours %></dd>
+              <dd class="mt-1 text-ink-900"><%= f.office_hours.presence || settings.hours %></dd>
             </div>
+            <% if f.access_hours.present? %>
+              <div>
+                <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Gate access</dt>
+                <dd class="mt-1 text-ink-900"><%= f.access_hours %></dd>
+              </div>
+            <% end %>
             <div>
               <dt class="text-sm font-display font-bold uppercase tracking-wide text-neutral-500">Phone</dt>
               <dd class="mt-1"><a href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click" class="text-brand-600 font-semibold hover:text-brand-700"><%= settings.toll_free %></a></dd>
@@ -49,7 +55,7 @@
     <%= affordabox_json_ld({"@context" => "https://schema.org", "@type" => "SelfStorage", "name" => facility.title, "telephone" => affordabox_tel(settings.toll_free).delete_prefix("tel:"),
       "address" => {"@type" => "PostalAddress", "streetAddress" => f.street, "addressLocality" => f.city, "addressRegion" => f.state, "postalCode" => f.zip, "addressCountry" => "US"},
       "geo" => {"@type" => "GeoCoordinates", "latitude" => f.lat.to_f, "longitude" => f.lng.to_f},
-      "openingHoursSpecification" => settings.hours_detailed.map { {"@type" => "OpeningHoursSpecification", "dayOfWeek" => it.day, "opens" => it.open, "closes" => it.close} },
-      "priceRange" => "$"}) %>
+      "openingHoursSpecification" => (settings.hours_detailed.map { {"@type" => "OpeningHoursSpecification", "dayOfWeek" => it.day, "opens" => it.open, "closes" => it.close} } if f.office_hours.blank?),
+      "priceRange" => "$"}.compact) %>
   </section>
 <% end %>

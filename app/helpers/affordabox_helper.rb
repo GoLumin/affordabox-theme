@@ -105,10 +105,11 @@ module AffordaboxHelper
   end
 
   # Words with the site's placeholders filled: {ownership}, {rating}, {year},
-  # {name}, {phone}.
+  # {name}, {phone}, {hours}.
   def affordabox_fill(text)
     text.to_s.gsub("{ownership}", affordabox_ownership).gsub("{rating}", affordabox_rating_line)
       .gsub("{year}", Date.current.year.to_s).gsub("{name}", affordabox_name).gsub("{phone}", affordabox_toll_free)
+      .gsub("{hours}", affordabox_settings.hours.to_s)
   end
 
   # A link field's href, or nil.
@@ -250,6 +251,23 @@ module AffordaboxHelper
                    "portable" => "portable-storage", "self-storage" => "self-storage"}.freeze
 
   def affordabox_service_label(key) = SERVICE_LABELS.fetch(key.to_s, key.to_s.humanize)
+
+  # A city's services as a phrase that reads after "Looking for": buying and
+  # renting a container become one "shipping containers to buy or rent".
+  def affordabox_service_phrase(keys)
+    keys = keys.map(&:to_s)
+    containers = %w[buy rent].select { keys.include?("container-#{it}") }
+    phrases = keys.filter_map do |key|
+      case key
+      when "dumpster" then "dumpster rentals"
+      when "container-buy", "container-rent" then "shipping containers to #{containers.join(" or ")}" if key == "container-#{containers.first}"
+      when "portable" then "portable storage"
+      when "self-storage" then "self-storage"
+      else affordabox_service_label(key).downcase
+      end
+    end
+    affordabox_sentence(phrases)
+  end
 
   def affordabox_service_href(key) = "/#{SERVICE_PAGES.fetch(key.to_s, "")}"
 end

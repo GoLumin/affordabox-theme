@@ -1,11 +1,13 @@
 <%# locals: (data:) -%>
-<%# A card per unit size from the Storage units collection (self-storage/monticello.astro): a photo of what fits when there is one, the size and its kind, square feet, what it fits, and a button to check availability. %>
+<%# A card per unit size from the Storage units collection (self-storage/monticello.astro): a photo of what fits when there is one, the size and its kind, square feet, what it fits, and a button to check availability. With a facility picked, only the sizes that facility has (a unit with no facilities ticked is at every one). %>
 <% labels = {"drive-up" => "Drive-up", "climate" => "Climate-controlled", "oversized" => "Oversized"} %>
 <section class="bg-neutral-50">
   <div class="container-base section-padding">
     <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro %>
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <% affordabox_entries("storage-units").each_with_index do |unit, index| %>
+      <% units = affordabox_entries("storage-units") %>
+      <% units = units.select { (at = website_fields(it).facilities).blank? || at.include?(data.facility) } if data.facility.present? %>
+      <% units.each_with_index do |unit, index| %>
         <%# herb:key index %>
         <% f = website_fields(unit) %>
         <div class="flex flex-col rounded-lg bg-white border border-neutral-200 p-6 shadow-[var(--shadow-card)]">
