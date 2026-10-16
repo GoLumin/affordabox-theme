@@ -1,6 +1,7 @@
 <%# locals: (data:) -%>
-<%# A price card per size from the Dumpster sizes collection (dumpster-rentals/index.astro): photo, size, dimensions, what it fits, example projects, the flat starting price and a button to quote that size; the most popular is ringed. With its Product structured data. %>
+<%# A price card per size from the Dumpster sizes collection (dumpster-rentals/index.astro): photo, size, dimensions, what it fits, example projects, the flat starting price and a button to quote that size; the most popular is ringed. With its Product structured data. On a landing page ("Button goes to": the form on this page) the button goes up to the page's form (#quote) and notes the size there (affordabox/landing.js) instead of leaving the page. %>
 <% sizes = affordabox_entries(:dumpsters) %>
+<% on_page = data.button_target == "form" %>
 <section class="bg-white">
   <div class="container-base section-padding">
     <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro %>
@@ -31,7 +32,11 @@
               <span class="font-display text-3xl font-bold text-ink-900"><%= affordabox_usd(f.price) %></span>
               <span class="block mt-1 h-1 w-full rounded-full bg-brand-500" aria-hidden="true"></span>
             </div>
-            <a href="/get-a-quote?service=Dumpster&amp;size=<%= size.slug %>" class="<%= class_names("mt-5 w-full justify-center", f.popular ? "btn-primary" : "btn-secondary") %>"><%= data.button_label.presence || "Get this size" %></a>
+            <% if on_page %>
+              <a href="#quote" data-lead-prefill="Size: <%= size.title %> dumpster" class="<%= class_names("mt-5 w-full justify-center", f.popular ? "btn-primary" : "btn-secondary") %>"><%= data.button_label.presence || "Get this size" %></a>
+            <% else %>
+              <a href="/get-a-quote?service=Dumpster&amp;size=<%= size.slug %>" class="<%= class_names("mt-5 w-full justify-center", f.popular ? "btn-primary" : "btn-secondary") %>"><%= data.button_label.presence || "Get this size" %></a>
+            <% end %>
           </div>
         </article>
       <% end %>

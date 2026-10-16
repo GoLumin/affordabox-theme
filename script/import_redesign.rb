@@ -17,6 +17,7 @@
 require_relative "cms_client"
 require_relative "seo_copy"
 require_relative "facts"
+require_relative "landing"
 
 ROOT = File.expand_path("..", __dir__)
 REDESIGN = File.expand_path(ENV.fetch("REDESIGN", File.join(ROOT, "../affordabox-redesign")))
@@ -99,8 +100,9 @@ BLOCK_TYPES = [
    fields: [f("heading", "Heading", "string"), f("body", "Words", "text"), f("service", "Lead form service", "select", options: SERVICES), f("note", "Note beside the phone", "string")],
    defaults: {"heading" => "Ready to get started?", "service" => "any"}},
   {slug: "dumpster_sizes", label: "Dumpster sizes", icon: "Truck", description: "A price card per dumpster size (the Dumpster sizes collection).",
-   fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"), f("schema", "Give search engines the prices (Product)", "boolean")],
-   defaults: {"button_label" => "Get this size", "schema" => true}},
+   fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"), Landing::BUTTON_TARGET_FIELD,
+     f("schema", "Give search engines the prices (Product)", "boolean")],
+   defaults: {"button_label" => "Get this size", "button_target" => "quote_page", "schema" => true}},
   {slug: "container_catalog", label: "Container catalogue", icon: "Container", description: "A card per container for sale (the Containers collection).",
    fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"), f("schema", "Give search engines the prices (Product)", "boolean")],
    defaults: {"button_label" => "Get this container", "schema" => true}},
@@ -163,7 +165,8 @@ BLOCK_TYPES = [
   {slug: "quote_configurator", label: "3-D quote", icon: "Box", description: "The 3-D configurator: size it, price it, then hand off to the online quote.",
    fields: [f("product", "Product", "select", options: %w[dumpsters portable-storage shipping-containers], required: true),
      f("fuse_url", "Online quote address", "url", help: "Where \"Continue\" goes, e.g. https://affordabox.gofuse.app/web-quotes/quote.")],
-   defaults: {"fuse_url" => "https://affordabox.gofuse.app/web-quotes/quote"}}
+   defaults: {"fuse_url" => "https://affordabox.gofuse.app/web-quotes/quote"}},
+  *Landing::BLOCK_TYPES
 ].freeze
 OLD_BLOCK_TYPES = %w[main_hero container_slider bento_grid two_col quote_form logo_slider photo_gallery two_col_banner image_cta products
   single_hero title_bar rich_text faqs container_listing locations image_gallery features testimonials image_text hours].freeze
@@ -224,7 +227,7 @@ GLOBALS = {
     f("legal_links", "Legal links", "repeater", of: LINK_ITEM), f("copyright", "Copyright line", "string", help: "{year} is this year; {name} the business name.")]}
 }.freeze
 
-PAGE_FIELDS = [f("exit_modal", "Exit-intent popup", "select", options: %w[on off], sidebar: true, help: "Off on pages after a form is sent.")].freeze
+PAGE_FIELDS = [f("exit_modal", "Exit-intent popup", "select", options: %w[on off], sidebar: true, help: "Off on pages after a form is sent."), Landing::LAYOUT_FIELD].freeze
 
 # ===== The content =====
 

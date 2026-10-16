@@ -1,5 +1,6 @@
-<%# The frame of every page (LayoutV2.astro in the redesign): the sticky header with its mega menus, the page, the footer, the call/quote bar on phones, and the exit-intent popup (off on pages after a form is sent: a page's "Exit-intent popup" field). %>
+<%# The frame of every page (LayoutV2.astro in the redesign): the sticky header with its mega menus, the page, the footer, the call/quote bar on phones, and the exit-intent popup (off on pages after a form is sent: a page's "Exit-intent popup" field). A landing page (a page's "Layout" field) keeps only the logo and the phone up top, a slim footer, and a bar on phones that goes to the page's own form: nowhere to wander off to. %>
 <% settings = affordabox_settings %>
+<% landing = content_for(:layout_mode) == "landing" %>
 <% favicon = affordabox_file_url(settings.favicon) %>
 <!DOCTYPE html>
 <html lang="<%= website_settings["default_locale"].presence || "en" %>" class="scroll-smooth">
@@ -26,12 +27,21 @@
     <%= website_javascript_tags %>
   </head>
   <body class="font-sans text-neutral-800 antialiased bg-white">
-    <%= render "website/shared/nav" %>
+    <% if landing %>
+      <%= render "website/shared/landing_header" %>
+    <% else %>
+      <%= render "website/shared/nav" %>
+    <% end %>
     <main id="main">
       <%= yield %>
     </main>
-    <%= render "website/shared/footer" %>
-    <%= render "website/shared/sticky_cta" %>
+    <% if landing %>
+      <%= render "website/shared/landing_footer" %>
+      <%= render "website/shared/sticky_cta", quote_href: "#quote", quote_label: "Get my price" %>
+    <% else %>
+      <%= render "website/shared/footer" %>
+      <%= render "website/shared/sticky_cta" %>
+    <% end %>
     <% if content_for(:exit_modal) != "off" && settings.exit_modal.enabled %>
       <%= render "website/shared/exit_modal" %>
     <% end %>

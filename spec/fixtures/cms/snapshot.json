@@ -3925,9 +3925,53 @@
   ],
   "pages": [
     {
-      "path": "self-storage",
-      "slug": "self-storage",
-      "title": "Self-Storage",
+      "path": "thank-you",
+      "slug": "thank-you",
+      "title": "Thank You",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "thank_you",
+          "version": 1,
+          "data": {
+            "heading": "Thank you — we've got your request.",
+            "body": "A real local person will reach out during business hours (Mon–Fri 8AM–5PM CT). No call centers, no runaround.",
+            "call_line": "In a hurry? Call us now at {phone}.",
+            "event": "generate_lead",
+            "buttons": [
+              {
+                "label": "Back to home",
+                "link": {
+                  "kind": "page",
+                  "value": "home"
+                },
+                "style": "primary"
+              },
+              {
+                "label": "Read our reviews",
+                "link": {
+                  "kind": "page",
+                  "value": "reviews"
+                },
+                "style": "secondary"
+              }
+            ]
+          }
+        }
+      ],
+      "frontmatter": {
+        "exit_modal": "off"
+      },
+      "seo": {
+        "meta_title": "Thank You | AffordABox",
+        "meta_description": "Thanks for your request — a real local person from AffordABox will be in touch shortly.",
+        "noindex": true
+      }
+    },
+    {
+      "path": "shipping-containers/buy",
+      "slug": "buy",
+      "title": "Buy",
       "locale": "en",
       "blocks": [
         {
@@ -3944,76 +3988,241 @@
             "padding": "large",
             "heading_size": "large",
             "photo_opacity": "20",
-            "photo": "139",
-            "eyebrow": "— Two locations, both local",
-            "heading": "Self-Storage in Monticello & St. Michael, MN",
-            "body": "Drive-up units at two Wright County facilities, plus climate-controlled units in St. Michael. Reserve online with no credit card to hold your space — month-to-month, with online-only discounts.",
+            "photo": "133",
+            "eyebrow": "— New & used containers, delivered local",
+            "heading": "Shipping Containers for Sale",
+            "body": "Buy a wind- and water-tight 20' or 40' container — new one-trip or budget-friendly cargo-worthy used. We publish real starting prices and deliver to your site as soon as next-day.",
             "checklist": [
-              "No credit card to reserve",
-              "Online discounts",
-              "Month-to-month"
+              "New & used",
+              "20' & 40'",
+              "Delivered to your site"
             ],
-            "form_heading": "Reserve your unit",
-            "form_service": "Self-Storage"
-          }
-        },
-        {
-          "type": "facility_cards",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Choose your location",
-            "heading": "Two facilities, same local service",
-            "facilities": [
-              "monticello",
-              "st-michael"
-            ],
-            "price_label": "Reserve online"
+            "form_heading": "Get your container quote",
+            "form_service": "Container — Buy"
           }
         },
         {
           "type": "card_grid",
           "version": 1,
           "data": {
-            "eyebrow": "— Which unit is right?",
-            "heading": "Drive-up, climate-controlled, or oversized",
-            "columns": "3",
+            "eyebrow": "— Pick your condition",
+            "heading": "New (one-trip) or used (cargo-worthy)",
+            "intro": "Both are structurally sound and lock securely — the difference is cosmetic wear and price.",
+            "columns": "2",
             "style": "card",
-            "background": "muted",
             "cards": [
               {
-                "title": "Drive-up units",
-                "body": "Pull right up to the door and load straight from your vehicle — no hallways, no elevators. The easiest option for furniture, totes, and quick in-and-out access through a Minnesota winter."
+                "title": "New — one-trip",
+                "body": "Manufactured recently and shipped just once, so they look nearly pristine — minimal wear, clean interiors, and a long service life. Ideal when appearance matters or you're planning a build."
               },
               {
-                "title": "Climate-controlled units",
-                "body": "A steadier temperature year-round for the things that don't like swings — electronics, documents, photos, wood furniture, and anything you'd rather not leave in the cold or heat."
-              },
-              {
-                "title": "Oversized units",
-                "body": "Tall doors and extra room for boats, campers, trailers, and fish houses, plus business inventory or a vehicle you want under cover."
+                "title": "Used — cargo-worthy",
+                "body": "Wind- and water-tight with honest cosmetic wear at the best price. Structurally sound and ready for on-site storage or job-site use the day they arrive."
               }
             ]
+          }
+        },
+        {
+          "type": "container_catalog",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Our catalogue",
+            "heading": "Containers for sale",
+            "intro": "Standard, high-cube, double-door, and side-door options in 20' and 40'.",
+            "button_label": "Get this container",
+            "schema": true
           }
         },
         {
           "type": "split",
           "version": 1,
           "data": {
-            "eyebrow": "— Easy to reserve",
-            "heading": "Reserve online — no card to hold",
-            "body": "Lock in your unit online and we'll hold it for you with no credit card required. Ask about online-only rate discounts, and rent month-to-month with no long-term contract. If your size shows as full, leave your info and we'll call the moment one opens.",
-            "button_label": "Reserve online",
-            "button_link": {
-              "kind": "page",
-              "value": "get-a-quote"
-            },
-            "right": "check_grid",
+            "eyebrow": "— Spec note",
+            "heading": "Standard vs. high-cube",
+            "body": "Both share the same footprint. The difference is height: standard containers stand 8'6\" tall, while high-cube containers add a full foot at 9'6\". That extra headroom matters for tall equipment, shelving, and comfortable workshop or office conversions.",
+            "facts": [
+              {
+                "label": "Standard",
+                "value": "8'6\" exterior height"
+              },
+              {
+                "label": "High-cube",
+                "value": "9'6\" exterior height"
+              }
+            ],
+            "facts_style": "boxes",
+            "right": "list",
+            "right_eyebrow": "— What people buy them for",
+            "right_heading": "Popular uses",
             "list": [
-              "No credit card to reserve",
-              "Online-only discounts",
-              "Month-to-month terms",
-              "Real local office staff"
+              "On-site & job-site storage",
+              "Workshops & garages",
+              "Portable offices",
+              "Retail & pop-ups",
+              "Custom builds & modifications"
             ]
+          }
+        },
+        {
+          "type": "card_grid",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Getting it on site",
+            "heading": "Delivery, clearance & door orientation",
+            "columns": "3",
+            "style": "card",
+            "background": "muted",
+            "cards": [
+              {
+                "title": "Tilt-bed delivery",
+                "body": "We deliver on a tilt-bed truck onto firm, level ground. We'll review your site with you before delivery so it lands exactly where you want it."
+              },
+              {
+                "title": "Clearance you'll need",
+                "body": "Plan for roughly the container length plus the truck — about 60 feet of straight clearance for a 20', and more for a 40'."
+              },
+              {
+                "title": "Door orientation",
+                "body": "You choose. Tell us whether you want the doors at the front or rear of the placement and we'll set it down accordingly."
+              }
+            ]
+          }
+        },
+        {
+          "type": "callout",
+          "version": 1,
+          "data": {
+            "style": "hazard",
+            "eyebrow": "— Make it yours",
+            "heading": "Custom modifications",
+            "body": "Doors, windows, shelving, and insulation are available, plus side-door and double-door containers. Tell us your plan and we'll quote the modifications along with the container.",
+            "button_label": "Talk modifications",
+            "button_link": {
+              "kind": "url",
+              "value": "/get-a-quote?service=Container%20%E2%80%94%20Buy"
+            }
+          }
+        },
+        {
+          "type": "reviews",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Reviews",
+            "heading": "What our neighbors say",
+            "context": "container",
+            "limit": 3,
+            "layout": "feed"
+          }
+        },
+        {
+          "type": "faq",
+          "version": 1,
+          "data": {
+            "eyebrow": "— FAQ",
+            "heading": "Buying a container — FAQs",
+            "group": "container-buy",
+            "style": "simple",
+            "schema": true
+          }
+        },
+        {
+          "type": "cta_band",
+          "version": 1,
+          "data": {
+            "heading": "Ready to get started?",
+            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
+            "service": "Container — Buy",
+            "note": "Mon–Fri 8AM–5PM CT · No call centers"
+          }
+        }
+      ],
+      "frontmatter": {
+        "exit_modal": "on"
+      },
+      "seo": {
+        "meta_title": "Shipping Containers for Sale in Minnesota | AffordABox",
+        "meta_description": "New one-trip and used cargo-worthy 20ft and 40ft shipping containers for sale in Minnesota from $1,800. Wind- and water-tight, delivered to your site."
+      }
+    },
+    {
+      "path": "self-storage/st-michael",
+      "slug": "st-michael",
+      "title": "St. Michael",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "breadcrumbs",
+          "version": 1,
+          "data": {}
+        },
+        {
+          "type": "page_hero",
+          "version": 1,
+          "data": {
+            "style": "photo",
+            "layout": "split",
+            "padding": "large",
+            "heading_size": "large",
+            "photo_opacity": "25",
+            "photo": "139",
+            "eyebrow": "— AffordABox Self-Storage",
+            "heading": "Self-Storage in St. Michael, MN",
+            "body": "10959 30th St NE, St. Michael, MN 55376",
+            "detail": "Just off Highway 19 with easy access from 30th Street, this facility pairs drive-up convenience with indoor climate-controlled units for Wright County renters who want quick, local access.",
+            "checklist": [
+              "Drive-up & climate-controlled",
+              "Held free, no obligation",
+              "Month-to-month"
+            ],
+            "form_heading": "Reserve your unit",
+            "form_service": "Self-Storage",
+            "form_city": "St. Michael"
+          }
+        },
+        {
+          "type": "facility_details",
+          "version": 1,
+          "data": {
+            "eyebrow": "— This facility",
+            "heading": "St. Michael facility details",
+            "facility": "st-michael"
+          }
+        },
+        {
+          "type": "storage_units",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Find your fit",
+            "heading": "Unit sizes in St. Michael",
+            "intro": "Reserve online and we’ll hold your unit free. Check live availability for the size you need.",
+            "button_label": "Check availability"
+          }
+        },
+        {
+          "type": "card_grid",
+          "version": 1,
+          "data": {
+            "columns": "2",
+            "style": "panel",
+            "cards": [
+              {
+                "title": "Built for Minnesota winters",
+                "body": "Drive-up units mean you park right at the door and load straight from your vehicle — no icy hallways, no stairs, no hauling totes down a long corridor in January. It's the fastest way in and out when the weather turns."
+              },
+              {
+                "title": "Room for your toys",
+                "body": "Oversized units with 10' doors give boats, campers, trailers, and fish houses a clean, secure home for the off-season — plus business inventory or a vehicle you'd rather keep covered.",
+                "dark": true
+              }
+            ]
+          }
+        },
+        {
+          "type": "prose",
+          "version": 1,
+          "data": {
+            "style": "small",
+            "body": "Our St. Michael self-storage facility sits at 10959 30th St NE, just off Highway 19 in the heart of Wright County, with quick access for renters across St. Michael, Albertville, Otsego, Hanover, Rogers, and the northwest Twin Cities metro. From a remodel overflow to seasonal boat and camper storage, you'll find drive-up, indoor, and climate-controlled units right where your crew already operates."
           }
         },
         {
@@ -4053,8 +4262,8 @@
         "exit_modal": "on"
       },
       "seo": {
-        "meta_title": "Self-Storage in Monticello & St. Michael, MN | AffordABox",
-        "meta_description": "Drive-up self-storage in Monticello and St. Michael, MN, with climate-controlled units in St. Michael. Reserve online with no card to hold, with units for boats and campers."
+        "meta_title": "Self-Storage in St. Michael, MN | AffordABox",
+        "meta_description": "Drive-up, indoor and climate-controlled storage units at 10959 30th St NE in St. Michael, MN. Reserve online and we’ll hold your unit free, month-to-month."
       }
     },
     {
@@ -4084,7 +4293,7 @@
             "detail": "Our Monticello facility on Innsbrook Drive offers drive-up units just off I-94 — park, load, and go without icy hallways, with oversized doors built for Minnesota boats and campers.",
             "checklist": [
               "Drive-up units",
-              "No card to reserve",
+              "Held free, no obligation",
               "Month-to-month"
             ],
             "form_heading": "Reserve your unit",
@@ -4107,7 +4316,7 @@
           "data": {
             "eyebrow": "— Find your fit",
             "heading": "Unit sizes in Monticello",
-            "intro": "Reserve online with no credit card to hold. Check live availability for the size you need.",
+            "intro": "Reserve online and we’ll hold your unit free. Check live availability for the size you need.",
             "button_label": "Check availability"
           }
         },
@@ -4177,6 +4386,354 @@
       "seo": {
         "meta_title": "Self-Storage in Monticello, MN | AffordABox",
         "meta_description": "Drive-up and oversized storage units at 10111 Innsbrook Drive in Monticello, MN, near I-94. Reserve online, month-to-month."
+      }
+    },
+    {
+      "path": "self-storage",
+      "slug": "self-storage",
+      "title": "Self-Storage",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "breadcrumbs",
+          "version": 1,
+          "data": {}
+        },
+        {
+          "type": "page_hero",
+          "version": 1,
+          "data": {
+            "style": "photo",
+            "layout": "split",
+            "padding": "large",
+            "heading_size": "large",
+            "photo_opacity": "20",
+            "photo": "139",
+            "eyebrow": "— Two locations, both local",
+            "heading": "Self-Storage in Monticello & St. Michael, MN",
+            "body": "Drive-up units at two Wright County facilities, plus climate-controlled units in St. Michael. Reserve online and we’ll hold your space free — month-to-month, with online discounts.",
+            "checklist": [
+              "Held free, no obligation",
+              "Online discounts",
+              "Month-to-month"
+            ],
+            "form_heading": "Reserve your unit",
+            "form_service": "Self-Storage"
+          }
+        },
+        {
+          "type": "facility_cards",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Choose your location",
+            "heading": "Two facilities, same local service",
+            "facilities": [
+              "monticello",
+              "st-michael"
+            ],
+            "price_label": "Reserve online"
+          }
+        },
+        {
+          "type": "card_grid",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Which unit is right?",
+            "heading": "Drive-up, climate-controlled, or oversized",
+            "columns": "3",
+            "style": "card",
+            "background": "muted",
+            "cards": [
+              {
+                "title": "Drive-up units",
+                "body": "Pull right up to the door and load straight from your vehicle — no hallways, no elevators. The easiest option for furniture, totes, and quick in-and-out access through a Minnesota winter."
+              },
+              {
+                "title": "Climate-controlled units",
+                "body": "A steadier temperature year-round for the things that don't like swings — electronics, documents, photos, wood furniture, and anything you'd rather not leave in the cold or heat."
+              },
+              {
+                "title": "Oversized units",
+                "body": "Tall doors and extra room for boats, campers, trailers, and fish houses, plus business inventory or a vehicle you want under cover."
+              }
+            ]
+          }
+        },
+        {
+          "type": "split",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Easy to reserve",
+            "heading": "Reserve online — held free",
+            "body": "Lock in your unit online and we'll hold it for you free, with no obligation to move in. Ask about online rate discounts, and rent month-to-month with no long-term contract. If your size shows as full, leave your info and we'll call the moment one opens.",
+            "button_label": "Reserve online",
+            "button_link": {
+              "kind": "page",
+              "value": "get-a-quote"
+            },
+            "right": "check_grid",
+            "list": [
+              "Held free, no obligation",
+              "Online-only discounts",
+              "Month-to-month terms",
+              "Real local office staff"
+            ]
+          }
+        },
+        {
+          "type": "reviews",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Reviews",
+            "heading": "What our neighbors say",
+            "context": "self-storage",
+            "limit": 3,
+            "layout": "feed"
+          }
+        },
+        {
+          "type": "faq",
+          "version": 1,
+          "data": {
+            "eyebrow": "— FAQ",
+            "heading": "Self-storage questions",
+            "group": "self-storage",
+            "style": "simple",
+            "schema": true
+          }
+        },
+        {
+          "type": "cta_band",
+          "version": 1,
+          "data": {
+            "heading": "Ready to get started?",
+            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
+            "service": "Self-Storage",
+            "note": "Mon–Fri 8AM–5PM CT · No call centers"
+          }
+        }
+      ],
+      "frontmatter": {
+        "exit_modal": "on"
+      },
+      "seo": {
+        "meta_title": "Self-Storage in Monticello & St. Michael, MN | AffordABox",
+        "meta_description": "Drive-up self-storage in Monticello and St. Michael, MN, with climate-controlled units in St. Michael. Reserve online and we’ll hold your unit free, with units for boats and campers."
+      }
+    },
+    {
+      "path": "portable-storage",
+      "slug": "portable-storage",
+      "title": "Portable Storage",
+      "locale": "en",
+      "blocks": [
+        {
+          "type": "breadcrumbs",
+          "version": 1,
+          "data": {}
+        },
+        {
+          "type": "page_hero",
+          "version": 1,
+          "data": {
+            "style": "photo",
+            "layout": "split",
+            "padding": "large",
+            "heading_size": "large",
+            "photo_opacity": "20",
+            "photo": "143",
+            "eyebrow": "— Portable storage, the local way",
+            "heading": "Portable Storage Delivered to Your Driveway — Loaded on Your Schedule.",
+            "body": "We place a ground-level unit right where you want it with the Mule Delivery System, then leave you to pack at your own pace. From **$149/mo + $79 delivery**, with $0 due until it arrives.",
+            "checklist": [
+              "Mule-placed in your driveway",
+              "$0 until delivery",
+              "Month-to-month"
+            ],
+            "form_heading": "Get your free quote",
+            "form_service": "Portable Storage"
+          }
+        },
+        {
+          "type": "portable_sizes",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Pick your size",
+            "heading": "Four sizes, priced upfront",
+            "intro": "Sizes start at **$149/mo**, and every unit holds ≈ 4,500 lbs. Not sure which fits? Tell us your move and a real local person will size it with you.",
+            "button_label": "Get this size",
+            "footnote": "**Weight limit:** ≈ 4,500 lbs per unit. **Climate options:** Non-climate (standard) · Insulated · Climate-controlled.",
+            "schema_price": 149
+          }
+        },
+        {
+          "type": "feature_split",
+          "version": 1,
+          "data": {
+            "eyebrow": "— The AffordABox advantage",
+            "heading": "Meet the Mule",
+            "body": "Our Mule Delivery System is the difference between a storage box dropped wherever the truck can reach — and one placed exactly where you need it. It's the local edge the national outfits simply don't have.",
+            "points": [
+              {
+                "title": "Remote-controlled placement",
+                "body": "We guide your unit into tight driveways and alleys by remote — exactly where you want it."
+              },
+              {
+                "title": "No driveway or lawn damage",
+                "body": "The Mule sets the box down gently, so your concrete and grass stay just as they were."
+              },
+              {
+                "title": "Stays level the whole way",
+                "body": "Your contents ride flat and don't shift in transport — nothing tips, slides, or breaks."
+              }
+            ],
+            "badge_value": "$0",
+            "badge_label": "due until it arrives",
+            "dark": true,
+            "image": "146",
+            "button_label": "See portable storage",
+            "button_link": {
+              "kind": "page",
+              "value": "portable-storage"
+            }
+          }
+        },
+        {
+          "type": "card_grid",
+          "version": 1,
+          "data": {
+            "eyebrow": "— What people use it for",
+            "heading": "One box, plenty of jobs",
+            "columns": "3",
+            "style": "icon",
+            "background": "muted",
+            "cards": [
+              {
+                "title": "Moving"
+              },
+              {
+                "title": "Remodel / restoration"
+              },
+              {
+                "title": "Decluttering"
+              },
+              {
+                "title": "Contractor on-site"
+              },
+              {
+                "title": "Business overflow"
+              },
+              {
+                "title": "Events"
+              }
+            ],
+            "note": "**10'×10' doors for Minnesota toys.** Need to store a boat, trailer, or fish house? Ask about units with 10'×10' doors built for Minnesota toys."
+          }
+        },
+        {
+          "type": "split",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Honest pricing",
+            "heading": "Real prices. No surprises.",
+            "body": "One clear starting rate, one flat delivery fee, and nothing due until your unit is in your driveway. Keep it as long as you need — it's month-to-month with no penalties for changing your plans.",
+            "button_label": "Get your free quote",
+            "button_link": {
+              "kind": "page",
+              "value": "get-a-quote"
+            },
+            "right": "rows",
+            "align": "start",
+            "rows": [
+              {
+                "label": "Monthly rate",
+                "value": "From $149/mo"
+              },
+              {
+                "label": "Delivery & pickup",
+                "value": "$79"
+              },
+              {
+                "label": "Due at booking",
+                "value": "$0 due until your unit is delivered.",
+                "highlight": true
+              },
+              {
+                "label": "Terms",
+                "value": "Month-to-month. No change fees, no cancel fees, no long-term contracts."
+              }
+            ]
+          }
+        },
+        {
+          "type": "process_steps",
+          "version": 1,
+          "data": {
+            "eyebrow": "— How it works",
+            "heading": "Three steps, about two minutes",
+            "steps": [
+              {
+                "title": "Tell us what you need",
+                "body": "Enter your ZIP and pick a service — our 2-minute quote does the rest."
+              },
+              {
+                "title": "Get a real human + a price",
+                "body": "A local person (never a call center) replies fast with a clear, upfront price."
+              },
+              {
+                "title": "We deliver as soon as next-day with the Mule",
+                "body": "We place it precisely in your driveway — no damage, no hassle, $0 until it arrives."
+              }
+            ]
+          }
+        },
+        {
+          "type": "reviews",
+          "version": 1,
+          "data": {
+            "eyebrow": "— Reviews",
+            "heading": "What our neighbors say",
+            "context": "portable",
+            "limit": 3,
+            "layout": "feed"
+          }
+        },
+        {
+          "type": "faq",
+          "version": 1,
+          "data": {
+            "eyebrow": "— FAQ",
+            "heading": "Portable storage questions",
+            "group": "portable",
+            "style": "simple",
+            "schema": true
+          }
+        },
+        {
+          "type": "callout",
+          "version": 1,
+          "data": {
+            "style": "note",
+            "body": "AffordABox is not associated with PODS. PODS is a registered trademark of The Procter & Gamble Company."
+          }
+        },
+        {
+          "type": "cta_band",
+          "version": 1,
+          "data": {
+            "heading": "Ready to get started?",
+            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
+            "service": "Portable Storage",
+            "note": "Mon–Fri 8AM–5PM CT · No call centers"
+          }
+        }
+      ],
+      "frontmatter": {
+        "exit_modal": "on"
+      },
+      "seo": {
+        "meta_title": "Portable Storage Containers in Minnesota | AffordABox",
+        "meta_description": "Portable storage delivered to your driveway by the Mule, from $149/mo plus $79 delivery. Month-to-month, $0 until it arrives, across the NW metro."
       }
     },
     {
@@ -4651,162 +5208,6 @@
       }
     },
     {
-      "path": "thank-you",
-      "slug": "thank-you",
-      "title": "Thank You",
-      "locale": "en",
-      "blocks": [
-        {
-          "type": "thank_you",
-          "version": 1,
-          "data": {
-            "heading": "Thank you — we've got your request.",
-            "body": "A real local person will reach out shortly — usually within the hour during business hours (Mon–Fri 8AM–5PM CT). No call centers, no runaround.",
-            "call_line": "In a hurry? Call us now at {phone}.",
-            "event": "generate_lead",
-            "buttons": [
-              {
-                "label": "Back to home",
-                "link": {
-                  "kind": "page",
-                  "value": "home"
-                },
-                "style": "primary"
-              },
-              {
-                "label": "Read our reviews",
-                "link": {
-                  "kind": "page",
-                  "value": "reviews"
-                },
-                "style": "secondary"
-              }
-            ]
-          }
-        }
-      ],
-      "frontmatter": {
-        "exit_modal": "off"
-      },
-      "seo": {
-        "meta_title": "Thank You | AffordABox",
-        "meta_description": "Thanks for your request — a real local person from AffordABox will be in touch shortly.",
-        "noindex": true
-      }
-    },
-    {
-      "path": "cold-storage",
-      "slug": "cold-storage",
-      "title": "Cold Storage",
-      "locale": "en",
-      "blocks": [
-        {
-          "type": "breadcrumbs",
-          "version": 1,
-          "data": {}
-        },
-        {
-          "type": "page_hero",
-          "version": 1,
-          "data": {
-            "style": "photo",
-            "layout": "split",
-            "padding": "large",
-            "heading_size": "large",
-            "photo_opacity": "20",
-            "photo": "149",
-            "eyebrow": "— Cold storage",
-            "heading": "Refrigerated Container Rentals",
-            "body": "Keep it cold. Keep it fresh. Temperature-controlled storage containers delivered to your door — ideal for restaurants, catering, events, and agriculture.",
-            "checklist": [
-              "-20°F to 70°F",
-              "Digital controls",
-              "Same-day delivery"
-            ],
-            "form_heading": "Get your cold storage quote",
-            "form_service": "any"
-          }
-        },
-        {
-          "type": "split",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Dialed-in to the degree",
-            "heading": "Precise temperature control",
-            "body": "Our reefer containers maintain consistent temperatures from -20°F to 70°F. Digital controls, insulated walls, and reliable compressor units keep your goods at the perfect temperature.",
-            "facts": [
-              {
-                "label": "Temperature Range",
-                "value": "-20°F to 70°F"
-              },
-              {
-                "label": "Power",
-                "value": "480V 3-phase"
-              },
-              {
-                "label": "Sizes",
-                "value": "20ft & 40ft"
-              },
-              {
-                "label": "Delivery",
-                "value": "Same-day available"
-              }
-            ],
-            "facts_style": "specs",
-            "right": "image",
-            "image": "150"
-          }
-        },
-        {
-          "type": "card_grid",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Who we keep cool",
-            "heading": "Industries we serve",
-            "columns": "4",
-            "style": "card",
-            "align": "left",
-            "background": "muted",
-            "cards": [
-              {
-                "title": "Restaurants",
-                "body": "Overflow refrigeration during peak seasons or equipment failure."
-              },
-              {
-                "title": "Catering & Events",
-                "body": "Temporary cold storage for large events and weddings."
-              },
-              {
-                "title": "Agriculture",
-                "body": "Post-harvest cooling and storage for produce."
-              },
-              {
-                "title": "Pharmaceuticals",
-                "body": "Temperature-sensitive medicine and vaccine storage."
-              }
-            ]
-          }
-        },
-        {
-          "type": "cta_band",
-          "version": 1,
-          "data": {
-            "heading": "Ready to get started?",
-            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
-            "service": "any",
-            "note": "Mon–Fri 8AM–5PM CT · No call centers"
-          }
-        }
-      ],
-      "frontmatter": {
-        "exit_modal": "on"
-      },
-      "seo": {
-        "meta_title": "Refrigerated Container Rentals in Minnesota | AffordABox",
-        "meta_description": "Refrigerated container rentals holding -20°F to 70°F for restaurants, events, agriculture and pharmaceuticals, delivered across Minnesota."
-      }
-    },
-    {
       "path": "faq",
       "slug": "faq",
       "title": "FAQ",
@@ -5208,343 +5609,6 @@
       }
     },
     {
-      "path": "self-storage/st-michael",
-      "slug": "st-michael",
-      "title": "St. Michael",
-      "locale": "en",
-      "blocks": [
-        {
-          "type": "breadcrumbs",
-          "version": 1,
-          "data": {}
-        },
-        {
-          "type": "page_hero",
-          "version": 1,
-          "data": {
-            "style": "photo",
-            "layout": "split",
-            "padding": "large",
-            "heading_size": "large",
-            "photo_opacity": "25",
-            "photo": "139",
-            "eyebrow": "— AffordABox Self-Storage",
-            "heading": "Self-Storage in St. Michael, MN",
-            "body": "12231 43rd St NE, St. Michael, MN 55376",
-            "detail": "At the heart of our St. Michael yard, this facility pairs drive-up convenience with indoor climate-controlled units for Wright County renters who want quick, local access.",
-            "checklist": [
-              "Drive-up & climate-controlled",
-              "No card to reserve",
-              "Month-to-month"
-            ],
-            "form_heading": "Reserve your unit",
-            "form_service": "Self-Storage",
-            "form_city": "St. Michael"
-          }
-        },
-        {
-          "type": "facility_details",
-          "version": 1,
-          "data": {
-            "eyebrow": "— This facility",
-            "heading": "St. Michael facility details",
-            "facility": "st-michael"
-          }
-        },
-        {
-          "type": "storage_units",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Find your fit",
-            "heading": "Unit sizes in St. Michael",
-            "intro": "Reserve online with no credit card to hold. Check live availability for the size you need.",
-            "button_label": "Check availability"
-          }
-        },
-        {
-          "type": "card_grid",
-          "version": 1,
-          "data": {
-            "columns": "2",
-            "style": "panel",
-            "cards": [
-              {
-                "title": "Built for Minnesota winters",
-                "body": "Drive-up units mean you park right at the door and load straight from your vehicle — no icy hallways, no stairs, no hauling totes down a long corridor in January. It's the fastest way in and out when the weather turns."
-              },
-              {
-                "title": "Room for your toys",
-                "body": "Oversized units with 10' doors give boats, campers, trailers, and fish houses a clean, secure home for the off-season — plus business inventory or a vehicle you'd rather keep covered.",
-                "dark": true
-              }
-            ]
-          }
-        },
-        {
-          "type": "prose",
-          "version": 1,
-          "data": {
-            "style": "small",
-            "body": "Our St. Michael self-storage facility shares our 12231 43rd St NE delivery yard in the heart of Wright County, with quick access for renters across St. Michael, Albertville, Otsego, Hanover, Rogers, and the northwest Twin Cities metro. From a remodel overflow to seasonal boat and camper storage, you'll find drive-up, indoor, and climate-controlled units right where your crew already operates."
-          }
-        },
-        {
-          "type": "reviews",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Reviews",
-            "heading": "What our neighbors say",
-            "context": "self-storage",
-            "limit": 3,
-            "layout": "feed"
-          }
-        },
-        {
-          "type": "faq",
-          "version": 1,
-          "data": {
-            "eyebrow": "— FAQ",
-            "heading": "Self-storage questions",
-            "group": "self-storage",
-            "style": "simple",
-            "schema": true
-          }
-        },
-        {
-          "type": "cta_band",
-          "version": 1,
-          "data": {
-            "heading": "Ready to get started?",
-            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
-            "service": "Self-Storage",
-            "note": "Mon–Fri 8AM–5PM CT · No call centers"
-          }
-        }
-      ],
-      "frontmatter": {
-        "exit_modal": "on"
-      },
-      "seo": {
-        "meta_title": "Self-Storage in St. Michael, MN | AffordABox",
-        "meta_description": "Drive-up, indoor and climate-controlled storage units at 12231 43rd St NE in St. Michael, MN. Reserve online with no card to hold, month-to-month."
-      }
-    },
-    {
-      "path": "portable-storage",
-      "slug": "portable-storage",
-      "title": "Portable Storage",
-      "locale": "en",
-      "blocks": [
-        {
-          "type": "breadcrumbs",
-          "version": 1,
-          "data": {}
-        },
-        {
-          "type": "page_hero",
-          "version": 1,
-          "data": {
-            "style": "photo",
-            "layout": "split",
-            "padding": "large",
-            "heading_size": "large",
-            "photo_opacity": "20",
-            "photo": "143",
-            "eyebrow": "— Portable storage, the local way",
-            "heading": "Portable Storage Delivered to Your Driveway — Loaded on Your Schedule.",
-            "body": "We place a ground-level unit right where you want it with the Mule Delivery System, then leave you to pack at your own pace. From **$149/mo + $79 delivery**, with $0 due until it arrives.",
-            "checklist": [
-              "Mule-placed in your driveway",
-              "$0 until delivery",
-              "Month-to-month"
-            ],
-            "form_heading": "Get your free quote",
-            "form_service": "Portable Storage"
-          }
-        },
-        {
-          "type": "portable_sizes",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Pick your size",
-            "heading": "Four sizes, one flat starting price",
-            "intro": "Every unit starts at **$149/mo** and holds ≈ 4,500 lbs per unit. Not sure which fits? Tell us your move and a real local person will size it with you.",
-            "button_label": "Get this size",
-            "footnote": "**Weight limit:** ≈ 4,500 lbs per unit. **Climate options:** Non-climate (standard) · Insulated · Climate-controlled.",
-            "schema_price": 149
-          }
-        },
-        {
-          "type": "feature_split",
-          "version": 1,
-          "data": {
-            "eyebrow": "— The AffordABox advantage",
-            "heading": "Meet the Mule",
-            "body": "Our Mule Delivery System is the difference between a storage box dropped wherever the truck can reach — and one placed exactly where you need it. It's the local edge the national outfits simply don't have.",
-            "points": [
-              {
-                "title": "Remote-controlled placement",
-                "body": "We guide your unit into tight driveways and alleys by remote — exactly where you want it."
-              },
-              {
-                "title": "No driveway or lawn damage",
-                "body": "The Mule sets the box down gently, so your concrete and grass stay just as they were."
-              },
-              {
-                "title": "Stays level the whole way",
-                "body": "Your contents ride flat and don't shift in transport — nothing tips, slides, or breaks."
-              }
-            ],
-            "badge_value": "$0",
-            "badge_label": "due until it arrives",
-            "dark": true,
-            "image": "146",
-            "button_label": "See portable storage",
-            "button_link": {
-              "kind": "page",
-              "value": "portable-storage"
-            }
-          }
-        },
-        {
-          "type": "card_grid",
-          "version": 1,
-          "data": {
-            "eyebrow": "— What people use it for",
-            "heading": "One box, plenty of jobs",
-            "columns": "3",
-            "style": "icon",
-            "background": "muted",
-            "cards": [
-              {
-                "title": "Moving"
-              },
-              {
-                "title": "Remodel / restoration"
-              },
-              {
-                "title": "Decluttering"
-              },
-              {
-                "title": "Contractor on-site"
-              },
-              {
-                "title": "Business overflow"
-              },
-              {
-                "title": "Events"
-              }
-            ],
-            "note": "**10'×10' doors for Minnesota toys.** Need to store a boat, trailer, or fish house? Ask about units with 10'×10' doors built for Minnesota toys."
-          }
-        },
-        {
-          "type": "split",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Honest pricing",
-            "heading": "Real prices. No surprises.",
-            "body": "One clear starting rate, one flat delivery fee, and nothing due until your unit is in your driveway. Keep it as long as you need — it's month-to-month with no penalties for changing your plans.",
-            "button_label": "Get your free quote",
-            "button_link": {
-              "kind": "page",
-              "value": "get-a-quote"
-            },
-            "right": "rows",
-            "align": "start",
-            "rows": [
-              {
-                "label": "Monthly rate",
-                "value": "From $149/mo"
-              },
-              {
-                "label": "Delivery & pickup",
-                "value": "$79"
-              },
-              {
-                "label": "Due at booking",
-                "value": "$0 due until your unit is delivered.",
-                "highlight": true
-              },
-              {
-                "label": "Terms",
-                "value": "Month-to-month. No change fees, no cancel fees, no long-term contracts."
-              }
-            ]
-          }
-        },
-        {
-          "type": "process_steps",
-          "version": 1,
-          "data": {
-            "eyebrow": "— How it works",
-            "heading": "Three steps, about two minutes",
-            "steps": [
-              {
-                "title": "Tell us what you need",
-                "body": "Enter your ZIP and pick a service — our 2-minute quote does the rest."
-              },
-              {
-                "title": "Get a real human + a price",
-                "body": "A local person (never a call center) replies fast with a clear, upfront price."
-              },
-              {
-                "title": "We deliver next-day with the Mule",
-                "body": "We place it precisely in your driveway — no damage, no hassle, $0 until it arrives."
-              }
-            ]
-          }
-        },
-        {
-          "type": "reviews",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Reviews",
-            "heading": "What our neighbors say",
-            "context": "portable",
-            "limit": 3,
-            "layout": "feed"
-          }
-        },
-        {
-          "type": "faq",
-          "version": 1,
-          "data": {
-            "eyebrow": "— FAQ",
-            "heading": "Portable storage questions",
-            "group": "portable",
-            "style": "simple",
-            "schema": true
-          }
-        },
-        {
-          "type": "callout",
-          "version": 1,
-          "data": {
-            "style": "note",
-            "body": "AffordABox is not associated with PODS. PODS is a registered trademark of The Procter & Gamble Company."
-          }
-        },
-        {
-          "type": "cta_band",
-          "version": 1,
-          "data": {
-            "heading": "Ready to get started?",
-            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
-            "service": "Portable Storage",
-            "note": "Mon–Fri 8AM–5PM CT · No call centers"
-          }
-        }
-      ],
-      "frontmatter": {
-        "exit_modal": "on"
-      },
-      "seo": {
-        "meta_title": "Portable Storage Containers in Minnesota | AffordABox",
-        "meta_description": "Portable storage delivered to your driveway by the Mule, from $149/mo plus $79 delivery. Month-to-month, $0 until it arrives, across the NW metro."
-      }
-    },
-    {
       "path": "shipping-containers/rent",
       "slug": "rent",
       "title": "Rent",
@@ -5674,182 +5738,6 @@
       "seo": {
         "meta_title": "Shipping Container Rentals in Minnesota | AffordABox",
         "meta_description": "Rent a 20ft or 40ft shipping container in Minnesota month-to-month. Delivered and picked up, wind- and water-tight, available as soon as next-day."
-      }
-    },
-    {
-      "path": "shipping-containers/buy",
-      "slug": "buy",
-      "title": "Buy",
-      "locale": "en",
-      "blocks": [
-        {
-          "type": "breadcrumbs",
-          "version": 1,
-          "data": {}
-        },
-        {
-          "type": "page_hero",
-          "version": 1,
-          "data": {
-            "style": "photo",
-            "layout": "split",
-            "padding": "large",
-            "heading_size": "large",
-            "photo_opacity": "20",
-            "photo": "133",
-            "eyebrow": "— New & used containers, delivered local",
-            "heading": "Shipping Containers for Sale",
-            "body": "Buy a wind- and water-tight 20' or 40' container — new one-trip or budget-friendly cargo-worthy used. We publish real starting prices and deliver to your site as soon as next-day.",
-            "checklist": [
-              "New & used",
-              "20' & 40'",
-              "Delivered to your site"
-            ],
-            "form_heading": "Get your container quote",
-            "form_service": "Container — Buy"
-          }
-        },
-        {
-          "type": "card_grid",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Pick your condition",
-            "heading": "New (one-trip) or used (cargo-worthy)",
-            "intro": "Both are structurally sound and lock securely — the difference is cosmetic wear and price.",
-            "columns": "2",
-            "style": "card",
-            "cards": [
-              {
-                "title": "New — one-trip",
-                "body": "Manufactured recently and shipped just once, so they look nearly pristine — minimal wear, clean interiors, and a long service life. Ideal when appearance matters or you're planning a build."
-              },
-              {
-                "title": "Used — cargo-worthy",
-                "body": "Wind- and water-tight with honest cosmetic wear at the best price. Structurally sound and ready for on-site storage or job-site use the day they arrive."
-              }
-            ]
-          }
-        },
-        {
-          "type": "container_catalog",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Our catalogue",
-            "heading": "Containers for sale",
-            "intro": "Standard, high-cube, double-door, and side-door options in 20' and 40'.",
-            "button_label": "Get this container",
-            "schema": true
-          }
-        },
-        {
-          "type": "split",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Spec note",
-            "heading": "Standard vs. high-cube",
-            "body": "Both share the same footprint. The difference is height: standard containers stand 8'6\" tall, while high-cube containers add a full foot at 9'6\". That extra headroom matters for tall equipment, shelving, and comfortable workshop or office conversions.",
-            "facts": [
-              {
-                "label": "Standard",
-                "value": "8'6\" exterior height"
-              },
-              {
-                "label": "High-cube",
-                "value": "9'6\" exterior height"
-              }
-            ],
-            "facts_style": "boxes",
-            "right": "list",
-            "right_eyebrow": "— What people buy them for",
-            "right_heading": "Popular uses",
-            "list": [
-              "On-site & job-site storage",
-              "Workshops & garages",
-              "Portable offices",
-              "Retail & pop-ups",
-              "Custom builds & modifications"
-            ]
-          }
-        },
-        {
-          "type": "card_grid",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Getting it on site",
-            "heading": "Delivery, clearance & door orientation",
-            "columns": "3",
-            "style": "card",
-            "background": "muted",
-            "cards": [
-              {
-                "title": "Tilt-bed delivery",
-                "body": "We deliver on a tilt-bed truck onto firm, level ground. We'll review your site with you before delivery so it lands exactly where you want it."
-              },
-              {
-                "title": "Clearance you'll need",
-                "body": "Plan for roughly the container length plus the truck — about 60 feet of straight clearance for a 20', and more for a 40'."
-              },
-              {
-                "title": "Door orientation",
-                "body": "You choose. Tell us whether you want the doors at the front or rear of the placement and we'll set it down accordingly."
-              }
-            ]
-          }
-        },
-        {
-          "type": "callout",
-          "version": 1,
-          "data": {
-            "style": "hazard",
-            "eyebrow": "— Make it yours",
-            "heading": "Custom modifications",
-            "body": "Doors, windows, vents, electrical, insulation, and full custom builds are available. Tell us your plan and we'll quote the modifications along with the container.",
-            "button_label": "Talk modifications",
-            "button_link": {
-              "kind": "url",
-              "value": "/get-a-quote?service=Container%20%E2%80%94%20Buy"
-            }
-          }
-        },
-        {
-          "type": "reviews",
-          "version": 1,
-          "data": {
-            "eyebrow": "— Reviews",
-            "heading": "What our neighbors say",
-            "context": "container",
-            "limit": 3,
-            "layout": "feed"
-          }
-        },
-        {
-          "type": "faq",
-          "version": 1,
-          "data": {
-            "eyebrow": "— FAQ",
-            "heading": "Buying a container — FAQs",
-            "group": "container-buy",
-            "style": "simple",
-            "schema": true
-          }
-        },
-        {
-          "type": "cta_band",
-          "version": 1,
-          "data": {
-            "heading": "Ready to get started?",
-            "body": "See your price and book in about two minutes — or call and talk to a real local person.",
-            "service": "Container — Buy",
-            "note": "Mon–Fri 8AM–5PM CT · No call centers"
-          }
-        }
-      ],
-      "frontmatter": {
-        "exit_modal": "on"
-      },
-      "seo": {
-        "meta_title": "Shipping Containers for Sale in Minnesota | AffordABox",
-        "meta_description": "New one-trip and used cargo-worthy 20ft and 40ft shipping containers for sale in Minnesota from $1,800. Wind- and water-tight, delivered to your site."
       }
     },
     {

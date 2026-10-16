@@ -1,0 +1,27 @@
+<%# A landing page's footer: who we are and where (the name, address and phone), the legal links and the PODS disclaimer, without the site's link columns. %>
+<% footer = website_global(:footer) %>
+<% settings = affordabox_settings %>
+<footer class="bg-ink-900 text-neutral-400">
+  <div class="hazard-rule h-1.5" aria-hidden="true"></div>
+  <div class="container-base py-10 space-y-4 text-center md:text-left">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <%= website_image_tag settings.logo_white, alt: affordabox_name, class: "h-8 w-auto mx-auto md:mx-0", sizes: "200px" %>
+      <p class="text-sm">
+        <%= affordabox_address_line %> ·
+        <a href="<%= affordabox_tel(settings.toll_free) %>" data-track="phone_click" class="font-semibold text-white hover:text-brand-300"><%= settings.toll_free %></a>
+      </p>
+    </div>
+    <% if settings.pods_disclaimer.present? %>
+      <p class="text-xs text-neutral-500 leading-relaxed max-w-3xl"><%= settings.pods_disclaimer %></p>
+    <% end %>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-3 border-t border-ink-700 pt-4">
+      <p class="text-xs text-neutral-500"><%= affordabox_fill(footer.copyright.presence || "© {year} {name}. All rights reserved.") %></p>
+      <div class="flex items-center gap-6">
+        <% footer.legal_links.each_with_index do |link, index| %>
+          <%# herb:key index %>
+          <a href="<%= affordabox_href(link.link) || "#" %>" class="text-xs text-neutral-500 hover:text-neutral-300 transition-colors"><%= link.label %></a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</footer>

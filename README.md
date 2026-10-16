@@ -25,11 +25,11 @@ theme reads, and redirects the old site's addresses:
 
 | | |
 | --- | --- |
-| Block types | `page_hero` (video, photo or plain; the lead form beside it), `breadcrumbs`, `trust_bar`, `product_router`, `feature_split`, `process_steps`, `reviews`, `faq`, `cta_band`, `dumpster_sizes`, `container_catalog`, `portable_sizes`, `storage_units`, `checklist`, `chips`, `card_grid`, `split`, `callout`, `facility_cards`, `facility_details`, `location_directory`, `map_embed`, `contact_details`, `prose`, `thank_you`, `service_area_teaser`, `quote_configurator` |
+| Block types | `page_hero` (video, photo or plain; the lead form beside it), `breadcrumbs`, `trust_bar`, `product_router`, `feature_split`, `process_steps`, `reviews`, `faq`, `cta_band`, `dumpster_sizes`, `container_catalog`, `portable_sizes`, `storage_units`, `checklist`, `chips`, `card_grid`, `split`, `callout`, `facility_cards`, `facility_details`, `location_directory`, `map_embed`, `contact_details`, `prose`, `thank_you`, `service_area_teaser`, `quote_configurator`; for landing pages, `lp_hero`, `lp_included`, `lp_area` |
 | Collections | `dumpsters`, `containers`, `portable-sizes`, `storage-units`, `facilities`, `locations` (each city has a page at `/locations/<city>`), `reviews`, `faqs` |
 | Globals | `site_settings` (name, phones, address, hours, logos, trust items, lead form words, exit popup, 404), `nav` (the mega menus), `footer`, `scripts` |
 | Form | `lead` (Forms plugin): its notification and confirmation emails, and the leads webhook |
-| A page's field | Exit-intent popup (on/off) |
+| A page's fields | Exit-intent popup (on/off); Layout (standard/landing) |
 
 Words in a few fields fill from Site settings: `{ownership}`, `{rating}`,
 `{phone}`, `{year}`, `{name}`; a service-area teaser's `{cities}` names the
@@ -41,6 +41,19 @@ updated, files already sent aren't sent twice. The lead form takes the
 quote form's webhook and recipients unless `ADS_LEADS_WEBHOOK_URL` and
 `QUOTE_RECIPIENTS` are given. `script/import_directus.rb` is the earlier
 move from Directus (the pre-redesign site, theme 0.1).
+
+## Landing pages
+
+A page whose Layout is `landing` (for ad traffic) draws a header with only
+the logo and the phone, a slim footer, and on phones a bar whose quote half
+goes to the page's own form. It opens with a Landing hero (`lp_hero`: the
+headline, the flat price, the phone and the lead form, `#quote`); its other
+buttons go back up to that form: What's included (`lp_included`), the
+service area with a ZIP check that carries the ZIP into the form
+(`lp_area`), and Dumpster sizes with "Button goes to: form", which notes the
+size picked (`affordabox/landing.js`). `script/landing.rb` holds these block
+types and the pages; `CMS_PROFILE=<profile> ruby script/landing_pages.rb`
+puts them in the CMS, new pages as drafts.
 
 ## Working on it
 
