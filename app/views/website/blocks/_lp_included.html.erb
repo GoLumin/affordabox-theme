@@ -1,0 +1,38 @@
+<%# locals: (data:) -%>
+<%# What the flat rate covers, and the few things that cost extra, side by side so nobody has to wonder about the bill; the button goes back to the page's form (#quote). %>
+<section class="<%= affordabox_background(data.background) %>">
+  <div class="container-base section-padding">
+    <%= render "website/shared/section_head", eyebrow: data.eyebrow, heading: data.heading, intro: data.intro %>
+    <div class="mx-auto mt-12 grid max-w-5xl overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-[var(--shadow-card)] md:grid-cols-5">
+      <div class="p-6 sm:p-8 md:col-span-3">
+        <h3 class="font-display text-lg font-bold uppercase tracking-tight text-ink-900"><%= data.included_heading.presence || "Included in the flat rate" %></h3>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+          <% data.included.each_with_index do |item, index| %>
+            <%# herb:key index %>
+            <li class="flex items-start gap-3 text-ink-800">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-500/10"><%= render "website/shared/check", class_name: "w-3.5 h-3.5 text-brand-600", stroke: 3 %></span>
+              <span class="font-medium"><%= item %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="border-t border-neutral-200 bg-neutral-50 p-6 sm:p-8 md:col-span-2 md:border-l md:border-t-0">
+        <h3 class="font-display text-lg font-bold uppercase tracking-tight text-ink-900"><%= data.extras_heading.presence || "Only if it applies" %></h3>
+        <dl class="mt-5 space-y-4">
+          <% data.extras.each_with_index do |extra, index| %>
+            <%# herb:key index %>
+            <div class="flex items-baseline justify-between gap-4 border-b border-neutral-200 pb-3 last:border-0 last:pb-0">
+              <dt class="text-sm text-neutral-600"><%= extra.label %></dt>
+              <dd class="shrink-0 font-display text-lg font-bold text-ink-900"><%= extra.value %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+    <% if data.button_label.present? %>
+      <div class="mt-10 text-center">
+        <a href="#quote" class="btn-primary"><%= data.button_label %></a>
+      </div>
+    <% end %>
+  </div>
+</section>

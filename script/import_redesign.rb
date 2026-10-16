@@ -17,6 +17,7 @@
 require_relative "cms_client"
 require_relative "seo_copy"
 require_relative "facts"
+require_relative "landing"
 
 ROOT = File.expand_path("..", __dir__)
 REDESIGN = File.expand_path(ENV.fetch("REDESIGN", File.join(ROOT, "../affordabox-redesign")))
@@ -99,8 +100,9 @@ BLOCK_TYPES = [
    fields: [f("heading", "Heading", "string"), f("body", "Words", "text"), f("service", "Lead form service", "select", options: SERVICES), f("note", "Note beside the phone", "string")],
    defaults: {"heading" => "Ready to get started?", "service" => "any"}},
   {slug: "dumpster_sizes", label: "Dumpster sizes", icon: "Truck", description: "A price card per dumpster size (the Dumpster sizes collection).",
-   fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"), f("schema", "Give search engines the prices (Product)", "boolean")],
-   defaults: {"button_label" => "Get this size", "schema" => true}},
+   fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"), Landing::BUTTON_TARGET_FIELD,
+     f("schema", "Give search engines the prices (Product)", "boolean")],
+   defaults: {"button_label" => "Get this size", "button_target" => "quote_page", "schema" => true}},
   {slug: "container_catalog", label: "Container catalogue", icon: "Container", description: "A card per container for sale (the Containers collection).",
    fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"), f("schema", "Give search engines the prices (Product)", "boolean")],
    defaults: {"button_label" => "Get this container", "schema" => true}},
@@ -109,7 +111,8 @@ BLOCK_TYPES = [
      f("schema_price", "Monthly price for search engines (Product)", "integer")],
    defaults: {"button_label" => "Get this size"}},
   {slug: "storage_units", label: "Storage unit sizes", icon: "Warehouse", description: "A card per self-storage unit size (the Storage units collection).",
-   fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string")], defaults: {"button_label" => "Check availability"}},
+   fields: [*HEAD, f("intro", "Intro", "text"), f("button_label", "Card button", "string"),
+     f("facility", "Facility", "record_ref", of_collection: "facilities", help: "Only the sizes this facility has. Blank: every size.")], defaults: {"button_label" => "Check availability"}},
   {slug: "checklist", label: "Checklist", icon: "ListChecks", description: "A heading and words beside a column of check-marked points.",
    fields: [*HEAD, f("body", "Words", "text"), f("items", "Points", "repeater", of: [f("title", "Title", "string", required: true), f("body", "Words", "text")]),
      f("background", "Background", "select", options: BACKGROUNDS)], defaults: {"background" => "muted"}},
@@ -162,7 +165,8 @@ BLOCK_TYPES = [
   {slug: "quote_configurator", label: "3-D quote", icon: "Box", description: "The 3-D configurator: size it, price it, then hand off to the online quote.",
    fields: [f("product", "Product", "select", options: %w[dumpsters portable-storage shipping-containers], required: true),
      f("fuse_url", "Online quote address", "url", help: "Where \"Continue\" goes, e.g. https://affordabox.gofuse.app/web-quotes/quote.")],
-   defaults: {"fuse_url" => "https://affordabox.gofuse.app/web-quotes/quote"}}
+   defaults: {"fuse_url" => "https://affordabox.gofuse.app/web-quotes/quote"}},
+  *Landing::BLOCK_TYPES
 ].freeze
 OLD_BLOCK_TYPES = %w[main_hero container_slider bento_grid two_col quote_form logo_slider photo_gallery two_col_banner image_cta products
   single_hero title_bar rich_text faqs container_listing locations image_gallery features testimonials image_text hours].freeze
@@ -179,9 +183,11 @@ COLLECTIONS = {
     f("monthly", "Monthly rate ($/mo, 3-D quote)", "integer"), f("popular", "Most popular", "boolean"), f("order", "Order", "integer")]},
   "storage-units" => {name: "Storage units", fields: [f("sqft", "Square feet", "integer"), f("fits", "What it fits", "text"),
     f("category", "Kind", "select", options: %w[drive-up climate oversized]), f("online_rate", "Online rate ($/mo)", "integer"), f("in_store_rate", "In-store rate ($/mo)", "integer"),
+    f("facilities", "Facilities", "record_refs", of_collection: "facilities", help: "The facilities that have this size. None ticked: every facility."),
     f("image", "Photo", "asset"), f("order", "Order", "integer")]},
   "facilities" => {name: "Facilities", fields: [f("street", "Street", "string"), f("city", "City", "string"), f("state", "State", "string"), f("zip", "ZIP", "string"),
     f("lat", "Latitude", "string"), f("lng", "Longitude", "string"), f("features", "Features", "string_list"), f("blurb", "Words", "text"),
+    f("office_hours", "Office hours", "string", help: "Blank: Site settings › Hours."), f("access_hours", "Gate access hours", "string"),
     f("image", "Photo", "asset"), f("link", "Its page", "link"), f("order", "Order", "integer")]},
   "locations" => {name: "Locations", fields: [f("city", "City", "string", required: true), f("zips", "ZIP codes", "string_list"), f("county", "County", "string"),
     f("tier", "Priority (1–3)", "integer"), f("services", "Services", "string_list", help: "Any of: dumpster, container-buy, container-rent, portable, self-storage."),
@@ -221,7 +227,7 @@ GLOBALS = {
     f("legal_links", "Legal links", "repeater", of: LINK_ITEM), f("copyright", "Copyright line", "string", help: "{year} is this year; {name} the business name.")]}
 }.freeze
 
-PAGE_FIELDS = [f("exit_modal", "Exit-intent popup", "select", options: %w[on off], sidebar: true, help: "Off on pages after a form is sent.")].freeze
+PAGE_FIELDS = [f("exit_modal", "Exit-intent popup", "select", options: %w[on off], sidebar: true, help: "Off on pages after a form is sent."), Landing::LAYOUT_FIELD].freeze
 
 # ===== The content =====
 

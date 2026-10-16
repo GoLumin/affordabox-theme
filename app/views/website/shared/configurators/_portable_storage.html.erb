@@ -6,7 +6,8 @@
   {slug: entry.slug, label: entry.title, tag: entry.title.to_s.gsub(/\s/, ""), lengthFt: length, cuft: 64 * length, dims: f.dims.to_s,
    holds: f.rooms.to_s, monthly: f.monthly.to_i, popular: f.popular == true}
 end %>
-<% default = (sizes.find { it[:popular] } || sizes.first || {})[:slug] %>
+<% start = sizes.find { it[:popular] } || sizes.first || {} %>
+<% default = start[:slug] %>
 <% svc = {
   keep: {name: "Keep It · on your property", sku: "KEEP", fuse: "keep-it", storage: nil, legs: [["Delivery & pickup", "drop-off and final pickup by the Mule", 79]]},
   move: {name: "Move It · to a new address", sku: "MOVE", fuse: "move-it", storage: nil,
@@ -74,8 +75,8 @@ end %>
             <div id="transit-lines"></div>
           </div>
           <div class="total">
-            <div><div class="tl">Your rate</div><div><span class="big">$<span id="total">199</span></span><span class="per" id="per">/mo</span></div></div>
-            <div class="mono dim" style="text-align:right;font-size:.72rem" id="capacity">holds ≈ 2–3 bedrooms</div>
+            <div><div class="tl">Your rate</div><div><span class="big">$<span id="total"><%= start[:monthly] %></span></span><span class="per" id="per">/mo</span></div></div>
+            <div class="mono dim" style="text-align:right;font-size:.72rem" id="capacity">holds ≈ <%= start[:holds] %></div>
           </div>
           <div class="transit">
             <span>$0 until it arrives</span><b>Delivered by the Mule</b>
@@ -130,15 +131,15 @@ end %>
         <p>Weatherproof steel and smart design — your belongings stay clean, dry, and secure.</p>
       </div>
       <div class="spec">
-        <div class="cell reveal"><span class="v">Steel</span><span class="k">Weatherproof skin</span><p>Galvanized steel panels — dent-resistant and rust-treated against Minnesota weather.</p></div>
+        <div class="cell reveal"><span class="v">Steel</span><span class="k">Weatherproof skin</span><p>Steel frame and steel roofing — water-tight through Minnesota rain and snow.</p></div>
         <div class="cell reveal"><span class="v">Level</span><span class="k">Mule delivery</span><p>The Mule keeps the unit level in transit, so nothing shifts, tips, or breaks.</p></div>
-        <div class="cell reveal"><span class="v">Sealed</span><span class="k">Weather-tight</span><p>Gasketed door and vents keep rain, dust, and moisture out of your things.</p></div>
-        <div class="cell reveal"><span class="v">1 key</span><span class="k">Yours only</span><p>You hold the only key from delivery to the day it's emptied. $0 until it arrives.</p></div>
+        <div class="cell reveal"><span class="v">Sealed</span><span class="k">Weather-tight</span><p>Heavy-duty weather stripping keeps rain, dust, and moisture out of your things.</p></div>
+        <div class="cell reveal"><span class="v">4,500</span><span class="k">lbs per unit</span><p>Room for a full 3–4 bedroom home in an 8×20. $0 until it arrives.</p></div>
       </div>
     </div>
   </section>
 
   <%= render "website/shared/configurators/faq", group: "portable" %>
   <%= render "website/shared/configurators/closing", fuse_url:, heading: "Get the box on the calendar.",
-    body: "Tell us your ZIP and a size — a real local person confirms your firm, all-in rate, usually within the hour." %>
+    body: "Tell us your ZIP and a size — a real local person confirms your firm, all-in rate." %>
 <% end %>

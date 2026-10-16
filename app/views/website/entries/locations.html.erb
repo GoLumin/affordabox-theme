@@ -7,7 +7,7 @@
 <% nearby = f.nearby.filter_map { by_slug[it] } %>
 <% facility = affordabox_entries(:facilities).find { it.slug == entry.slug } %>
 <% services = f.services %>
-<% intro = "Looking for #{affordabox_sentence(services.map { affordabox_service_label(it).downcase })} in #{city}? AffordABox delivers across #{f.county} County straight from our St. Michael yard." %>
+<% intro = "Looking for #{affordabox_service_phrase(services)} in #{city}? AffordABox delivers across #{f.county} County straight from our St. Michael yard." %>
 <% intro += nearby.any? ? " We're on the road through #{affordabox_sentence(nearby.map { website_fields(it).city })} every week, so #{city} gets quick, reliable scheduling — no national call center, just local people." : " Real local people, fast scheduling, and the Mule placing your box exactly where you want it." %>
 <% crumbs = [["Home", "/"], ["Locations", "/locations"], [city, website_path(entry)]] %>
 <%# Its title and description unless the entry's SEO panel has its own. %>

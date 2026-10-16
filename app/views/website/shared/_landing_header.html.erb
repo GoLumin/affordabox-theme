@@ -1,0 +1,22 @@
+<%# A landing page's header: the logo and the phone, nothing else to click away to (no menu, and the logo isn't a link). The hours sit beside the number on wider screens, so a caller knows someone will pick up. %>
+<% settings = affordabox_settings %>
+<% phone = settings.toll_free.to_s %>
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-200">
+  <div class="container-base">
+    <div class="flex items-center justify-between gap-4 h-16 lg:h-18">
+      <%= website_image_tag settings.logo, alt: affordabox_name, class: "h-8 lg:h-9 w-auto shrink-0", sizes: "200px", loading: :eager %>
+      <div class="flex items-center gap-4">
+        <% if settings.hours.present? %>
+          <p class="hidden md:block text-right text-xs leading-tight text-neutral-500">
+            <span class="block font-semibold text-ink-900">Real local people</span>
+            <%= settings.hours %>
+          </p>
+        <% end %>
+        <a href="<%= affordabox_tel(phone) %>" data-track="phone_click" class="btn-primary !px-4 !py-2.5 sm:!px-5" aria-label="Call <%= phone %>">
+          <%= render "website/shared/phone_icon", class_name: "w-4 h-4" %>
+          <span class="whitespace-nowrap"><%= phone %></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

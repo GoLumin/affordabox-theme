@@ -1,10 +1,11 @@
-<%# Phones only: a bar along the bottom, Get a Quote | Call (StickyCta.astro), with a spacer so it never covers the page. %>
+<%# locals: (quote_href: nil, quote_label: nil) -%>
+<%# Phones only: a bar along the bottom, Get a Quote | Call (StickyCta.astro), with a spacer so it never covers the page. A landing page points the quote half at its own form. %>
 <% nav = website_global(:nav) %>
 <div class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-neutral-200 shadow-[0_-4px_16px_rgba(6,27,35,0.10)] md:hidden">
   <div class="grid grid-cols-2">
-    <a href="<%= affordabox_href(nav.cta_link) || "/get-a-quote" %>" class="flex items-center justify-center gap-2 py-3.5 bg-brand-500 text-white font-display font-semibold uppercase tracking-wide text-sm hover:bg-brand-600 transition-colors">
+    <a href="<%= quote_href || affordabox_href(nav.cta_link) || "/get-a-quote" %>" class="flex items-center justify-center gap-2 py-3.5 bg-brand-500 text-white font-display font-semibold uppercase tracking-wide text-sm hover:bg-brand-600 transition-colors">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-      <%= nav.cta_label.presence || "Get a Quote" %>
+      <%= quote_label || nav.cta_label.presence || "Get a Quote" %>
     </a>
     <a href="<%= affordabox_tel(affordabox_toll_free) %>" data-track="phone_click" class="flex items-center justify-center gap-2 py-3.5 bg-ink-900 text-white font-display font-semibold uppercase tracking-wide text-sm hover:bg-ink-700 transition-colors">
       <%= render "website/shared/phone_icon", class_name: "w-4 h-4" %>

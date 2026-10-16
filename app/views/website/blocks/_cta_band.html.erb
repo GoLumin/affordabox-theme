@@ -12,7 +12,7 @@
         <div class="mt-8 flex flex-wrap items-center gap-4">
           <a href="<%= affordabox_tel(affordabox_toll_free) %>" data-track="phone_click" class="btn-primary">Call <%= affordabox_toll_free %></a>
           <% if data.note.present? %>
-            <span class="text-sm text-neutral-400"><%= data.note %></span>
+            <span class="text-sm text-neutral-400"><%= affordabox_fill(data.note) %></span>
           <% end %>
         </div>
       </div>
